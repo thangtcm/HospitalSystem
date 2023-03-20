@@ -5,6 +5,7 @@
 package ViewForm;
 import Form.Form1;
 import Form.Form2;
+import Form.Form3;
 import Form.Home;
 import Model.ModelMenu;
 import java.awt.BorderLayout;
@@ -59,7 +60,7 @@ public class Main extends javax.swing.JFrame {
             switch (index) {
                 case 0 -> showForm(new Home());
                 case 1 -> showForm(new Form2());
-                case 2 -> showForm(new Form1());
+                case 2 -> showForm(new Form3());
                 default -> {
                 }
             }

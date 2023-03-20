@@ -50,17 +50,17 @@ public class Welcome extends PanelShadow {
         jLabel2.setFont(new java.awt.Font("Inter", 1, 28)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(85, 85, 85));
         jLabel2.setText("Welcome!");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         lbName.setFont(new java.awt.Font("Inter", 1, 28)); // NOI18N
         lbName.setForeground(new java.awt.Color(243, 195, 101));
         lbName.setText("Dr. Jonny!");
-        add(lbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
+        add(lbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(107, 107, 107));
         jLabel4.setText("Have a nice day at work.");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         AvatarUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Avatar/Avatar.png"))); // NOI18N
         imgAvatar1.add(AvatarUser);

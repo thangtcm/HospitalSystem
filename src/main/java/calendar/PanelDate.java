@@ -60,7 +60,6 @@ public class PanelDate extends javax.swing.JLayeredPane {
                 else
                 {
                     cell.setAsToDay(false);
-                    System.out.println(cell.getText());
                 }
                 calendar.add(Calendar.DATE, 1); //  up 1 day
             }

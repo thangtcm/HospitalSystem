@@ -12,7 +12,7 @@ import java.util.List;
  * @author couni
  */
 public interface Patient_Dao {
-    public List<Patient> getPatientList(Patient patient);
+    public List<Patient> getPatientList();
     
     public boolean AddPatient(Patient patient);
     

@@ -65,8 +65,8 @@ public class Patient_DaoImpl implements Patient_Dao{
                 table_Patient.setFirstName(resultSet.getString("FirstName").trim());
                 table_Patient.setMiddleName(resultSet.getString("MiddleName").trim());
                 table_Patient.setLastName(resultSet.getString("LastName").trim());
-                table_Patient.setBirthDay(resultSet.getDate("BrithDay"));
-                table_Patient.setGender(resultSet.getString("Sex").trim());
+                table_Patient.setBirthDay(resultSet.getDate("Birthday"));
+                table_Patient.setGender(resultSet.getString("Gender").trim());
                 table_Patient.setAddress(resultSet.getString("Address").trim());
                 table_Patient.setEmail(resultSet.getString("Email").trim());
                 table_Patient.setNumberPhone(resultSet.getString("NumberPhone").trim());
@@ -92,8 +92,8 @@ public class Patient_DaoImpl implements Patient_Dao{
             preparedStatement.setString(index++, patient.getMiddleName().trim());
             preparedStatement.setString(index++, patient.getLastName().trim());
             preparedStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
-            preparedStatement.setString(index++, patient.getAddress().trim());
             preparedStatement.setString(index++, patient.getGender().trim());
+            preparedStatement.setString(index++, patient.getAddress().trim());
             preparedStatement.setString(index++, patient.getNumberPhone().trim());
             preparedStatement.setString(index++, patient.getEmail().trim());
             return preparedStatement.executeUpdate() > 0;
@@ -108,6 +108,27 @@ public class Patient_DaoImpl implements Patient_Dao{
     
      @Override
     public boolean Update_Staff(Patient patient){
+
+        String SQL_Update_ClassInformation = "UPDATE Patient SET FirstName = ?, MiddleName = ?, LastName = ?, Birthday = ?, Gender = ?, Address = ?, NumberPhone = ?, Email = ? WHERE ID = ?";
+        try(Connection connection = DBConnect.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_Update_ClassInformation);
+        ){
+            int index = 1;
+            preparedStatement.setInt(index++, patient.getID());
+            preparedStatement.setString(index++, patient.getFirstName().trim());
+            preparedStatement.setString(index++, patient.getMiddleName().trim());
+            preparedStatement.setString(index++, patient.getLastName().trim());
+            preparedStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
+            preparedStatement.setString(index++, patient.getGender().trim());
+            preparedStatement.setString(index++, patient.getAddress().trim());
+            preparedStatement.setString(index++, patient.getNumberPhone().trim());
+            preparedStatement.setString(index++, patient.getEmail().trim());
+            
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e)
+        {
+            System.out.println("Failed to add patient: " + e.getMessage());
+        }
         return false;
     }
     

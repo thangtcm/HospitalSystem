@@ -20,7 +20,6 @@ dao\DBConnect.class
 widget\inputID.class
 Swing\Button\Button.class
 com\raven\swing\TextField.class
-.netbeans_automatic_build
 widget\profile.class
 Services\SQLHandle.class
 Model\PhongDieuTri.class
@@ -95,7 +94,6 @@ Components\RightMain.class
 DatabaseAccessObject_Impl\Patient_DaoImpl.class
 widget\inputDate.class
 com\raven\chart\blankchart\SeriesSize.class
-ViewForm\Test$2.class
 ViewForm\ViewStaffForm.class
 Components\Bottom.class
 ViewForm\NewJFrameMain$1.class
