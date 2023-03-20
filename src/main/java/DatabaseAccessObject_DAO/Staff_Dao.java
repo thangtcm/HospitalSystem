@@ -4,7 +4,7 @@
  */
 package DatabaseAccessObject_DAO;
 
-import Model.Staff;
+import Model.Employee;
 import java.util.List;
 
 /**
@@ -14,17 +14,17 @@ import java.util.List;
 public interface Staff_Dao {
     
     /*Lấy tất cả nhân viên*/
-    public List<Staff> getStaffList(Staff staff);
+    public List<Employee> getStaffList(Employee staff);
     
-    public boolean AddStaff(Staff staff);
+    public boolean AddStaff(Employee staff);
     
     public boolean Delete_Staff(int ID);
     
-    public boolean Update_Staff(Staff staff);
+    public boolean Update_Staff(Employee staff);
     
-    public Staff Login_Staff(Staff staff);
+    public Employee Login_Staff(Employee staff);
     
-    public boolean ResignerUser(Staff staff);
+    public boolean ResignerUser(Employee staff);
     
-    String ChangePassword(Staff staff, String Password);
+    String ChangePassword(Employee staff, String Password);
 }

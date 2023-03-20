@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author couni
  */
-public class Staff {
+public class Employee {
 
     
     private Integer ID;
@@ -19,19 +19,20 @@ public class Staff {
     private String FirstName;
     private String MiddleName;
     private String LastName;
-    private Date Brithday;
-    private int RoleID;
-    private String Sex;
+    private Date Birthday;
+    private String Gender;
     private String Address;
-    private int NumberPhonne;
+    private String NumberPhonne;
     private String email;
+    private String RoleName;
     
-     public Staff()
+    
+    public Employee()
     {
         
     }
     
-    public Staff(Staff staff)
+    public Employee(Employee staff)
     {
         this.ID = staff.ID;
         this.UserName = staff.UserName;
@@ -39,9 +40,9 @@ public class Staff {
         this.FirstName = staff.FirstName;
         this.MiddleName = staff.MiddleName;
         this.LastName = staff.LastName;
-        this.Brithday = staff.Brithday;
-        this.RoleID = staff.RoleID;
-        this.Sex = staff.Sex;
+        this.Birthday = staff.Birthday;
+        this.RoleName = staff.RoleName;
+        this.Gender = staff.Gender;
         this.Address = staff.Address;
         this.NumberPhonne = staff.NumberPhonne;
         this.email = staff.email;
@@ -50,37 +51,39 @@ public class Staff {
     /**
      * @return the RoleID
      */
-    public int getRoleID() {
-        return RoleID;
+    public String getRoleName() {
+        if(this.RoleName == null)
+            return "";
+        return RoleName;
     }
 
     /**
-     * @param RoleID the RoleID to set
+     * @param RoleName the RoleID to set
      */
-    public void setRoleID(int RoleID) {
-        this.RoleID = RoleID;
+    public void setRoleName(String RoleName) {
+        this.RoleName = RoleName;
     }
     
-    public Date getBrithday() {
-        return Brithday;
+    public Date getBirthday() {
+        return Birthday;
     }
 
-    public void setBrithday(Date Brithday) {
-        this.Brithday = Brithday;
+    public void setBirthday(Date Birthday) {
+        this.Birthday = Birthday;
     }
 
     /**
      * @return the Sex
      */
-    public String getSex() {
-        return Sex;
+    public String getGender() {
+        return Gender;
     }
 
     /**
-     * @param Sex the Sex to set
+     * @param Gender the Sex to set
      */
-    public void setSex(String Sex) {
-        this.Sex = Sex;
+    public void setGender(String Gender) {
+        this.Gender = Gender;
     }
 
     /**
@@ -100,14 +103,14 @@ public class Staff {
     /**
      * @return the NumberPhonne
      */
-    public int getNumberPhonne() {
+    public String getNumberPhonne() {
         return NumberPhonne;
     }
 
     /**
      * @param NumberPhonne the NumberPhonne to set
      */
-    public void setNumberPhonne(int NumberPhonne) {
+    public void setNumberPhonne(String NumberPhonne) {
         this.NumberPhonne = NumberPhonne;
     }
 

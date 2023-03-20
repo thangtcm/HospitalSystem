@@ -47,7 +47,8 @@ public class Table extends JTable {
                     com.setBackground(Color.decode("#4F62CB"));
                     com.setForeground(Color.WHITE);
                 } else {
-                    com.setBackground(jtable.getBackground());
+                    com.setBackground(Color.WHITE);
+                        //com.setBackground(jtable.getBackground());
                     com.setForeground(Color.decode("#444343"));
                 }
                 if(i1 == 0)  

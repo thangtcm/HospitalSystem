@@ -4,7 +4,7 @@
  */
 package ViewForm;
 
-import Model.Staff;
+import Model.Employee;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -14,7 +14,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class NewJFrameMain extends javax.swing.JFrame {
 
     private String RoleName; 
-    private Staff staff;
+    private Employee staff;
     /**
      * Creates new form NewJFrameMain
      */
@@ -23,7 +23,7 @@ public class NewJFrameMain extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(jComboBox1);
     }
     
-    public NewJFrameMain(String RoleName, Staff staff)
+    public NewJFrameMain(String RoleName, Employee staff)
     {
         initComponents();
         jLabel1.setText("Xin chào " + RoleName + " : " + staff.getFullName());

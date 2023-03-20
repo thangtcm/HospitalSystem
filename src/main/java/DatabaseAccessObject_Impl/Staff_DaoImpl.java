@@ -5,7 +5,7 @@
 package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.Staff_Dao;
-import Model.Staff;
+import Model.Employee;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -23,54 +23,41 @@ import java.util.logging.Logger;
  */
 public class Staff_DaoImpl implements Staff_Dao{
     
-    Connection connection = null;
     @Override
-    public boolean AddStaff(Staff staff)
+    public boolean AddStaff(Employee staff)
     {
-        PreparedStatement preparedStatement = null;
-        String SQL_AddStaff = "INSERT INTO [Staff] VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL_AddStaff = "INSERT INTO [Employee] VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
-        try{
-            connection = DBConnect.getConnection();
-            preparedStatement = connection.prepareStatement(SQL_AddStaff);
-            preparedStatement.setString(1, staff.getUserName().trim());
-            preparedStatement.setString(2, staff.getPassword().trim());
-            preparedStatement.setString(3, staff.getFirstName().trim());
-            preparedStatement.setString(4, staff.getMiddleName().trim());
-            preparedStatement.setString(5, staff.getLastName().trim());
-            preparedStatement.setDate(6, Convert.convertDate(staff.getBrithday()));
-            preparedStatement.setInt(7, staff.getRoleID());
-            preparedStatement.setString(8, staff.getSex().trim());
-            preparedStatement.setString(9, staff.getAddress().trim());
-            preparedStatement.setInt(10, staff.getNumberPhonne());
-            preparedStatement.setString(11, staff.getEmail().trim());
-            
+        try(Connection connection = DBConnect.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_AddStaff);
+        ){
+            int i = 1;
+            preparedStatement.setString(i++, staff.getUserName().trim());
+            preparedStatement.setString(i++, staff.getPassword().trim());
+            preparedStatement.setString(i++, staff.getFirstName().trim());
+            preparedStatement.setString(i++, staff.getMiddleName().trim());
+            preparedStatement.setString(i++, staff.getLastName().trim());
+            preparedStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
+            preparedStatement.setString(i++, staff.getGender().trim());     
+            preparedStatement.setString(i++, staff.getAddress().trim());
+            preparedStatement.setString(i++, staff.getNumberPhonne().trim());
+            preparedStatement.setString(i++, staff.getEmail().trim());
+            preparedStatement.setString(i++, staff.getRoleName().trim());
+            return preparedStatement.executeUpdate() > 0;
         }
         catch(SQLException e) {
             System.out.println(e.getMessage()); 
-        }finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Staff_DaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }
 
     @Override
-    public List<Staff> getStaffList(Staff staff) {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        List<Staff> list = new ArrayList<Staff>();
-
+    public List<Employee> getStaffList(Employee staff) {
+        List<Employee> list = new ArrayList<>();
         /*
          * Default: displays all student information
          */
-        StringBuilder SQL_GetStaffInformation = new StringBuilder("SELECT * FROM [Staff]");
+        StringBuilder SQL_GetStaffInformation = new StringBuilder("SELECT * FROM [Employee]");
 
         /*------------------------------------------------------------------------
          * getStudent_name() : Get it from the information entered by the user.  |
@@ -84,37 +71,28 @@ public class Staff_DaoImpl implements Staff_Dao{
                     .append(" AND LastName LIKE '%").append(staff.getLastName()).append("%' ");
         }
 
-        try
-        {
-            connection = DBConnect.getConnection();
-            preparedStatement = connection.prepareStatement(SQL_GetStaffInformation.toString().replaceFirst("AND","WHERE"));
-
-            resultSet = preparedStatement.executeQuery();
+        try(Connection connection = DBConnect.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_GetStaffInformation.toString().replaceFirst("AND","WHERE"));
+            ResultSet resultSet = preparedStatement.executeQuery();
+        ){      
             while (resultSet.next())
             {
-                    Staff table_staff = new Staff();
-                    table_staff.setID(resultSet.getInt("ID"));
-                    table_staff.setFirstName(resultSet.getString("FirstName").trim());
-                    table_staff.setMiddleName(resultSet.getString("MiddleName").trim());
-                    table_staff.setLastName(resultSet.getString("LastName").trim());
-                    table_staff.setBrithday(resultSet.getDate("BrithDay"));
-                    table_staff.setSex(resultSet.getString("Sex").trim());
-                    table_staff.setAddress(resultSet.getString("Address").trim());
-                    table_staff.setEmail(resultSet.getString("Email").trim());
-                    table_staff.setNumberPhonne(resultSet.getInt("NumberPhone"));
+                Employee table_staff = new Employee();
+                table_staff.setID(resultSet.getInt("ID"));
+                table_staff.setFirstName(resultSet.getString("FirstName").trim());
+                table_staff.setMiddleName(resultSet.getString("MiddleName").trim());
+                table_staff.setLastName(resultSet.getString("LastName").trim());
+                table_staff.setBirthday(resultSet.getDate("BirthDay"));
+                table_staff.setGender(resultSet.getString("Gender").trim());
+                table_staff.setAddress(resultSet.getString("Address").trim());
+                table_staff.setNumberPhonne(resultSet.getString("NumberPhone"));
+                table_staff.setEmail(resultSet.getString("Email").trim());
+                table_staff.setRoleName(resultSet.getString("RoleName").trim());
 
                     list.add(table_staff);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Staff_DaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return list;
     }
@@ -125,71 +103,54 @@ public class Staff_DaoImpl implements Staff_Dao{
     }
 
     @Override
-    public boolean Update_Staff(Staff staff) {
+    public boolean Update_Staff(Employee staff) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Staff Login_Staff(Staff staff) {
-        String SQL_ADMINISTRATOR_LOGIN = "SELECT * FROM [Staff] WHERE UserName = ? AND Password = ?";
+    public Employee Login_Staff(Employee staff) {
+        String SQL_ADMINISTRATOR_LOGIN = "SELECT * FROM [Employee] WHERE UserName = ? AND Password = ?";
         /*
          * In order to initialize the main interface though the user's personal information.
          */
-        Staff table_Staff_temp = null;
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try
-        {
-            /*
-             * ------------------------------------------------------------------------------
-             * 'connection' : Pass SQL statements to objects that manipulate the database	|
-             *  From Connection com.YUbuntu.dao.BasicDao.connection 						|
-             * ------------------------------------------------------------------------------
-             */
-            connection = DBConnect.getConnection();
-            preparedStatement = connection.prepareStatement(SQL_ADMINISTRATOR_LOGIN);
-
+        Employee table_Staff_temp = null;
+        try(Connection connection = DBConnect.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADMINISTRATOR_LOGIN);    
+        ){
             preparedStatement.setString(1, staff.getUserName());
             preparedStatement.setString(2, staff.getPassword());
-            resultSet = preparedStatement.executeQuery();
-
+            ResultSet resultSet = preparedStatement.executeQuery();
             //Store the user information
             if (resultSet.next())
             {		
-                    /*---------------------------------------------------------------------------------------------------------------------------------
-                     * Stores the data of Student_ID and .. so that in order to initialize the main interface though the user's personal information. |
-                     *---------------------------------------------------------------------------------------------------------------------------------
-                     *///Such as it's be used when change user's password !
-                    table_Staff_temp = new Staff();
-                    table_Staff_temp.setID(resultSet.getInt("ID"));
-                    table_Staff_temp.setUserName(resultSet.getString("UserName").trim());
-                    table_Staff_temp.setPassword(resultSet.getString("Password").trim());
-                    table_Staff_temp.setFirstName(resultSet.getString("FirstName").trim());
-                    table_Staff_temp.setMiddleName(resultSet.getString("MiddleName").trim());
-                    table_Staff_temp.setLastName(resultSet.getString("LastName").trim());
-                    table_Staff_temp.setBrithday(resultSet.getDate("BrithDay"));
-                    table_Staff_temp.setSex(resultSet.getString("Sex").trim());
-                    table_Staff_temp.setAddress(resultSet.getString("Address").trim());
-                    table_Staff_temp.setEmail(resultSet.getString("Email").trim());
-                    table_Staff_temp.setNumberPhonne(resultSet.getInt("NumberPhone"));
-                    //...
+                table_Staff_temp = new Employee();
+                table_Staff_temp.setID(resultSet.getInt("ID"));
+                table_Staff_temp.setUserName(resultSet.getString("UserName").trim());
+                table_Staff_temp.setPassword(resultSet.getString("Password").trim());
+                table_Staff_temp.setFirstName(resultSet.getString("FirstName").trim());
+                table_Staff_temp.setMiddleName(resultSet.getString("MiddleName").trim());
+                table_Staff_temp.setLastName(resultSet.getString("LastName").trim());
+                table_Staff_temp.setBirthday(resultSet.getDate("BirthDay"));
+                table_Staff_temp.setGender(resultSet.getString("Gender").trim());
+                table_Staff_temp.setAddress(resultSet.getString("Address").trim());
+                table_Staff_temp.setNumberPhonne(resultSet.getString("NumberPhone"));
+                table_Staff_temp.setEmail(resultSet.getString("Email").trim());
+                table_Staff_temp.setNumberPhonne(resultSet.getString("RoleName"));
             }
         } catch (Exception e)
         {
-                System.err.println("ERROR : Fail to check specified information of student from the SQL database !\n");
-                e.printStackTrace();
+            System.out.println(e.getMessage());
         }		
         return table_Staff_temp;	
     }
 
     @Override
-    public String ChangePassword(Staff staff, String Password) {
+    public String ChangePassword(Employee staff, String Password) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean ResignerUser(Staff staff) {
+    public boolean ResignerUser(Employee staff) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

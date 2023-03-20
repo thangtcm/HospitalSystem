@@ -21,6 +21,11 @@ public class Welcome extends PanelShadow {
         init();
     }
     
+    public void setlbName(String Name)
+    {
+        lbName.setText(Name);
+    }
+    
     private void init()
     {
         setRadius(20);

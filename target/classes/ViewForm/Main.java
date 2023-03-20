@@ -7,6 +7,7 @@ import Form.Form1;
 import Form.Form2;
 import Form.Form3;
 import Form.Home;
+import Model.Employee;
 import Model.ModelMenu;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -32,11 +33,19 @@ public class Main extends javax.swing.JFrame {
     private MigLayout layout;
     private Animator animator;
     private boolean menuShow;
+    private Employee employee;
+    
     public Main() {
         initComponents();
         init();
     }
 
+    public Main(Employee employee)
+    {
+        initComponents();
+        this.employee = employee;
+        init();  
+    }
     
     private void init() {
         layout = new MigLayout("fill", "0[]10[]0", "0[fill]0");
@@ -58,7 +67,7 @@ public class Main extends javax.swing.JFrame {
         
         menu.setEvent((int index) -> {
             switch (index) {
-                case 0 -> showForm(new Home());
+                case 0 -> showForm(new Home(this.employee));
                 case 1 -> showForm(new Form2());
                 case 2 -> showForm(new Form3());
                 default -> {
@@ -74,7 +83,7 @@ public class Main extends javax.swing.JFrame {
         body.add(rightMain, BorderLayout.EAST);
         body.add(main, "w 100%");
         
-
+        rightMain.lbNameEmployee(employee.getFullName());
         TimingTarget target;
         target = new TimingTargetAdapter() {
             @Override
@@ -102,7 +111,7 @@ public class Main extends javax.swing.JFrame {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
-        showForm(new Home());
+        showForm(new Home(this.employee));
     }
     private  void showForm(Component com){
         main.removeAll();

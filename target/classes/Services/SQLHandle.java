@@ -4,14 +4,14 @@
  */
 package Services;
 
-import Model.Staff;
+import Model.Employee;
 
 /**
  *
  * @author couni
  */
 public class SQLHandle {
-    public Staff ImportStaff(Staff table_staff)
+    public Employee ImportStaff(Employee table_staff)
     {
         return table_staff;
     }

@@ -6,7 +6,6 @@ package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.Patient_Dao;
 import Model.Patient;
-import Model.Staff;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -16,8 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

@@ -16,6 +16,11 @@ public class RightMain extends javax.swing.JPanel {
     public RightMain() {
         initComponents();
     }
+    
+    public void lbNameEmployee(String Name)
+    {
+        lbNameEmployee.setText(Name);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,7 +32,7 @@ public class RightMain extends javax.swing.JPanel {
     private void initComponents() {
 
         avatarStaff = new Swing.Img.ImgAvatar();
-        lbNameStaff = new javax.swing.JLabel();
+        lbNameEmployee = new javax.swing.JLabel();
         lbIDStaff = new javax.swing.JLabel();
         panelShadow1 = new Swing.Panel.PanelShadow();
         imgAvatar2 = new Swing.Img.ImgAvatar();
@@ -56,10 +61,10 @@ public class RightMain extends javax.swing.JPanel {
         avatarStaff.setBorderSize(5);
         avatarStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Avatar/Avatar.png"))); // NOI18N
 
-        lbNameStaff.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
-        lbNameStaff.setForeground(new java.awt.Color(255, 255, 255));
-        lbNameStaff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbNameStaff.setText("Dr. Jonny");
+        lbNameEmployee.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
+        lbNameEmployee.setForeground(new java.awt.Color(255, 255, 255));
+        lbNameEmployee.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbNameEmployee.setText("Dr. Jonny");
 
         lbIDStaff.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         lbIDStaff.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,7 +214,6 @@ public class RightMain extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbNameStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(avatarStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(lbIDStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
@@ -246,6 +250,10 @@ public class RightMain extends javax.swing.JPanel {
                                 .addComponent(panelShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)))))
                 .addGap(0, 16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbNameEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +261,7 @@ public class RightMain extends javax.swing.JPanel {
                 .addGap(49, 49, 49)
                 .addComponent(avatarStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbNameStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbNameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lbIDStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -309,7 +317,7 @@ public class RightMain extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lbIDStaff;
-    private javax.swing.JLabel lbNameStaff;
+    private javax.swing.JLabel lbNameEmployee;
     private Swing.Panel.PanelShadow panelShadow1;
     private Swing.Panel.PanelShadow panelShadow2;
     private Swing.Panel.PanelShadow panelShadow3;
