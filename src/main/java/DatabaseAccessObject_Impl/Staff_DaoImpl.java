@@ -14,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -89,7 +87,7 @@ public class Staff_DaoImpl implements Staff_Dao{
                 table_staff.setEmail(resultSet.getString("Email").trim());
                 table_staff.setRoleName(resultSet.getString("RoleName").trim());
 
-                    list.add(table_staff);
+                list.add(table_staff);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

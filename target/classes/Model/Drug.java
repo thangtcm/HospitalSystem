@@ -8,9 +8,10 @@ package Model;
  *
  * @author couni
  */
-public class Medicine { //Kho thuốc
+public class Drug { //Kho thuốc
     private int ID;
-    private String MedicineName;
+    private String DrugName;
+    private String DrugType;
     private int Quantity;
     private int Price;
     private String Decription;
@@ -21,19 +22,33 @@ public class Medicine { //Kho thuốc
     public int getID() {
         return ID;
     }
+    
+    /**
+     * @return the MedicineName
+     */
+    public String getDrugType() {
+        return DrugType;
+    }
+
+    /**
+     * @param DrugType the MedicineName to set
+     */
+    public void setDrugType(String DrugType) {
+        this.DrugType = DrugType;
+    }
 
     /**
      * @return the MedicineName
      */
-    public String getMedicineName() {
-        return MedicineName;
+    public String getDrugName() {
+        return DrugName;
     }
 
     /**
-     * @param MedicineName the MedicineName to set
+     * @param DrugName the MedicineName to set
      */
-    public void setMedicineName(String MedicineName) {
-        this.MedicineName = MedicineName;
+    public void setDrugName(String DrugName) {
+        this.DrugName = DrugName;
     }
 
     /**

@@ -52,7 +52,7 @@ public class PasswordField extends JPasswordField {
     private boolean mouseOver = false;
     private String labelText = "Label";
     private String helperText = "";
-    private int spaceHelperText = 15;
+    private final int spaceHelperText = 15;
     private Color lineColor = new Color(3, 155, 216);
 
     public PasswordField() {

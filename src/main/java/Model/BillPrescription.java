@@ -10,13 +10,45 @@ import java.sql.Date;
  *
  * @author couni
  */
-public class Prescription { // Phiếu nhận thuốc
+public class BillPrescription { 
+
+    // Phiếu nhận thuốc
     private int ID;
     private String PrescriptName;
-    private int StaffID;
+    private int EmployeeID;
     private int PatientID;
+    private Date CreateDate;
     private Date ReceivedDate;
-    private int Price;
+    private int ToTalPrice;
+    private int Note;
+    /**
+     * @return the CreateDate
+     */
+    public Date getCreateDate() {
+        return CreateDate;
+    }
+
+    /**
+     * @param CreateDate the CreateDate to set
+     */
+    public void setCreateDate(Date CreateDate) {
+        this.CreateDate = CreateDate;
+    }
+
+    /**
+     * @return the ToTalPrice
+     */
+    public int getToTalPrice() {
+        return ToTalPrice;
+    }
+
+    /**
+     * @param ToTalPrice the ToTalPrice to set
+     */
+    public void setToTalPrice(int ToTalPrice) {
+        this.ToTalPrice = ToTalPrice;
+    }
+
 
     /**
      * @return the ID
@@ -42,15 +74,15 @@ public class Prescription { // Phiếu nhận thuốc
     /**
      * @return the StaffID
      */
-    public int getStaffID() {
-        return StaffID;
+    public int getEmployeeID() {
+        return EmployeeID;
     }
 
     /**
-     * @param StaffID the StaffID to set
+     * @param EmployeeID the StaffID to set
      */
-    public void setStaffID(int StaffID) {
-        this.StaffID = StaffID;
+    public void setEmployeeID(int EmployeeID) {
+        this.EmployeeID = EmployeeID;
     }
 
     /**
@@ -84,15 +116,15 @@ public class Prescription { // Phiếu nhận thuốc
     /**
      * @return the Price
      */
-    public int getPrice() {
-        return Price;
+    public int getNote() {
+        return Note;
     }
 
     /**
-     * @param Price the Price to set
+     * @param Note the Price to set
      */
-    public void setPrice(int Price) {
-        this.Price = Price;
+    public void setNote(int Note) {
+        this.Note = Note;
     }
     
     
