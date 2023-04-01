@@ -21,30 +21,46 @@ import java.util.List;
  */
 public class Staff_DaoImpl implements Staff_Dao{
     
+    Connection conn = null;
+    PreparedStatement prepStatement= null;
+    ResultSet resultSet = null;
+    
+    public Staff_DaoImpl()
+    {
+        conn = new DBConnect().getConnection();
+    }
+    
     @Override
     public boolean AddStaff(Employee staff)
     {
-        String SQL_AddStaff = "INSERT INTO [Employee] VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL_AddStaff = "INSERT INTO [Employee] (UserName, Password, FirstName, MiddleName, LastName, Birthday, Gender, Address, NumberPhone, Email, RoleName) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
-        try(Connection connection = DBConnect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_AddStaff);
-        ){
+        try{
+            prepStatement = conn.prepareStatement(SQL_AddStaff);
             int i = 1;
-            preparedStatement.setString(i++, staff.getUserName().trim());
-            preparedStatement.setString(i++, staff.getPassword().trim());
-            preparedStatement.setString(i++, staff.getFirstName().trim());
-            preparedStatement.setString(i++, staff.getMiddleName().trim());
-            preparedStatement.setString(i++, staff.getLastName().trim());
-            preparedStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
-            preparedStatement.setString(i++, staff.getGender().trim());     
-            preparedStatement.setString(i++, staff.getAddress().trim());
-            preparedStatement.setString(i++, staff.getNumberPhonne().trim());
-            preparedStatement.setString(i++, staff.getEmail().trim());
-            preparedStatement.setString(i++, staff.getRoleName().trim());
-            return preparedStatement.executeUpdate() > 0;
+            prepStatement.setString(i++, staff.getUserName().trim());
+            prepStatement.setString(i++, staff.getPassword().trim());
+            prepStatement.setString(i++, staff.getFirstName().trim());
+            prepStatement.setString(i++, staff.getMiddleName().trim());
+            prepStatement.setString(i++, staff.getLastName().trim());
+            prepStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
+            prepStatement.setString(i++, staff.getGender().trim());     
+            prepStatement.setString(i++, staff.getAddress().trim());
+            prepStatement.setString(i++, staff.getNumberPhonne().trim());
+            prepStatement.setString(i++, staff.getEmail().trim());
+            prepStatement.setString(i++, staff.getRoleName().trim());
+            return prepStatement.executeUpdate() > 0;
         }
         catch(SQLException e) {
             System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return false;
     }
@@ -55,24 +71,32 @@ public class Staff_DaoImpl implements Staff_Dao{
         /*
          * Default: displays all student information
          */
-        StringBuilder SQL_GetStaffInformation = new StringBuilder("SELECT * FROM [Employee]");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Employee] WHERE ");
 
         /*------------------------------------------------------------------------
          * getStudent_name() : Get it from the information entered by the user.  |
          * -----------------------------------------------------------------------
          */
-        if (!staff.getFullName().isEmpty())
+        if(staff != null)
         {
-                // If 'getStudent_name()' is null ¡ª¡ª> false (Not execute)
-            SQL_GetStaffInformation.append(" AND FirstName LIKE '%").append(staff.getFirstName()).append("%' ")
-                    .append(" AND MiddleName LIKE '%").append(staff.getMiddleName()).append("%' ")
-                    .append(" AND LastName LIKE '%").append(staff.getLastName()).append("%' ");
+            Integer id = staff.getID();
+            if(id != null)
+            {
+                sql.append("ID = '").append(staff.getID()).append("%' ");  
+            }else
+                {
+                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + staff.getFullName().isEmpty());
+                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + staff.getFullName());
+                    sql.append("FirstName LIKE N'%").append(staff.getFirstName()).append("%' ")
+                            .append(" AND MiddleName LIKE N'%").append(staff.getMiddleName()).append("%' ")
+                            .append(" AND LastName LIKE N'%").append(staff.getLastName()).append("%' ");
+                }
+            
         }
 
-        try(Connection connection = DBConnect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_GetStaffInformation.toString().replaceFirst("AND","WHERE"));
-            ResultSet resultSet = preparedStatement.executeQuery();
-        ){      
+        try{
+            prepStatement = conn.prepareStatement(sql.toString());
+            resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
                 Employee table_staff = new Employee();
@@ -87,22 +111,77 @@ public class Staff_DaoImpl implements Staff_Dao{
                 table_staff.setEmail(resultSet.getString("Email").trim());
                 table_staff.setRoleName(resultSet.getString("RoleName").trim());
 
-                list.add(table_staff);
+                    list.add(table_staff);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return list;
     }
 
     @Override
-    public boolean Delete_Staff(int ID) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Delete_Staff(int ID) {
+        try {
+            String query = "DELETE FROM [Employee] WHERE ID=?";
+            prepStatement = (PreparedStatement) conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            prepStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
-    public boolean Update_Staff(Employee staff) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Update_Staff(Employee staff) {
+        try{
+            String query = "Update [Employee] SET UserName =?, Password =?, FirstName =?, MiddleName =?, LastName =?, Birthday =?, Gender =?, Address =?, NumberPhone =?, Email =?, RoleName =? WHERE ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            int i= 1;
+            prepStatement.setString(i++, staff.getUserName().trim());
+            prepStatement.setString(i++, staff.getPassword().trim());
+            prepStatement.setString(i++, staff.getFirstName().trim());
+            prepStatement.setString(i++, staff.getMiddleName().trim());
+            prepStatement.setString(i++, staff.getLastName().trim());
+            prepStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
+            prepStatement.setString(i++, staff.getGender().trim());     
+            prepStatement.setString(i++, staff.getAddress().trim());
+            prepStatement.setString(i++, staff.getNumberPhonne().trim());
+            prepStatement.setString(i++, staff.getEmail().trim());
+            prepStatement.setString(i++, staff.getRoleName().trim());
+            prepStatement.setInt(i++, staff.getID());
+            prepStatement.executeUpdate();
+        }catch(SQLException e)
+        {  
+            System.out.println(e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    
     }
 
     @Override
@@ -112,12 +191,11 @@ public class Staff_DaoImpl implements Staff_Dao{
          * In order to initialize the main interface though the user's personal information.
          */
         Employee table_Staff_temp = null;
-        try(Connection connection = DBConnect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADMINISTRATOR_LOGIN);    
-        ){
-            preparedStatement.setString(1, staff.getUserName());
-            preparedStatement.setString(2, staff.getPassword());
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try{
+            prepStatement = conn.prepareStatement(SQL_ADMINISTRATOR_LOGIN);
+            prepStatement.setString(1, staff.getUserName());
+            prepStatement.setString(2, staff.getPassword());
+            resultSet = prepStatement.executeQuery();
             //Store the user information
             if (resultSet.next())
             {		
@@ -135,20 +213,94 @@ public class Staff_DaoImpl implements Staff_Dao{
                 table_Staff_temp.setEmail(resultSet.getString("Email").trim());
                 table_Staff_temp.setNumberPhonne(resultSet.getString("RoleName"));
             }
-        } catch (Exception e)
+        } catch (SQLException e)
         {
             System.out.println(e.getMessage());
-        }		
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }	
         return table_Staff_temp;	
     }
 
     @Override
-    public String ChangePassword(Employee staff, String Password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Employee getEmployee(int ID)
+    {
+        try {
+            String query = "SELECT * FROM [Employee] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Employee object = new Employee();
+                object.setID(resultSet.getInt("ID"));
+                object.setUserName(resultSet.getString("UserName").trim());
+                object.setPassword(resultSet.getString("Password").trim());
+                object.setFirstName(resultSet.getString("FirstName").trim());
+                object.setMiddleName(resultSet.getString("MiddleName").trim());
+                object.setLastName(resultSet.getString("LastName").trim());
+                object.setBirthday(resultSet.getDate("BirthDay"));
+                object.setGender(resultSet.getString("Gender").trim());
+                object.setAddress(resultSet.getString("Address").trim());
+                object.setNumberPhonne(resultSet.getString("NumberPhone"));
+                object.setEmail(resultSet.getString("Email").trim());
+                object.setNumberPhonne(resultSet.getString("RoleName"));
+                
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
     }
-
+    
     @Override
-    public boolean ResignerUser(Employee staff) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void ChangePassword(Employee staff, String Password) {
+        String SQL_ChangePassword = "UPDATE [Employee] SET Password = ? WHERE ID = ?";
+        try {
+            //The second step: Change the password of user
+            prepStatement = conn.prepareStatement(SQL_ChangePassword);
+
+            //The value passed in : The new password
+            prepStatement.setString(1, Password);
+            prepStatement.setInt(2, staff.getID());
+
+            int result = prepStatement.executeUpdate();
+            if (result > 0)
+            {
+                prepStatement.executeUpdate();
+            }
+            
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

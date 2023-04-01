@@ -29,32 +29,17 @@
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   <Component id="calendarCustom1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="passwordField1" pref="240" max="32767" attributes="0"/>
-                  <Component id="textField1" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace pref="388" max="32767" attributes="0"/>
+              <EmptySpace pref="730" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="calendarCustom1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
-                      <Component id="passwordField1" min="-2" pref="87" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                      <Component id="textField1" min="-2" pref="78" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="calendarCustom1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="193" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -84,15 +69,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="com.raven.swing.PasswordField" name="passwordField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="passwordField1"/>
-      </Properties>
-    </Component>
-    <Component class="com.raven.swing.TextField" name="textField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="textField1"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

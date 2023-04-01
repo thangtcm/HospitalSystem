@@ -9,80 +9,65 @@ package Model;
  * @author couni
  */
 public class PrescriptionDetail {
-    private int ID;
-    private int PrescriptionID;
-    private int DrugID;
-    private int Quantity;
-    private int TotalPrice;
+    private Integer ID;
+    private Prescription prescription;
+    private Drug drug;
+    private int quantity;
 
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
     /**
      * @param ID the ID to set
      */
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
     /**
-     * @return the PrescriptionID
+     * @return the prescription
      */
-    public int getPrescriptionID() {
-        return PrescriptionID;
+    public Prescription getPrescription() {
+        return prescription;
     }
 
     /**
-     * @param PrescriptionID the PrescriptionID to set
+     * @param prescription the prescription to set
      */
-    public void setPrescriptionID(int PrescriptionID) {
-        this.PrescriptionID = PrescriptionID;
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
     }
 
     /**
-     * @return the DrugID
+     * @return the drug
      */
-    public int getDrugID() {
-        return DrugID;
+    public Drug getDrug() {
+        return drug;
     }
 
     /**
-     * @param DrugID the DrugID to set
+     * @param drug the drug to set
      */
-    public void setDrugID(int DrugID) {
-        this.DrugID = DrugID;
+    public void setDrug(Drug drug) {
+        this.drug = drug;
     }
 
     /**
-     * @return the Quantity
+     * @return the quantity
      */
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     /**
-     * @param Quantity the Quantity to set
+     * @param quantity the quantity to set
      */
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
-    }
-
-    /**
-     * @return the TotalPrice
-     */
-    public int getTotalPrice() {
-        return TotalPrice;
-    }
-
-    /**
-     * @param TotalPrice the TotalPrice to set
-     */
-    public void setTotalPrice(int TotalPrice) {
-        this.TotalPrice = TotalPrice;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
     

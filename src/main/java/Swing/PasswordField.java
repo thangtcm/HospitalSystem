@@ -44,6 +44,8 @@ public class PasswordField extends JPasswordField {
     public void setLineColor(Color lineColor) {
         this.lineColor = lineColor;
     }
+    
+    
 
     private final Animator animator;
     private boolean animateHinText = true;
@@ -52,7 +54,7 @@ public class PasswordField extends JPasswordField {
     private boolean mouseOver = false;
     private String labelText = "Label";
     private String helperText = "";
-    private final int spaceHelperText = 15;
+    private int spaceHelperText = 15;
     private Color lineColor = new Color(3, 155, 216);
 
     public PasswordField() {
@@ -85,7 +87,7 @@ public class PasswordField extends JPasswordField {
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void begin() {
-                animateHinText = getText().equals("");
+                animateHinText = getPassword().equals("");
             }
 
             @Override
@@ -126,7 +128,7 @@ public class PasswordField extends JPasswordField {
         } else {
             g2.setColor(new Color(150, 150, 150));
         }
-        g2.fillRect(2, height - spaceHelperText - 1, width - 4, 1);
+        g2.fillRect(2, height - getSpaceHelperText() - 1, width - 4, 1);
         createHintText(g2);
         createLineStyle(g2);
         createHelperText(g2);
@@ -156,7 +158,7 @@ public class PasswordField extends JPasswordField {
     private void createLineStyle(Graphics2D g2) {
         if (isFocusOwner()) {
             double width = getWidth() - 4;
-            int height = getHeight() - spaceHelperText;
+            int height = getHeight() - getSpaceHelperText();
             g2.setColor(lineColor);
             double size;
             if (show) {
@@ -185,9 +187,23 @@ public class PasswordField extends JPasswordField {
 
     @Override
     public void setText(String string) {
-        if (!getText().equals(string)) {
+        if (!getPassword().equals(string)) {
             showing(string.equals(""));
         }
         super.setText(string);
+    }
+
+    /**
+     * @return the spaceHelperText
+     */
+    public int getSpaceHelperText() {
+        return spaceHelperText;
+    }
+
+    /**
+     * @param spaceHelperText the spaceHelperText to set
+     */
+    public void setSpaceHelperText(int spaceHelperText) {
+        this.spaceHelperText = spaceHelperText;
     }
 }

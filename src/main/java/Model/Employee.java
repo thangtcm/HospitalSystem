@@ -162,14 +162,14 @@ public class Employee {
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
     /**
      * @param ID the ID to set
      */
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

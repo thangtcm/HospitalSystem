@@ -4,6 +4,7 @@
  */
 package Form;
 
+import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_Impl.Patient_DaoImpl;
 import Model.Employee;
 import Model.Patient;
@@ -54,8 +55,8 @@ public class Home extends javax.swing.JPanel {
         model.addColumn("Giới Tính");
         model.addColumn("Địa Chỉ");
         model.addColumn("Số Điện Thoại");
-        Patient_DaoImpl patients = new Patient_DaoImpl();
-        List<Patient> patientList = patients.getPatientList();
+        Patient_Dao patients = new Patient_DaoImpl();
+        List<Patient> patientList = patients.getPatientList(new Patient(null,"Trần","Cao Minh","Thắng"));
         for (Patient object : patientList) {
             Vector vector = new Vector();
             vector.add(object.getID());

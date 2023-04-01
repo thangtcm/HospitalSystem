@@ -4,7 +4,6 @@
  */
 package ViewForm;
 
-import DatabaseAccessObject_DAO.UserDao;
 import Model.User;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,20 +34,20 @@ public class ViewStaffForm extends javax.swing.JFrame {
         tableModel.addColumn("Staff Name");
         tableModel.addColumn("Account Name");
         tableModel.addColumn("Password");
-        UserDao userDao = new UserDao();
+        //UserDao userDao = new UserDao();
         //lấy ra toàn bộ vai trò
-        List<User> userList = userDao.selectAll();
-        for (User nv : userList) {
-            Vector vector = new Vector();
-            vector.add(nv.getID());
-            vector.add(nv.getFullName());
-            vector.add(nv.getUserName());
-            vector.add(nv.getPassword());
-            //tạo hàng
-            tableModel.addRow(vector);
-        }
-        //đưa dữ liệu từ model vào bảng
-        Table_User.setModel(tableModel);
+        //List<User> userList = userDao.selectAll();
+//        for (User nv : userList) {
+//            Vector vector = new Vector();
+//            vector.add(nv.getID());
+//            vector.add(nv.getFullName());
+//            vector.add(nv.getUserName());
+//            vector.add(nv.getPassword());
+//            //tạo hàng
+//            tableModel.addRow(vector);
+//        }
+//        //đưa dữ liệu từ model vào bảng
+//        Table_User.setModel(tableModel);
     }
 
     /**

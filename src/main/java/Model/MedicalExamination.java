@@ -4,16 +4,16 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author couni
  */
 public class MedicalExamination {
-    private int ID;
-    private int PatientID;
-    private int EmployeeID;
+    private Integer ID;
+    private Patient Patient;
+    private Employee Employee;
     private Date MedicalDate;
     private String Symptom;
     private String Illnesses;
@@ -22,43 +22,43 @@ public class MedicalExamination {
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
     /**
      * @param ID the ID to set
      */
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
     /**
-     * @return the PatientID
+     * @return the Patient
      */
-    public int getPatientID() {
-        return PatientID;
+    public Patient getPatient() {
+        return Patient;
     }
 
     /**
-     * @param PatientID the PatientID to set
+     * @param Patient the Patient to set
      */
-    public void setPatientID(int PatientID) {
-        this.PatientID = PatientID;
+    public void setPatient(Patient Patient) {
+        this.Patient = Patient;
     }
 
     /**
-     * @return the EmployeeID
+     * @return the Employee
      */
-    public int getEmployeeID() {
-        return EmployeeID;
+    public Employee getEmployee() {
+        return Employee;
     }
 
     /**
-     * @param EmployeeID the EmployeeID to set
+     * @param Employee the Employee to set
      */
-    public void setEmployeeID(int EmployeeID) {
-        this.EmployeeID = EmployeeID;
+    public void setEmployee(Employee Employee) {
+        this.Employee = Employee;
     }
 
     /**

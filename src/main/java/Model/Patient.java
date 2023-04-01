@@ -11,7 +11,7 @@ import java.sql.Date;
  * @author couni
  */
 public class Patient {
-    private int ID;
+    private Integer ID;
     private String FirstName;
     private String MiddleName;
     private String LastName;
@@ -24,11 +24,11 @@ public class Patient {
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
     
-    public void setID(int ID){
+    public void setID(Integer ID){
         this.ID = ID;
     }
 
@@ -147,6 +147,18 @@ public class Patient {
     public String getFullName()
     {
         return this.FirstName + " " + this.MiddleName + " " + this.LastName;
+    }
+    
+    public Patient(){
+        
+    }
+    
+    public Patient(Integer Id, String FirstName, String MiddleName, String LastName)
+    {
+        this.ID = Id;
+        this.FirstName = FirstName;
+        this.MiddleName = MiddleName;
+        this.LastName = LastName;
     }
     
 }

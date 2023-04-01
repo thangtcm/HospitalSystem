@@ -18,47 +18,47 @@ public class User {
     private String FirstName;
     private String MiddleName;
     private String LastName;
-    private Date Brithday;
-    private int IDRole;
-    private String Sex;
+    private Date Birthday;
+    private String Gender;
     private String Address;
-    private int NumberPhonne;
+    private String NumberPhonne;
     private String email;
+    private String RoleName;
     
-    public Date getBrithday() {
-        return Brithday;
+    public Date getBirthday() {
+        return Birthday;
     }
 
-    public void setBrithday(Date Brithday) {
-        this.Brithday = Brithday;
+    public void setBirthday(Date Birthday) {
+        this.Birthday = Birthday;
     }
 
     /**
      * @return the IDRole
      */
-    public int getIDRole() {
-        return IDRole;
+    public String getRole() {
+        return RoleName;
     }
 
     /**
-     * @param IDRole the IDRole to set
+     * @param RoleName the IDRole to set
      */
-    public void setIDRole(int IDRole) {
-        this.IDRole = IDRole;
+    public void setRole(String RoleName) {
+        this.RoleName = RoleName;
     }
 
     /**
      * @return the Sex
      */
-    public String getSex() {
-        return Sex;
+    public String getGender() {
+        return Gender;
     }
 
     /**
-     * @param Sex the Sex to set
+     * @param Gender the Sex to set
      */
-    public void setSex(String Sex) {
-        this.Sex = Sex;
+    public void setGender(String Gender) {
+        this.Gender = Gender;
     }
 
     /**
@@ -78,14 +78,14 @@ public class User {
     /**
      * @return the NumberPhonne
      */
-    public int getNumberPhonne() {
+    public String getNumberPhonne() {
         return NumberPhonne;
     }
 
     /**
      * @param NumberPhonne the NumberPhonne to set
      */
-    public void setNumberPhonne(int NumberPhonne) {
+    public void setNumberPhonne(String NumberPhonne) {
         this.NumberPhonne = NumberPhonne;
     }
 

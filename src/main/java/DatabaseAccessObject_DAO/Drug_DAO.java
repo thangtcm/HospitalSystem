@@ -11,14 +11,12 @@ import java.util.List;
  *
  * @author couni
  */
-public interface Drug_DAO {
-    public List<Drug> getPatientList();
+public interface Drug_Dao {
+    public List<Drug> getDrugList(Drug drug);
     
     public boolean AddDrug(Drug drug);
     
-    //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
+    public void Delete_Drug(int ID);
     
     public boolean Update_Drug(Drug drug);
-    
-    public List<Drug> Search(Drug drug);
 }

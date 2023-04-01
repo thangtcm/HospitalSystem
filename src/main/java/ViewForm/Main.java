@@ -3,18 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ViewForm;
-import Form.Form1;
-import Form.Form2;
-import Form.Form3;
+
+import AdminForm.ListOfMedical;
+import Enum.RoleName;
 import Form.Home;
 import Model.Employee;
 import Model.ModelMenu;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import jiconfont.icons.google_material_design_icons.GoogleMaterialDesignIcons;
+import jiconfont.swing.IconFontSwing;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -68,17 +71,26 @@ public class Main extends javax.swing.JFrame {
         menu.setEvent((int index) -> {
             switch (index) {
                 case 0 -> showForm(new Home(this.employee));
-                case 1 -> showForm(new Form2());
-                case 2 -> showForm(new Form3());
+                case 1 -> showForm(new ListOfMedical(main));
+                case 2 -> showForm(new ListOfMedical(main));
+                case 3 -> showForm(new ListOfMedical(main));
+                case 4 -> showForm(new ListOfMedical(main));
+                case 5 -> showForm(new ListOfMedical(main));
+                case 6 -> showForm(new ListOfMedical(main));
                 default -> {
                 }
             }
         });
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         menu.addMenu(new ModelMenu("Profile", new ImageIcon(getClass().getResource("/Images/Icons/home.png"))));
-        menu.addMenu(new ModelMenu("Message", new ImageIcon(getClass().getResource("/Images/Icons/procedures.png"))));
-        menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/Images/Icons/layers.png"))));
-        menu.addMenu(new ModelMenu("Setting", new ImageIcon(getClass().getResource("/Images/Icons/users.png"))));
-        menu.addMenu(new ModelMenu("Key", new ImageIcon(getClass().getResource("/Images/Icons/settings.png"))));
+        //menu.addMenu(new ModelMenu("Message", new ImageIcon(getClass().getResource("/Images/Icons/procedures.png"))));
+        menu.addMenu(new ModelMenu("Patient", IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SUPERVISOR_ACCOUNT, 28, Color.WHITE)));
+        menu.addMenu(new ModelMenu("Medical", IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LOCAL_HOSPITAL, 28, Color.WHITE)));// Phieu Kham Benh
+        //menu.addMenu(new ModelMenu("Prescription", new ImageIcon(getClass().getResource("/Images/Icons/CardMedicine.png"))));// Phieu Linh Thuoc
+        menu.addMenu(new ModelMenu("Drug", new ImageIcon(getClass().getResource("/Images/Icons/Drug.png"))));// Quan ly Thuoc
+        menu.addMenu(new ModelMenu("Employee", new ImageIcon(getClass().getResource("/Images/Icons/users.png"))));// Nhan Vien
+        menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/Images/Icons/layers.png")))); // Bao cao     
+        menu.addMenu(new ModelMenu("Setting", new ImageIcon(getClass().getResource("/Images/Icons/settings.png"))));
         body.add(menu, "w 200!");
         body.add(rightMain, BorderLayout.EAST);
         body.add(main, "w 100%");
@@ -113,7 +125,7 @@ public class Main extends javax.swing.JFrame {
         animator.setDeceleration(0.5f);
         showForm(new Home(this.employee));
     }
-    private  void showForm(Component com){
+    private void showForm(Component com){
         main.removeAll();
         main.add(com);
         main.repaint();

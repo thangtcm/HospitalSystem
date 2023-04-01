@@ -18,13 +18,13 @@ public interface Staff_Dao {
     
     public boolean AddStaff(Employee staff);
     
-    public boolean Delete_Staff(int ID);
+    public void Delete_Staff(int ID);
     
-    public boolean Update_Staff(Employee staff);
+    public void Update_Staff(Employee staff);
     
     public Employee Login_Staff(Employee staff);
     
-    public boolean ResignerUser(Employee staff);
+    public Employee getEmployee(int ID);
     
-    String ChangePassword(Employee staff, String Password);
+    public void ChangePassword(Employee staff, String Password);
 }

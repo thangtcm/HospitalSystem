@@ -4,44 +4,44 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
  * @author couni
  */
 public class Revisit {
-    private int ID;
-    private int MedicalExaminationID;
+    private Integer ID;
+    private MedicalExamination medicalExamination;
     private Date RevisitDate;
     private String Note;
 
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
     /**
      * @param ID the ID to set
      */
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
     /**
-     * @return the MedicalExaminationID
+     * @return the medicalExamination
      */
-    public int getMedicalExaminationID() {
-        return MedicalExaminationID;
+    public MedicalExamination getMedicalExamination() {
+        return medicalExamination;
     }
 
     /**
-     * @param MedicalExaminationID the MedicalExaminationID to set
+     * @param medicalExamination the medicalExamination to set
      */
-    public void setMedicalExaminationID(int MedicalExaminationID) {
-        this.MedicalExaminationID = MedicalExaminationID;
+    public void setMedicalExamination(MedicalExamination medicalExamination) {
+        this.medicalExamination = medicalExamination;
     }
 
     /**
@@ -71,5 +71,6 @@ public class Revisit {
     public void setNote(String Note) {
         this.Note = Note;
     }
+    
     
 }

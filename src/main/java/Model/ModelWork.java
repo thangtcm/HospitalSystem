@@ -46,7 +46,7 @@ public class ModelWork {
     }
 
     /**
-     * @param idpatient the impatient to set
+     * @param idpatient the idpatient to set
      */
     public void setIdpatient(String idpatient) {
         this.idpatient = idpatient;

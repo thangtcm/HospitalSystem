@@ -7,10 +7,8 @@ package Swing.Table;
 import Swing.Scroll.ScrollBar;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,7 +43,6 @@ public class Table extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
                 Component com = super.getTableCellRendererComponent(jtable, o, selected, bln1, i, i1); 
-                setFont(new Font("Inter", 1, 12));
                 if (selected) {
                     com.setBackground(Color.decode("#4F62CB"));
                     com.setForeground(Color.WHITE);
@@ -60,7 +57,6 @@ public class Table extends JTable {
                 {
                     ((JComponent) com).setBorder(BorderFactory.createEmptyBorder());
                 }
-               
                 //((JComponent) com).setBorder(BorderFactory.createCompoundBorder(new DropShadowBorder(), BorderFactory.createMatteBorder(0, 0, 1, 0, jtable.getBackground())));
                 return com;
             }

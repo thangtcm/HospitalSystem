@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,38 +22,38 @@ import java.util.List;
 public class Patient_DaoImpl implements Patient_Dao{
     
 //    Connection connection = null;
+    Connection conn = null;
+    PreparedStatement prepStatement= null;
+    ResultSet resultSet = null;
+    
+    public Patient_DaoImpl()
+    {
+        conn = new DBConnect().getConnection();
+    }
     
     @Override
-    public List<Patient> getPatientList(){
+    public List<Patient> getPatientList(Patient patient){
         List<Patient> list = new ArrayList<>();
-
-        /*
-         * Default: displays all student information
-         */
-        //StringBuilder SQL_GetStaffInformation = new StringBuilder("SELECT * FROM [Patient]");
-        String sql = "SELECT * FROM [Patient]";
         
-        //ResultSet rs = prst.executeQuery(sql);
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Patient] WHERE ");
 
-        /*------------------------------------------------------------------------
-         * getStudent_name() : Get it from the information entered by the user.  |
-         * -----------------------------------------------------------------------
-         */
-//        if (!patient.getFullName().isEmpty())
-//        {
-//                // If 'getStudent_name()' is null ¡ª¡ª> false (Not execute)
-//            SQL_GetStaffInformation.append(" AND FirstName LIKE '%").append(patient.getFirstName()).append("%' ")
-//                    .append(" AND MiddleName LIKE '%").append(patient.getMiddleName()).append("%' ")
-//                    .append(" AND LastName LIKE '%").append(patient.getLastName()).append("%' ")
-//                    .append("AND ID LIKE '%").append(patient.getID()).append("%' ");
-//        }
-
-        try(Connection connection = DBConnect.getConnection();
-            //PreparedStatement preparedStatement = connection.prepareStatement(SQL_GetStaffInformation.toString().replaceFirst("AND","WHERE"));
-            Statement prst = connection.createStatement();
-            ResultSet resultSet = prst.executeQuery(sql);
-        ){
+        if(patient != null)
+        {
+            Integer id = patient.getID();
+            if(id != null)
+            {
+                sql.append("ID = '").append(patient.getID()).append("' ");  
+            }else
+                {
+                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + patient.getFullName().isEmpty());
+                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + patient.getFullName());
+                    sql.append("CONCAT(FirstName, ' ', MiddleName, ' ', LastName)  LIKE N'%").append(patient.getFullName()).append("%' ");
+                }
             
+        }
+        try{
+            prepStatement = conn.prepareStatement(sql.toString());
+            resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
                 Patient table_Patient = new Patient();
@@ -71,6 +70,17 @@ public class Patient_DaoImpl implements Patient_Dao{
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return list;
      }
@@ -78,27 +88,74 @@ public class Patient_DaoImpl implements Patient_Dao{
     @Override
     public boolean AddPatient(Patient patient){
 //        PreparedStatement preparedStatement = null;
-        String SQL_AddStaff = "INSERT INTO [Patient] VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [Patient] (ID, FirstName, MiddleName, LastName, Birthday, Gender, Address, NumberPhone, Email) VALUES (?, ?,?,?,?,?,?,?,?)";
         
-        try(Connection connection = DBConnect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_AddStaff);
-            ){
+        try{
+            prepStatement = conn.prepareStatement(sql);
             int index = 1;
-            preparedStatement.setInt(index++, patient.getID());
-            preparedStatement.setString(index++, patient.getFirstName().trim());
-            preparedStatement.setString(index++, patient.getMiddleName().trim());
-            preparedStatement.setString(index++, patient.getLastName().trim());
-            preparedStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
-            preparedStatement.setString(index++, patient.getGender().trim());
-            preparedStatement.setString(index++, patient.getAddress().trim());
-            preparedStatement.setString(index++, patient.getNumberPhone().trim());
-            preparedStatement.setString(index++, patient.getEmail().trim());
-            return preparedStatement.executeUpdate() > 0;
+            prepStatement.setInt(index++, patient.getID());
+            prepStatement.setString(index++, patient.getFirstName().trim());
+            prepStatement.setString(index++, patient.getMiddleName().trim());
+            prepStatement.setString(index++, patient.getLastName().trim());
+            prepStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
+            prepStatement.setString(index++, patient.getGender().trim());
+            prepStatement.setString(index++, patient.getAddress().trim());
+            prepStatement.setString(index++, patient.getNumberPhone().trim());
+            prepStatement.setString(index++, patient.getEmail().trim());
+            return prepStatement.executeUpdate() > 0;
         }
          catch (SQLException e) {
             System.out.println("Failed to add patient: " + e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return false;
+    }
+    
+    @Override
+    public Patient getPatient(int ID)
+    {
+        try {
+            String query = "SELECT * FROM [Patient] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Patient object = new Patient();
+                object.setID(resultSet.getInt("ID"));
+                object.setFirstName(resultSet.getString("FirstName").trim());
+                object.setMiddleName(resultSet.getString("MiddleName").trim());
+                object.setLastName(resultSet.getString("LastName").trim());
+                object.setBirthDay(resultSet.getDate("Birthday"));
+                object.setGender(resultSet.getString("Gender").trim());
+                object.setAddress(resultSet.getString("Address").trim());
+                object.setEmail(resultSet.getString("Email").trim());
+                object.setNumberPhone(resultSet.getString("NumberPhone").trim());
+                
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
     }
     
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
@@ -106,31 +163,32 @@ public class Patient_DaoImpl implements Patient_Dao{
      @Override
     public boolean Update_Staff(Patient patient){
 
-        String SQL_Update_ClassInformation = "UPDATE Patient SET FirstName = ?, MiddleName = ?, LastName = ?, Birthday = ?, Gender = ?, Address = ?, NumberPhone = ?, Email = ? WHERE ID = ?";
-        try(Connection connection = DBConnect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_Update_ClassInformation);
-        ){
+        String query = "UPDATE Patient SET FirstName = ?, MiddleName = ?, LastName = ?, Birthday = ?, Gender = ?, Address = ?, NumberPhone = ?, Email = ? WHERE ID = ?";
+        try{
+            prepStatement = conn.prepareStatement(query);
             int index = 1;
-            preparedStatement.setInt(index++, patient.getID());
-            preparedStatement.setString(index++, patient.getFirstName().trim());
-            preparedStatement.setString(index++, patient.getMiddleName().trim());
-            preparedStatement.setString(index++, patient.getLastName().trim());
-            preparedStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
-            preparedStatement.setString(index++, patient.getGender().trim());
-            preparedStatement.setString(index++, patient.getAddress().trim());
-            preparedStatement.setString(index++, patient.getNumberPhone().trim());
-            preparedStatement.setString(index++, patient.getEmail().trim());
-            
-            return preparedStatement.executeUpdate() > 0;
+            prepStatement.setString(index++, patient.getFirstName().trim());
+            prepStatement.setString(index++, patient.getMiddleName().trim());
+            prepStatement.setString(index++, patient.getLastName().trim());
+            prepStatement.setDate(index++, Convert.convertDate(patient.getBirthDay()));
+            prepStatement.setString(index++, patient.getGender().trim());
+            prepStatement.setString(index++, patient.getAddress().trim());
+            prepStatement.setString(index++, patient.getNumberPhone().trim());
+            prepStatement.setString(index++, patient.getEmail().trim());
+            prepStatement.setInt(index++, patient.getID());
+            return prepStatement.executeUpdate() > 0;
         } catch (SQLException e)
         {
             System.out.println("Failed to add patient: " + e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return false;
-    }
-    
-     @Override
-    public List<Patient> Search(Patient patient){
-        return null;
     }
 }

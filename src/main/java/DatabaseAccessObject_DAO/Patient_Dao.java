@@ -12,13 +12,12 @@ import java.util.List;
  * @author couni
  */
 public interface Patient_Dao {
-    public List<Patient> getPatientList();
+    public List<Patient> getPatientList(Patient patient);
     
     public boolean AddPatient(Patient patient);
     
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
+    public Patient getPatient(int ID);
     
     public boolean Update_Staff(Patient patient);
-    
-    public List<Patient> Search(Patient patient);
 }

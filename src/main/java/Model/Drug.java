@@ -9,46 +9,53 @@ package Model;
  * @author couni
  */
 public class Drug { //Kho thuốc
-    private int ID;
+    private Integer ID;
     private String DrugName;
     private String DrugType;
     private int Quantity;
-    private int Price;
-    private String Decription;
+    private double Price;
+    private String Description;
 
     /**
      * @return the ID
      */
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
-    
+
     /**
-     * @return the MedicineName
+     * @param ID the ID to set
      */
-    public String getDrugType() {
-        return DrugType;
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
     /**
-     * @param DrugType the MedicineName to set
-     */
-    public void setDrugType(String DrugType) {
-        this.DrugType = DrugType;
-    }
-
-    /**
-     * @return the MedicineName
+     * @return the DrugName
      */
     public String getDrugName() {
         return DrugName;
     }
 
     /**
-     * @param DrugName the MedicineName to set
+     * @param DrugName the DrugName to set
      */
     public void setDrugName(String DrugName) {
         this.DrugName = DrugName;
+    }
+
+    /**
+     * @return the DrugType
+     */
+    public String getDrugType() {
+        return DrugType;
+    }
+
+    /**
+     * @param DrugType the DrugType to set
+     */
+    public void setDrugType(String DrugType) {
+        this.DrugType = DrugType;
     }
 
     /**
@@ -68,30 +75,29 @@ public class Drug { //Kho thuốc
     /**
      * @return the Price
      */
-    public int getPrice() {
+    public double getPrice() {
         return Price;
     }
 
     /**
      * @param Price the Price to set
      */
-    public void setPrice(int Price) {
+    public void setPrice(double Price) {
         this.Price = Price;
     }
 
     /**
-     * @return the decryption
+     * @return the Description
      */
-    public String getDecription() {
-        return Decription;
+    public String getDescription() {
+        return Description;
     }
 
     /**
-     * @param Decription the decryption to set
+     * @param Description the Description to set
      */
-    public void setDecription(String Decription) {
-        this.Decription = Decription;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
-    
     
 }
