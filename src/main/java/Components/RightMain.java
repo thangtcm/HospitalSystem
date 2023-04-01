@@ -69,7 +69,7 @@ public class RightMain extends javax.swing.JPanel {
         lbIDStaff.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
         lbIDStaff.setForeground(new java.awt.Color(255, 255, 255));
         lbIDStaff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIDStaff.setText("IDStaff : 5");
+        lbIDStaff.setText("StaffID : 5");
 
         panelShadow1.setBackground(new java.awt.Color(255, 255, 255));
         panelShadow1.setPreferredSize(new java.awt.Dimension(70, 100));

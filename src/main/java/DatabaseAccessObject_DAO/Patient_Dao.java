@@ -5,14 +5,14 @@
 package DatabaseAccessObject_DAO;
 
 import Model.Patient;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface Patient_Dao {
-    public List<Patient> getPatientList(Patient patient);
+    public ArrayList<Patient> getPatientList(Patient patient);
     
     public boolean AddPatient(Patient patient);
     

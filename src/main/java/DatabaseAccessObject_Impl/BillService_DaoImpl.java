@@ -5,6 +5,8 @@
 package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.BillService_Dao;
+import DatabaseAccessObject_DAO.MedicalExamination_Dao;
+import DatabaseAccessObject_DAO.Staff_Dao;
 import Model.BillService;
 import dao.Convert;
 import dao.DBConnect;
@@ -31,36 +33,30 @@ public class BillService_DaoImpl implements BillService_Dao{
     }
     
     @Override
-    public List<BillService> getBillServiceList(BillService billService) {
-        List<BillService> list = new ArrayList<>();
+    public ArrayList<BillService> getBillServiceList(int ID) {
+        ArrayList<BillService> list = new ArrayList<>();
+        //Lấy Toàn bộ Products và Categories và Supplyer có liên quan
+        String query = "Select * From [BillService] Where MedicalExaminationID = ?";
         
-        StringBuilder sql = new StringBuilder("SELECT * FROM [BillService] WHERE ");
-
-        if(billService != null)
-        {
-            if(billService.getID() != null)
-            {
-                sql.append("ID = '").append(billService.getID()).append("' ");  
-            }else
-                {
-                    if(billService.getMedicalExamination().getID() != null)
-                        sql.append("MedicalExaminationID = ").append(billService.getMedicalExamination().getID()).append("' ");
-                    sql.append("Paid = ").append(billService.isPaid()).append("' ");
-                }
-            
-        }
         try{
-            prepStatement = conn.prepareStatement(sql.toString());
+            //statement = conn.createStatement();  
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
-                BillService object = new BillService();
-                object.setID(resultSet.getInt("ID"));
-
-                
-                object.setBillDate(resultSet.getDate("BillDate"));
-                object.setPrice(0);
-                list.add(object);
+                    BillService object = new BillService();
+                    object.setID(resultSet.getInt("ID"));
+                    MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
+                    object.setMedicalExamination(medical.getMedicalExamination(ID));
+                    
+                    Staff_Dao employee = new Staff_DaoImpl();
+                    object.setEmployee(employee.getEmployee(ID));
+                    
+                    object.setBillDate(resultSet.getDate("BillDate"));
+                    object.setPrice(resultSet.getDouble("Price"));
+                    object.setPaid(resultSet.getBoolean("Paid"));
+                    list.add(object);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -81,11 +77,13 @@ public class BillService_DaoImpl implements BillService_Dao{
 
     @Override
     public boolean AddBillService(BillService billService) {
-        String sql = "INSERT INTO [BillService] (MedicalExaminationID, EmployeeID, BillDate, Price, Paid) VALUES (?, ?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [BillService] (MedicalExaminationID, EmployeeID, BillDate, Price, Paid) VALUES (?, ?,?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);
             int index = 1;
+            prepStatement.setInt(index++, billService.getMedicalExamination().getID());
+            prepStatement.setInt(index++, billService.getEmployee().getID());
             prepStatement.setDate(index++, Convert.convertDate(billService.getBillDate()));
             prepStatement.setDouble(index++, billService.getPrice());
             prepStatement.setBoolean(index++, billService.isPaid());

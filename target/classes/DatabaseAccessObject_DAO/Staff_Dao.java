@@ -5,7 +5,7 @@
 package DatabaseAccessObject_DAO;
 
 import Model.Employee;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.util.List;
 public interface Staff_Dao {
     
     /*Lấy tất cả nhân viên*/
-    public List<Employee> getStaffList(Employee staff);
+    public ArrayList<Employee> getStaffList(Employee staff);
     
     public boolean AddStaff(Employee staff);
     

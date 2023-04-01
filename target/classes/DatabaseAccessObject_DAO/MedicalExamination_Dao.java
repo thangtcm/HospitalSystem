@@ -5,16 +5,18 @@
 package DatabaseAccessObject_DAO;
 
 import Model.MedicalExamination;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface MedicalExamination_Dao {
-    public List<MedicalExamination> getMedicalList(MedicalExamination medicalExamination);
+    public ArrayList<MedicalExamination> getMedicalList(MedicalExamination medicalExamination);
     
     public boolean AddMedicalExamination(MedicalExamination medicalExamination);
+    
+    public ArrayList<MedicalExamination> getMedicalPatientList(int ID);
     
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
     public MedicalExamination getMedicalExamination(int ID);

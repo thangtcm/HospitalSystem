@@ -5,14 +5,14 @@
 package DatabaseAccessObject_DAO;
 
 import Model.BillService;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface BillService_Dao {
-    public List<BillService> getBillServiceList(BillService billService);
+    public ArrayList<BillService> getBillServiceList(int ID);
     
     public boolean AddBillService(BillService billService);
     

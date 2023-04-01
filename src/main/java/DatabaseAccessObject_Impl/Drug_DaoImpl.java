@@ -29,8 +29,8 @@ public class Drug_DaoImpl implements Drug_Dao{
     }
 
     @Override
-    public List<Drug> getDrugList(Drug drug) {
-        List<Drug> list = new ArrayList<>();
+    public ArrayList<Drug> getDrugList(Drug drug) {
+        ArrayList<Drug> list = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder("SELECT * FROM [Drugs] WHERE ");
 

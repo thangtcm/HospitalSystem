@@ -6,7 +6,9 @@ package ViewForm;
 
 import AdminForm.ListOfMedical;
 import Enum.RoleName;
+import Enum.TypeList;
 import Form.Home;
+import Form.List.ListOfObject;
 import Model.Employee;
 import Model.ModelMenu;
 import java.awt.BorderLayout;
@@ -66,17 +68,14 @@ public class Main extends javax.swing.JFrame {
         });
         menu.addEventMenu(menuEvent);
         
-        
-        
         menu.setEvent((int index) -> {
             switch (index) {
                 case 0 -> showForm(new Home(this.employee));
-                case 1 -> showForm(new ListOfMedical(main));
-                case 2 -> showForm(new ListOfMedical(main));
-                case 3 -> showForm(new ListOfMedical(main));
-                case 4 -> showForm(new ListOfMedical(main));
-                case 5 -> showForm(new ListOfMedical(main));
-                case 6 -> showForm(new ListOfMedical(main));
+                case 1 -> showForm(new ListOfObject(main, TypeList.Patient));
+                case 2 -> showForm(new ListOfObject(main, TypeList.Medical));
+                case 3 -> showForm(new ListOfObject(main, TypeList.Drug));
+                case 4 -> showForm(new ListOfObject(main, TypeList.Employee));
+                case 5 -> showForm(new ListOfObject(main, TypeList.Services));
                 default -> {
                 }
             }
@@ -89,8 +88,8 @@ public class Main extends javax.swing.JFrame {
         //menu.addMenu(new ModelMenu("Prescription", new ImageIcon(getClass().getResource("/Images/Icons/CardMedicine.png"))));// Phieu Linh Thuoc
         menu.addMenu(new ModelMenu("Drug", new ImageIcon(getClass().getResource("/Images/Icons/Drug.png"))));// Quan ly Thuoc
         menu.addMenu(new ModelMenu("Employee", new ImageIcon(getClass().getResource("/Images/Icons/users.png"))));// Nhan Vien
-        menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/Images/Icons/layers.png")))); // Bao cao     
-        menu.addMenu(new ModelMenu("Setting", new ImageIcon(getClass().getResource("/Images/Icons/settings.png"))));
+        //menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/Images/Icons/layers.png")))); // Bao cao     
+        menu.addMenu(new ModelMenu("Services", new ImageIcon(getClass().getResource("/Images/Icons/settings.png"))));
         body.add(menu, "w 200!");
         body.add(rightMain, BorderLayout.EAST);
         body.add(main, "w 100%");
@@ -211,10 +210,8 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Main().setVisible(true);
         });
     }
     

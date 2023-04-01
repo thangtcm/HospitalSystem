@@ -4,8 +4,10 @@
  */
 package DatabaseAccessObject_Impl;
 
+import DatabaseAccessObject_DAO.MedicalExamination_Dao;
 import DatabaseAccessObject_DAO.Patient_Dao;
 import Model.Patient;
+import Services.StringHandle;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -13,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -32,23 +33,26 @@ public class Patient_DaoImpl implements Patient_Dao{
     }
     
     @Override
-    public List<Patient> getPatientList(Patient patient){
-        List<Patient> list = new ArrayList<>();
+    public ArrayList<Patient> getPatientList(Patient patient){
+        ArrayList<Patient> list = new ArrayList<>();
         
-        StringBuilder sql = new StringBuilder("SELECT * FROM [Patient] WHERE ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Patient]");
 
         if(patient != null)
         {
             Integer id = patient.getID();
             if(id != null)
             {
-                sql.append("ID = '").append(patient.getID()).append("' ");  
-            }else
+                sql.append("WHERE ID = '").append(patient.getID()).append("' ");  
+            }
+            else
+            {
+                if(patient.getFullName() != null)
                 {
-                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + patient.getFullName().isEmpty());
-                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + patient.getFullName());
-                    sql.append("CONCAT(FirstName, ' ', MiddleName, ' ', LastName)  LIKE N'%").append(patient.getFullName()).append("%' ");
+                    sql.append("WHERE CONCAT_WS(' ', FirstName, MiddleName, LastName) LIKE N'").append(StringHandle.addWildcards(patient.getFullName())).append("'");
                 }
+                
+            }
             
         }
         try{
@@ -56,17 +60,21 @@ public class Patient_DaoImpl implements Patient_Dao{
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
-                Patient table_Patient = new Patient();
-                table_Patient.setID(resultSet.getInt("ID"));
-                table_Patient.setFirstName(resultSet.getString("FirstName").trim());
-                table_Patient.setMiddleName(resultSet.getString("MiddleName").trim());
-                table_Patient.setLastName(resultSet.getString("LastName").trim());
-                table_Patient.setBirthDay(resultSet.getDate("Birthday"));
-                table_Patient.setGender(resultSet.getString("Gender").trim());
-                table_Patient.setAddress(resultSet.getString("Address").trim());
-                table_Patient.setEmail(resultSet.getString("Email").trim());
-                table_Patient.setNumberPhone(resultSet.getString("NumberPhone").trim());
-                list.add(table_Patient);
+                Patient object = new Patient();
+                object.setID(resultSet.getInt("ID"));
+                object.setFirstName(resultSet.getString("FirstName").trim());
+                object.setMiddleName(resultSet.getString("MiddleName").trim());
+                object.setLastName(resultSet.getString("LastName").trim());
+                object.setBirthDay(resultSet.getDate("Birthday"));
+                object.setGender(resultSet.getString("Gender").trim());
+                object.setAddress(resultSet.getString("Address").trim());
+                object.setEmail(resultSet.getString("Email").trim());
+                object.setNumberPhone(resultSet.getString("NumberPhone").trim());
+                
+                MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
+                object.setMedicalList(medical.getMedicalPatientList(resultSet.getInt("ID")));
+                
+                list.add(object);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -88,7 +96,7 @@ public class Patient_DaoImpl implements Patient_Dao{
     @Override
     public boolean AddPatient(Patient patient){
 //        PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO [Patient] (ID, FirstName, MiddleName, LastName, Birthday, Gender, Address, NumberPhone, Email) VALUES (?, ?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [Patient] (ID, FirstName, MiddleName, LastName, Birthday, Gender, Address, NumberPhone, Email) VALUES (?,?,?,?,?,?,?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);

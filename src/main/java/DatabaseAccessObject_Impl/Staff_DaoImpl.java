@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -66,8 +65,8 @@ public class Staff_DaoImpl implements Staff_Dao{
     }
 
     @Override
-    public List<Employee> getStaffList(Employee staff) {
-        List<Employee> list = new ArrayList<>();
+    public ArrayList<Employee> getStaffList(Employee staff) {
+        ArrayList<Employee> list = new ArrayList<>();
         /*
          * Default: displays all student information
          */

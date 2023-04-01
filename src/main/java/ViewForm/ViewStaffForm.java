@@ -4,10 +4,7 @@
  */
 package ViewForm;
 
-import Model.User;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -157,9 +154,7 @@ public class ViewStaffForm extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             loadDuLieuLenLuoi();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ViewStaffForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ViewStaffForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

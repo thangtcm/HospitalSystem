@@ -8,6 +8,7 @@ import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_Impl.Patient_DaoImpl;
 import Model.Employee;
 import Model.Patient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -56,17 +57,17 @@ public class Home extends javax.swing.JPanel {
         model.addColumn("Địa Chỉ");
         model.addColumn("Số Điện Thoại");
         Patient_Dao patients = new Patient_DaoImpl();
-        List<Patient> patientList = patients.getPatientList(new Patient(null,"Trần","Cao Minh","Thắng"));
+        List<Patient> patientList = patients.getPatientList(new Patient(null, null, null, null));
         for (Patient object : patientList) {
-            Vector vector = new Vector();
-            vector.add(object.getID());
-            vector.add(object.getFullName());
-            vector.add(object.getBirthDay());
-            vector.add(object.getGender());
-            vector.add(object.getAddress());
-            vector.add(object.getNumberPhone());
+            ArrayList<Object> item = new ArrayList<>();
+            item.add(object.getID());
+            item.add(object.getFullName());
+            item.add(object.getBirthDay());
+            item.add(object.getGender());
+            item.add(object.getAddress());
+            item.add(object.getNumberPhone());
             //tạo hàng
-            model.addRow(vector);
+            model.addRow(item.toArray());
         }
         //đưa dữ liệu từ model vào bảng
         table.fixTable(jScrollPane1);

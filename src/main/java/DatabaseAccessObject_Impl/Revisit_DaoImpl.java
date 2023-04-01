@@ -31,8 +31,8 @@ public class Revisit_DaoImpl implements Revisit_Dao{
     }
 
     @Override
-    public List<Revisit> getRevisitList(Revisit revisit) {
-        List<Revisit> list = new ArrayList<>();
+    public ArrayList<Revisit> getRevisitList(Revisit revisit) {
+        ArrayList<Revisit> list = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder("SELECT r.* FROM Revisit"
                 + "INNER JOIN MedicalExamination m ON m.ID = r.MedicalExaminationID "

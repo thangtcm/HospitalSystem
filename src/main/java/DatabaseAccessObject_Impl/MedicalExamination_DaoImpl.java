@@ -8,6 +8,7 @@ import DatabaseAccessObject_DAO.MedicalExamination_Dao;
 import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_DAO.Staff_Dao;
 import Model.MedicalExamination;
+import Services.StringHandle;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -15,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -33,13 +33,12 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
     }
     
     @Override
-    public List<MedicalExamination> getMedicalList(MedicalExamination medicalExamination) {
-        List<MedicalExamination> list = new ArrayList<>();
+    public ArrayList<MedicalExamination> getMedicalList(MedicalExamination medicalExamination) {
+        ArrayList<MedicalExamination> list = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder("SELECT m.* FROM MedicalExamination m "
                 + "INNER JOIN Patient p ON m.PatientID = p.ID "
-                + "INNER JOIN Employee e ON m.EmployeeID = e.ID "
-                + "WHERE ");
+                + "INNER JOIN Employee e ON m.EmployeeID = e.ID ");
         
 
         if(medicalExamination != null)
@@ -47,11 +46,12 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             Integer id = medicalExamination.getID();
             if(id != null)
             {
-                sql.append("m.ID = ").append(medicalExamination.getID());  
+                sql.append("WHERE m.ID = ").append(medicalExamination.getID());  
             }else
-                {
-                    sql.append("CONCAT(p.FirstName, ' ', p.MiddleName, ' ', p.LastName)  LIKE N'").append(medicalExamination.getPatient().getFullName()).append("'");
-                }
+            {
+                if(medicalExamination.getPatient().getFullName() != null)
+                    sql.append("WHERE CONCAT_WS(' ', p.FirstName, p.MiddleName, p.LastName)  LIKE N'").append(StringHandle.addWildcards(medicalExamination.getPatient().getFullName())).append("'");
+            }
             
         }
         try{
@@ -67,6 +67,49 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
                 
                 Staff_Dao employee = new Staff_DaoImpl();
                 object.setEmployee(employee.getEmployee(resultSet.getInt("e.ID")));
+                
+                object.setMedicalDate(resultSet.getDate("MedicalDate"));
+                object.setSymptom(resultSet.getString("Symptom"));
+                object.setIllnesses(resultSet.getString("Illnesses"));
+                object.setNote(resultSet.getString("Note"));
+                list.add(object);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return list;
+    }
+    
+    @Override
+    public ArrayList<MedicalExamination> getMedicalPatientList(int ID)
+    {
+        ArrayList<MedicalExamination> list = new ArrayList<>();
+        String query = "Select * From [MedicalExamination] Where PatientID = ?";
+        try{
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while (resultSet.next())
+            {
+                MedicalExamination object = new MedicalExamination();
+                object.setID(resultSet.getInt("ID"));
+                
+                Patient_Dao patient = new Patient_DaoImpl();
+                object.setPatient(patient.getPatient(resultSet.getInt("PatientID")));
+                
+                Staff_Dao employee = new Staff_DaoImpl();
+                object.setEmployee(employee.getEmployee(resultSet.getInt("EmployeeID")));
                 
                 object.setMedicalDate(resultSet.getDate("MedicalDate"));
                 object.setSymptom(resultSet.getString("Symptom"));

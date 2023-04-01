@@ -5,6 +5,8 @@
 package Model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,9 @@ public class Patient {
     private String Gender;
     private String NumberPhone;
     private String Email;
+    
+    
+    private ArrayList<MedicalExamination> medicalList; 
 
     /**
      * @return the ID
@@ -146,19 +151,43 @@ public class Patient {
      
     public String getFullName()
     {
-        return this.FirstName + " " + this.MiddleName + " " + this.LastName;
+        if (this.FirstName == null && this.MiddleName == null && this.LastName == null) {
+        return null;
+    }
+        String fullName = (this.FirstName != null ? this.FirstName : "")
+                + (this.MiddleName  != null ?  " " + this.MiddleName  : "") + " "
+                + (this.LastName != null ? this.LastName : "");
+        fullName = fullName.trim();
+        if (fullName.isEmpty()) {
+            return null;
+        }
+        return fullName;
     }
     
     public Patient(){
         
     }
     
-    public Patient(Integer Id, String FirstName, String MiddleName, String LastName)
+    public Patient(Integer Id, String FirstName,String MiddleName,String LastName)
     {
         this.ID = Id;
         this.FirstName = FirstName;
         this.MiddleName = MiddleName;
         this.LastName = LastName;
+    }
+
+    /**
+     * @return the medicalList
+     */
+    public ArrayList<MedicalExamination> getMedicalList() {
+        return medicalList;
+    }
+
+    /**
+     * @param medicalList the medicalList to set
+     */
+    public void setMedicalList(ArrayList<MedicalExamination> medicalList) {
+        this.medicalList = medicalList;
     }
     
 }

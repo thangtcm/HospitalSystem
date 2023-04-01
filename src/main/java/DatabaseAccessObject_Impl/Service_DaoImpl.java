@@ -29,8 +29,8 @@ public class Service_DaoImpl implements Service_Dao{
     }
 
     @Override
-    public List<Service> getServiceList(Service service) {
-        List<Service> list = new ArrayList<>();
+    public ArrayList<Service> getServiceList(Service service) {
+        ArrayList<Service> list = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder("SELECT * FROM [Service] WHERE ");
 

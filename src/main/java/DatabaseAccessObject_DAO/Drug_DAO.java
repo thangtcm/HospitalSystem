@@ -5,14 +5,14 @@
 package DatabaseAccessObject_DAO;
 
 import Model.Drug;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface Drug_Dao {
-    public List<Drug> getDrugList(Drug drug);
+    public ArrayList<Drug> getDrugList(Drug drug);
     
     public boolean AddDrug(Drug drug);
     

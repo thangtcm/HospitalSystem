@@ -217,6 +217,16 @@ public class Employee {
     
     public String getFullName()
     {
-        return this.FirstName + " " + this.MiddleName + " " + this.LastName;
+        if (this.FirstName == null && this.MiddleName == null && this.LastName == null) {
+        return null;
+    }
+        String fullName = (this.FirstName != null ? this.FirstName : "")
+                + (this.MiddleName  != null ?  " " + this.MiddleName  : "") + " "
+                + (this.LastName != null ? this.LastName : "");
+        fullName = fullName.trim();
+        if (fullName.isEmpty()) {
+            return null;
+        }
+        return fullName;
     }
 }

@@ -168,7 +168,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="IDStaff : 5"/>
+        <Property name="text" type="java.lang.String" value="StaffID : 5"/>
       </Properties>
     </Component>
     <Container class="Swing.Panel.PanelShadow" name="panelShadow1">

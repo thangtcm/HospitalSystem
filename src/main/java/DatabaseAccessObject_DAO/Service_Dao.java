@@ -5,14 +5,14 @@
 package DatabaseAccessObject_DAO;
 
 import Model.Service;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface Service_Dao {
-    public List<Service> getServiceList(Service service);
+    public ArrayList<Service> getServiceList(Service service);
     
     public boolean AddService(Service service);
     

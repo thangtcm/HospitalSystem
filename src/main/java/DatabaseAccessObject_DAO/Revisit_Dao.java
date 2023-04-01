@@ -5,14 +5,14 @@
 package DatabaseAccessObject_DAO;
 
 import Model.Revisit;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author couni
  */
 public interface Revisit_Dao {
-    public List<Revisit> getRevisitList(Revisit revisit);
+    public ArrayList<Revisit> getRevisitList(Revisit revisit);
     
     public boolean AddRevisit(Revisit revisit);
     

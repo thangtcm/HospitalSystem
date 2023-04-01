@@ -19,6 +19,16 @@ public class MedicalExamination {
     private String Illnesses;
     private String Note;
 
+    public MedicalExamination(){
+        
+    }
+    
+    public MedicalExamination(int ID, Patient patient)
+    {
+        this.ID = ID;
+        this.Patient = patient;
+    }
+    
     /**
      * @return the ID
      */
