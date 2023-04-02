@@ -37,8 +37,8 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
         ArrayList<MedicalExamination> list = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder("SELECT m.* FROM MedicalExamination m "
-                + "INNER JOIN Patient p ON m.PatientID = p.ID "
-                + "INNER JOIN Employee e ON m.EmployeeID = e.ID ");
+                + "LEFT JOIN Patient p ON m.PatientID = p.ID "
+                + "LEFT JOIN Employee e ON m.EmployeeID = e.ID ");
         
 
         if(medicalExamination != null)
@@ -46,47 +46,50 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             Integer id = medicalExamination.getID();
             if(id != null)
             {
-                sql.append("WHERE m.ID = ").append(medicalExamination.getID());  
+                sql.append("WHERE m.ID = ?");  
             }else
             {
-                if(medicalExamination.getPatient().getFullName() != null)
-                    sql.append("WHERE CONCAT_WS(' ', p.FirstName, p.MiddleName, p.LastName)  LIKE N'").append(StringHandle.addWildcards(medicalExamination.getPatient().getFullName())).append("'");
+                String patientFullName = medicalExamination.getPatient().getFullName();
+                if(patientFullName != null)
+                    sql.append("WHERE CONCAT_WS(' ', p.FirstName, p.MiddleName, p.LastName)  LIKE N'?").append(StringHandle.addWildcards(patientFullName)).append("'");
             }
             
         }
         try{
             prepStatement = conn.prepareStatement(sql.toString());
+
+            if (medicalExamination != null) {
+                Integer id = medicalExamination.getID();
+                if (id != null) {
+                    prepStatement.setInt(1, id);
+                }
+            }
+
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
                 MedicalExamination object = new MedicalExamination();
-                object.setID(resultSet.getInt("ID"));
+                object.setID(resultSet.getInt("m.ID"));
+                
+                // Patient_Dao patient = new Patient_DaoImpl();
+                // 
                 
                 Patient_Dao patient = new Patient_DaoImpl();
                 object.setPatient(patient.getPatient(resultSet.getInt("p.ID")));
-                
+
                 Staff_Dao employee = new Staff_DaoImpl();
-                object.setEmployee(employee.getEmployee(resultSet.getInt("e.ID")));
+                object.setPatient(employee.getEmployee(resultSet.getInt("e.ID")));
                 
-                object.setMedicalDate(resultSet.getDate("MedicalDate"));
-                object.setSymptom(resultSet.getString("Symptom"));
-                object.setIllnesses(resultSet.getString("Illnesses"));
-                object.setNote(resultSet.getString("Note"));
+                object.setMedicalDate(resultSet.getDate("m.MedicalDate"));
+                object.setSymptom(resultSet.getString("m.Symptom"));
+                object.setIllnesses(resultSet.getString("m.Illnesses"));
+                object.setNote(resultSet.getString("m.Note"));
                 list.add(object);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }finally {
-            try {
-                if (prepStatement != null) {
-                    prepStatement.close();
-                }
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            closeResources(conn, prepStatement, resultSet);
         }
         return list;
     }

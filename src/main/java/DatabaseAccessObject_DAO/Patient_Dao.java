@@ -19,5 +19,5 @@ public interface Patient_Dao {
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
     public Patient getPatient(int ID);
     
-    public boolean Update_Staff(Patient patient);
+    public boolean Update_Patient(Patient patient);
 }
