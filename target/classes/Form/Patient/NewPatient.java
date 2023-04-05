@@ -69,6 +69,7 @@ public class NewPatient extends javax.swing.JPanel {
             txtAddress.setText(this.patients.getAddress());
             txtPhone.setText(this.patients.getNumberPhone());
             txtCID.setText(this.patients.getID().toString());
+            JBirthday.setDate(this.patients.getBirthDay());
             btnSave.setText("Save");
         }
     }

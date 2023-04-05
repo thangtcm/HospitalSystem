@@ -150,6 +150,41 @@ public class Service_DaoImpl implements Service_Dao{
     }
     
     @Override
+    public Service getService(int ID)
+    {
+        try {
+            String query = "SELECT * FROM [Service] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Service object = new Service();
+                object.setID(resultSet.getInt("ID"));
+                object.setServiceName(resultSet.getString("ServiceName").trim());
+                object.setServiceDescription(resultSet.getString("ServiceDescription").trim());
+                object.setServicePrice(resultSet.getDouble("ServicePrice"));
+                
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
+    }
+    
+    @Override
     public int Count(String where)
     {
         String queryString = "SELECT COUNT(*) FROM [Service]";

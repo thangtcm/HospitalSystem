@@ -20,5 +20,7 @@ public interface Service_Dao {
     
     public int Count(String where);
     
+    public Service getService(int ID);
+    
     public boolean Update_Service(Service service);
 }

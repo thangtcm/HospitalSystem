@@ -20,5 +20,7 @@ public interface Drug_Dao {
     
     public int Count(String where);
     
+    public Drug getDrug(int ID);
+    
     public boolean Update_Drug(Drug drug);
 }

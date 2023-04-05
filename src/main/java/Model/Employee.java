@@ -243,4 +243,10 @@ public class Employee {
         }
         return fullName;
     }
+    
+    @Override
+    public String toString()
+    {
+        return getFullName() + " (ID : " + this.ID + " )";
+    }
 }

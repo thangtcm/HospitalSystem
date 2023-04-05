@@ -2,7 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package AdminForm.BillServices;
+package Form.Service;
+
+import DatabaseAccessObject_DAO.Staff_Dao;
+import DatabaseAccessObject_Impl.Staff_DaoImpl;
+import Enum.TypeInterface;
+import Model.BillService;
+import Model.Employee;
+import Model.PatientService;
+import java.awt.Component;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 
 
 /**
@@ -14,8 +31,53 @@ public class NewServiceBill extends javax.swing.JPanel {
     /**
      * Creates new form ServiceBill
      */
-    public NewServiceBill() {
+    private JPanel main;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Employee employee;
+    private TypeInterface type;
+    private BillService servicer_bill;
+    private ArrayList<PatientService> serviceList;
+    
+    public NewServiceBill()
+    {
         initComponents();
+        Staff_Dao employee_Dao = new Staff_DaoImpl();
+        ArrayList<Employee> employeelist = employee_Dao.getStaffList(new Employee(null, null, null, null));
+        DefaultComboBoxModel<Employee> model = new DefaultComboBoxModel<>();
+        model.addAll(employeelist);
+        JPatient.setModel(model);
+    }
+    
+    public NewServiceBill(JPanel main, TypeInterface type, Employee employee) {
+        initComponents();
+        this.main = main;
+        this.employee = employee;
+        this.type = type;
+        
+    }
+    
+    public NewServiceBill(JPanel main, TypeInterface type, Employee employee, BillService servicer_bill) {
+        initComponents();
+        this.main = main;
+        this.employee = employee;
+        this.type = type;
+        this.servicer_bill = servicer_bill;
+        
+    }
+    
+    private void init(TypeInterface type)
+    {
+        Date date = new Date();
+        txtDescription.setText("");
+        txtNote.setText("");
+        txtResult.setText("");
+        if(type == TypeInterface.Create)
+        {
+            
+        }
+        else{
+
+        }
     }
 
     /**
@@ -32,22 +94,22 @@ public class NewServiceBill extends javax.swing.JPanel {
         panel1 = new Swing.Panel.Panel();
         jLabel7 = new javax.swing.JLabel();
         btnAdd = new Swing.Button.Button2();
-        comboBoxSuggestion1 = new Swing.Combobox.ComboBoxSuggestion();
-        comboBoxSuggestion2 = new Swing.Combobox.ComboBoxSuggestion();
+        JPatient = new Swing.Combobox.ComboBoxSuggestion();
+        JService = new Swing.Combobox.ComboBoxSuggestion();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        JStartTime = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        JEndTime = new com.toedter.calendar.JDateChooser();
         jLabel19 = new javax.swing.JLabel();
         textAreaScroll3 = new Swing.TextField.TextAreaScroll();
-        txtNote = new Swing.TextField.TextArea();
+        txtDescription = new Swing.TextField.TextArea();
         textAreaScroll4 = new Swing.TextField.TextAreaScroll();
-        txtNote1 = new Swing.TextField.TextArea();
+        txtNote = new Swing.TextField.TextArea();
         jLabel20 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         textAreaScroll5 = new Swing.TextField.TextAreaScroll();
-        txtNote2 = new Swing.TextField.TextArea();
+        txtResult = new Swing.TextField.TextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new Swing.Table.Table();
 
@@ -72,16 +134,16 @@ public class NewServiceBill extends javax.swing.JPanel {
         btnAdd.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         btnAdd.setRadius(25);
 
-        comboBoxSuggestion1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "B", "C", "D", "SSSS", "Thắng", "Duyên", "AAA" }));
-        comboBoxSuggestion1.setSelectedIndex(-1);
-        comboBoxSuggestion1.addActionListener(new java.awt.event.ActionListener() {
+        JPatient.setSelectedIndex(-1);
+        JPatient.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        JPatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxSuggestion1ActionPerformed(evt);
+                JPatientActionPerformed(evt);
             }
         });
 
-        comboBoxSuggestion2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "B", "C", "D", "SSSS", "Thắng", "Duyên", "AAA" }));
-        comboBoxSuggestion2.setSelectedIndex(-1);
+        JService.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "B", "C", "D", "SSSS", "Thắng", "Duyên", "AAA" }));
+        JService.setSelectedIndex(-1);
 
         jLabel8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(124, 124, 124));
@@ -103,19 +165,19 @@ public class NewServiceBill extends javax.swing.JPanel {
         textAreaScroll3.setLabelText("Input Description");
         textAreaScroll3.setOpaque(false);
 
-        txtNote.setColumns(20);
-        txtNote.setRows(5);
-        txtNote.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        textAreaScroll3.setViewportView(txtNote);
+        txtDescription.setColumns(20);
+        txtDescription.setRows(5);
+        txtDescription.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        textAreaScroll3.setViewportView(txtDescription);
 
         textAreaScroll4.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         textAreaScroll4.setLabelText("Input Note");
         textAreaScroll4.setOpaque(false);
 
-        txtNote1.setColumns(20);
-        txtNote1.setRows(5);
-        txtNote1.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        textAreaScroll4.setViewportView(txtNote1);
+        txtNote.setColumns(20);
+        txtNote.setRows(5);
+        txtNote.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        textAreaScroll4.setViewportView(txtNote);
 
         jLabel20.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(124, 124, 124));
@@ -129,10 +191,10 @@ public class NewServiceBill extends javax.swing.JPanel {
         textAreaScroll5.setLabelText("Input Result");
         textAreaScroll5.setOpaque(false);
 
-        txtNote2.setColumns(20);
-        txtNote2.setRows(5);
-        txtNote2.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        textAreaScroll5.setViewportView(txtNote2);
+        txtResult.setColumns(20);
+        txtResult.setRows(5);
+        txtResult.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        textAreaScroll5.setViewportView(txtResult);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -163,21 +225,21 @@ public class NewServiceBill extends javax.swing.JPanel {
                                     .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(comboBoxSuggestion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(JService, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(comboBoxSuggestion1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(JPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(133, 133, 133)
                                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(26, 26, 26)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(JStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(26, 26, 26)
-                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(JEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panel1Layout.setVerticalGroup(
@@ -187,17 +249,17 @@ public class NewServiceBill extends javax.swing.JPanel {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboBoxSuggestion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JStartTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboBoxSuggestion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JEndTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(textAreaScroll3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +268,7 @@ public class NewServiceBill extends javax.swing.JPanel {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(textAreaScroll4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,18 +338,18 @@ public class NewServiceBill extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboBoxSuggestion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSuggestion1ActionPerformed
+    private void JPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPatientActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxSuggestion1ActionPerformed
+    }//GEN-LAST:event_JPatientActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser JEndTime;
+    private Swing.Combobox.ComboBoxSuggestion JPatient;
+    private Swing.Combobox.ComboBoxSuggestion JService;
+    private com.toedter.calendar.JDateChooser JStartTime;
     private javax.swing.JLabel TitleTable;
     private Swing.Button.Button2 btnAdd;
-    private Swing.Combobox.ComboBoxSuggestion comboBoxSuggestion1;
-    private Swing.Combobox.ComboBoxSuggestion comboBoxSuggestion2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -302,8 +364,8 @@ public class NewServiceBill extends javax.swing.JPanel {
     private Swing.TextField.TextAreaScroll textAreaScroll3;
     private Swing.TextField.TextAreaScroll textAreaScroll4;
     private Swing.TextField.TextAreaScroll textAreaScroll5;
+    private Swing.TextField.TextArea txtDescription;
     private Swing.TextField.TextArea txtNote;
-    private Swing.TextField.TextArea txtNote1;
-    private Swing.TextField.TextArea txtNote2;
+    private Swing.TextField.TextArea txtResult;
     // End of variables declaration//GEN-END:variables
 }

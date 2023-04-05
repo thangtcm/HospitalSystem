@@ -156,6 +156,43 @@ public class Drug_DaoImpl implements Drug_Dao{
     }
     
     @Override
+    public Drug getDrug(int ID)
+    {
+        try {
+            String query = "SELECT * FROM [Drugs] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Drug table_Drug = new Drug();
+                table_Drug.setID(resultSet.getInt("ID"));
+                table_Drug.setDrugName(resultSet.getString("DrugName").trim());
+                table_Drug.setDrugType(resultSet.getString("DrugType").trim());
+                table_Drug.setQuantity(resultSet.getInt("Quantity"));
+                table_Drug.setPrice(resultSet.getDouble("DrugPrice"));
+                table_Drug.setDescription(resultSet.getString("Description"));
+                
+                return table_Drug;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
+    }
+    
+    @Override
     public int Count(String where)
     {
         String queryString = "SELECT COUNT(*) FROM [Drugs]";
