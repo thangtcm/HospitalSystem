@@ -4,15 +4,30 @@
  */
 package Form.Medical;
 
+import DatabaseAccessObject_DAO.BillPrescription_Dao;
+import DatabaseAccessObject_DAO.BillService_Dao;
 import DatabaseAccessObject_DAO.Patient_Dao;
+import DatabaseAccessObject_DAO.Service_Dao;
+import DatabaseAccessObject_Impl.BillPrescription_DaoImpl;
+import DatabaseAccessObject_Impl.BillService_DaoImpl;
 import DatabaseAccessObject_Impl.Patient_DaoImpl;
+import DatabaseAccessObject_Impl.Service_DaoImpl;
+import Enum.TypeInterface;
 import Form.Patient.PatientDetails;
+import Form.Service.NewServiceBill;
+import Model.BillService;
 import Model.Employee;
 import Model.MedicalExamination;
+import Model.Prescription;
+import Model.Service;
+import Swing.Table.EventAction;
+import Swing.Table.ThreeAction_Abs;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -36,12 +51,46 @@ public class MedicalDetails extends javax.swing.JPanel {
     private void init()
     {
         Date date = new Date();
+        EventAction eventAction = new ThreeAction_Abs(tableService, this.employee, main);
         txtCID.setText(this.medical_target.getPatient().getID().toString());
         txtName.setText(this.medical_target.getPatient().getFullName());
         txtMedicalDate.setText(dateFormat.format(this.medical_target.getMedicalDate()));
         txtIllnesse.setText(this.medical_target.getIllnesses());
         txtNote.setText(this.medical_target.getNote());
         txtSymptom.setText(this.medical_target.getSymptom());
+        DefaultTableModel modelService = new DefaultTableModel();
+        modelService.addColumn("#");
+        modelService.addColumn("Họ Và Tên Bệnh Nhân");
+        modelService.addColumn("Ngày Tạo");
+        modelService.addColumn("Giá");
+        modelService.addColumn("Chức Năng");
+        BillService_Dao service_Dao = new BillService_DaoImpl();
+        ArrayList<BillService> serviceList = service_Dao.getBillServiceList(this.medical_target.getID());
+        for (BillService object : serviceList) {
+            modelService.addRow(new BillService(object).toRowTable(eventAction));
+        }
+        tableService.fixTable(jScrollPane1);
+        tableService.setModel(modelService);
+        tableService.setDefaultEditor(Object.class, null);
+        
+        
+        
+        ///
+        DefaultTableModel modelDrug = new DefaultTableModel();
+        modelDrug.addColumn("#");
+        modelDrug.addColumn("Họ Và Tên Bệnh Nhân");
+        modelDrug.addColumn("Ngày Tạo");
+        modelDrug.addColumn("Ngày Nhận");
+        modelDrug.addColumn("Giá");
+        modelDrug.addColumn("Chức Năng");
+        BillPrescription_Dao drug_Dao = new BillPrescription_DaoImpl();
+        ArrayList<Prescription> prescriptionList = drug_Dao.getBillPrescriptionList(this.medical_target.getID());
+        for (Prescription object : prescriptionList) {
+            modelDrug.addRow(new Prescription(object).toRowTable(eventAction));
+        }
+        tableDrug.fixTable(jScrollPane1);
+        tableDrug.setModel(modelDrug);
+        tableDrug.setDefaultEditor(Object.class, null);
     }
     
     private void showForm(Component com){
@@ -229,6 +278,7 @@ public class MedicalDetails extends javax.swing.JPanel {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
+        tableService.setBackground(new java.awt.Color(238, 245, 255));
         tableService.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -256,6 +306,7 @@ public class MedicalDetails extends javax.swing.JPanel {
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setText("Drug Bill");
 
+        tableDrug.setBackground(new java.awt.Color(238, 245, 255));
         tableDrug.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -347,7 +398,7 @@ public class MedicalDetails extends javax.swing.JPanel {
 
     private void btnNewServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewServiceActionPerformed
         // TODO add your handling code here:
-        
+        showForm(new NewServiceBill(main, TypeInterface.Create, this.employee));
     }//GEN-LAST:event_btnNewServiceActionPerformed
 
 

@@ -34,7 +34,7 @@ public class BillPrescription_DaoImpl implements BillPrescription_Dao{
     public ArrayList<Prescription> getBillPrescriptionList(int ID) {
         ArrayList<Prescription> list = new ArrayList<>();
         //Lấy Toàn bộ Products và Categories và Supplyer có liên quan
-        String query = "Select * From [BillService] Where MedicalExaminationID = ?";
+        String query = "Select * From [BillPrescription] Where MedicalExaminationID = ?";
         
         try{
             //statement = conn.createStatement();  

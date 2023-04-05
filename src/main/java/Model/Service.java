@@ -30,6 +30,12 @@ public class Service {
         this.currencyFormater.setMaximumFractionDigits(0);
     }
     
+    @Override
+    public String toString()
+    {
+        return this.ServiceName + " (ID : " + this.ID + " )";
+    }
+    
     public Service(Service service)
     {
         this.ID = service.ID;

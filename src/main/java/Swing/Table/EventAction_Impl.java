@@ -23,6 +23,7 @@ import Enum.TypeNotification;
 import Form.Drug.NewDrug;
 import Form.Employee.EmployeeProfile;
 import Form.Employee.NewEmployee;
+import Form.Medical.MedicalDetails;
 import Form.Medical.NewMedical;
 import Form.Patient.NewPatient;
 import Form.Patient.PatientDetails;
@@ -280,6 +281,21 @@ public abstract class EventAction_Impl implements EventAction{
                 if (showMessage("View Patient : " + object.getFullName()+ "(ID: " + object.getID()+ ")", TypeNotification.Default)) {
                     // Chuyển giao diện xem tại đây
                     showForm(new EmployeeProfile(main, this.employeecurrent, object));
+                } else {
+                    System.out.println("User click Cancel");
+                }
+            } else {
+                System.out.println("No row selected");
+            }
+        }
+        else if(obj instanceof MedicalExamination)
+        {
+            int rowIndex = table.getSelectedRow();
+            MedicalExamination object = (MedicalExamination)obj;
+            if (rowIndex >= 0) {
+                if (showMessage("View Patient : " + object.getPatient().getFullName()+ "(ID: " + object.getID()+ ")", TypeNotification.Default)) {
+                    // Chuyển giao diện xem tại đây
+                    showForm(new MedicalDetails(main, this.employeecurrent, object));
                 } else {
                     System.out.println("User click Cancel");
                 }

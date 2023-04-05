@@ -4,12 +4,20 @@
  */
 package Form.Service;
 
+import DatabaseAccessObject_DAO.MedicalExamination_Dao;
+import DatabaseAccessObject_DAO.Service_Dao;
 import DatabaseAccessObject_DAO.Staff_Dao;
+import DatabaseAccessObject_Impl.MedicalExamination_DaoImpl;
+import DatabaseAccessObject_Impl.Service_DaoImpl;
 import DatabaseAccessObject_Impl.Staff_DaoImpl;
 import Enum.TypeInterface;
 import Model.BillService;
 import Model.Employee;
+import Model.MedicalExamination;
 import Model.PatientService;
+import Model.Service;
+import Swing.Table.EventAction;
+import Swing.Table.ThreeAction_Abs;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +28,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 
 /**
@@ -32,7 +42,7 @@ public class NewServiceBill extends javax.swing.JPanel {
      * Creates new form ServiceBill
      */
     private JPanel main;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Employee employee;
     private TypeInterface type;
     private BillService servicer_bill;
@@ -41,11 +51,6 @@ public class NewServiceBill extends javax.swing.JPanel {
     public NewServiceBill()
     {
         initComponents();
-        Staff_Dao employee_Dao = new Staff_DaoImpl();
-        ArrayList<Employee> employeelist = employee_Dao.getStaffList(new Employee(null, null, null, null));
-        DefaultComboBoxModel<Employee> model = new DefaultComboBoxModel<>();
-        model.addAll(employeelist);
-        JPatient.setModel(model);
     }
     
     public NewServiceBill(JPanel main, TypeInterface type, Employee employee) {
@@ -53,7 +58,7 @@ public class NewServiceBill extends javax.swing.JPanel {
         this.main = main;
         this.employee = employee;
         this.type = type;
-        
+        init(type);
     }
     
     public NewServiceBill(JPanel main, TypeInterface type, Employee employee, BillService servicer_bill) {
@@ -62,7 +67,7 @@ public class NewServiceBill extends javax.swing.JPanel {
         this.employee = employee;
         this.type = type;
         this.servicer_bill = servicer_bill;
-        
+        init(type);
     }
     
     private void init(TypeInterface type)
@@ -71,12 +76,35 @@ public class NewServiceBill extends javax.swing.JPanel {
         txtDescription.setText("");
         txtNote.setText("");
         txtResult.setText("");
+        MedicalExamination_Dao medical_Dao = new MedicalExamination_DaoImpl();
+        ArrayList<MedicalExamination> medicalList = medical_Dao.getMedicalList(new MedicalExamination(null, null));
+        DefaultComboBoxModel<MedicalExamination> model = new DefaultComboBoxModel<>();
+        model.addAll(medicalList);
+        JMedical.setModel(model);
+        
+        Service_Dao service_Dao = new Service_DaoImpl();
+        ArrayList<Service> serviceLists = service_Dao.getServiceList(new Service(null, null));
+        DefaultComboBoxModel<Service> modelService = new DefaultComboBoxModel<>();
+        modelService.addAll(serviceLists);
+        JService.setModel(modelService);
+        
+        table1.fixTable(jScrollPane1);
+        EventAction eventAction = new ThreeAction_Abs(table1, this.employee, main);
+        DefaultTableModel modeltable = new DefaultTableModel();
+        modeltable.addColumn("#");
+        modeltable.addColumn("Tên Dịch Vụ");
+        modeltable.addColumn("Bắt Đầu Ngày");
+        modeltable.addColumn("Hạn Ngày");
+        modeltable.addColumn("Kết Quả");
+        modeltable.addColumn("Chức Năng");
+        table1.setModel(modeltable);
+        
         if(type == TypeInterface.Create)
         {
             
         }
         else{
-
+            
         }
     }
 
@@ -94,7 +122,7 @@ public class NewServiceBill extends javax.swing.JPanel {
         panel1 = new Swing.Panel.Panel();
         jLabel7 = new javax.swing.JLabel();
         btnAdd = new Swing.Button.Button2();
-        JPatient = new Swing.Combobox.ComboBoxSuggestion();
+        JMedical = new Swing.Combobox.ComboBoxSuggestion();
         JService = new Swing.Combobox.ComboBoxSuggestion();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -112,6 +140,7 @@ public class NewServiceBill extends javax.swing.JPanel {
         txtResult = new Swing.TextField.TextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         table1 = new Swing.Table.Table();
+        btnAdd1 = new Swing.Button.Button2();
 
         setOpaque(false);
 
@@ -128,17 +157,21 @@ public class NewServiceBill extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(124, 124, 124));
-        jLabel7.setText("Patient:");
+        jLabel7.setText("Medical:");
 
         btnAdd.setText("Add");
         btnAdd.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         btnAdd.setRadius(25);
-
-        JPatient.setSelectedIndex(-1);
-        JPatient.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        JPatient.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JPatientActionPerformed(evt);
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        JMedical.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        JMedical.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMedicalActionPerformed(evt);
             }
         });
 
@@ -229,7 +262,7 @@ public class NewServiceBill extends javax.swing.JPanel {
                                     .addGroup(panel1Layout.createSequentialGroup()
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(JPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(JMedical, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(133, 133, 133)
                                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panel1Layout.createSequentialGroup()
@@ -249,7 +282,7 @@ public class NewServiceBill extends javax.swing.JPanel {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JMedical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(JStartTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
@@ -304,6 +337,15 @@ public class NewServiceBill extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table1);
 
+        btnAdd1.setText("Save");
+        btnAdd1.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        btnAdd1.setRadius(25);
+        btnAdd1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdd1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -319,6 +361,10 @@ public class NewServiceBill extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,23 +379,46 @@ public class NewServiceBill extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPatientActionPerformed
+    private void JMedicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMedicalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JPatientActionPerformed
+    }//GEN-LAST:event_JMedicalActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        EventAction eventAction = new ThreeAction_Abs(table1, this.employee, main);
+        PatientService patientService = new PatientService();
+        patientService.setDescription(txtDescription.getText().trim());
+        patientService.setNote(txtNote.getText().trim());
+        patientService.setResult(txtResult.getText().trim());
+        patientService.setStartTime(java.sql.Date.valueOf(dateFormat.format(JStartTime.getDate())));
+        patientService.setEndTime(java.sql.Date.valueOf(dateFormat.format(JEndTime.getDate())));
+        Service value = (Service)JService.getSelectedItem();
+        patientService.setService(value.getID());
+        DefaultTableModel modelTable = (DefaultTableModel) table1.getModel();
+        modelTable.addRow(patientService.toRowTable(eventAction));
+        table1.setModel(modelTable);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdd1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JEndTime;
-    private Swing.Combobox.ComboBoxSuggestion JPatient;
+    private Swing.Combobox.ComboBoxSuggestion JMedical;
     private Swing.Combobox.ComboBoxSuggestion JService;
     private com.toedter.calendar.JDateChooser JStartTime;
     private javax.swing.JLabel TitleTable;
     private Swing.Button.Button2 btnAdd;
+    private Swing.Button.Button2 btnAdd1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

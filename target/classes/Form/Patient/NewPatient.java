@@ -106,13 +106,20 @@ public class NewPatient extends javax.swing.JPanel {
         Patient_Dao patient_Dao = new Patient_DaoImpl();
         if(this.type == TypeInterface.Create)
         {
-            patient_Dao.AddPatient(patient);
-            return true;
+            if(patient_Dao.AddPatient(patient))
+            {
+                showMessage("Bạn vừa tạo mới bệnh nhân thành công", TypeNotification.Success);
+                return true;
+            }
+            
         }
         else if(this.type == TypeInterface.Edit)
         {
-            patient_Dao.Update_Patient(patient);
-            return true;
+            if(patient_Dao.Update_Patient(patient))
+            {
+                showMessage("Bạn vừa cập nhật bệnh nhân thành công", TypeNotification.Success);
+                return true;
+            }
         }
         return false;  
     }
@@ -402,13 +409,9 @@ public class NewPatient extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(this.type == TypeInterface.Create)
+        if(initCreateData())
         {
-            if(initCreateData())
-            {
-                showMessage("Bạn vừa tạo mới bệnh nhân thành công", TypeNotification.Success);
-                showForm(new ListOfObject(main, TypeList.Patient, this.employee));
-            }
+            showForm(new ListOfObject(main, TypeList.Patient, this.employee));
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 

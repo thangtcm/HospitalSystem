@@ -5,7 +5,9 @@
 package Form.Medical;
 
 import DatabaseAccessObject_DAO.MedicalExamination_Dao;
+import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_Impl.MedicalExamination_DaoImpl;
+import DatabaseAccessObject_Impl.Patient_DaoImpl;
 import Dialog.Swal_Notification;
 import Enum.TypeInterface;
 import Enum.TypeList;
@@ -35,11 +37,14 @@ public class NewMedical extends javax.swing.JPanel {
     private final Employee employee;
     private final TypeInterface type;
     private MedicalExamination medical_target;
-    public NewMedical(JPanel main, TypeInterface type, Employee employee) {
+    private Patient patient_target;
+    public NewMedical(JPanel main, TypeInterface type, Employee employee, Patient patient_target) {
         initComponents();
         this.main = main;
         this.employee = employee;
         this.type = type;
+        this.patient_target = patient_target;
+        
         init(type);
     }
     
@@ -56,17 +61,22 @@ public class NewMedical extends javax.swing.JPanel {
     private void init(TypeInterface type)
     {
         Date date = new Date();
-        txtCID.setText(this.medical_target.getPatient().getID().toString());
-        txtName.setText(this.medical_target.getPatient().getFullName());
+        MedicalExamination_Dao medical_Dao = new MedicalExamination_DaoImpl();
         if(type == TypeInterface.Create)
         {
+            txtCID.setText(this.patient_target.getID().toString());
+            txtName.setText(this.patient_target.getFullName());
             txtMedicalDate.setText(dateFormat.format(date));
+            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.patient_target.getID()) ));
             txtIllnesses.setText("");
             txtNote.setText("");
             txtSympton.setText("");
         }
         else{
+            txtCID.setText(this.medical_target.getPatient().getID().toString());
+            txtName.setText(this.medical_target.getPatient().getFullName());
             txtMedicalDate.setText(dateFormat.format(this.medical_target.getMedicalDate()));
+            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.medical_target.getPatient().getID()) ));
             txtIllnesses.setText(this.medical_target.getIllnesses());
             txtNote.setText(this.medical_target.getNote());
             txtSympton.setText(this.medical_target.getSymptom());

@@ -99,6 +99,7 @@ public class ListOfObject extends javax.swing.JPanel {
                 model.addColumn("Họ Và Tên");
                 model.addColumn("Ngày Sinh");
                 model.addColumn("Giới Tính");
+                model.addColumn("Địa Chỉ");
                 model.addColumn("Số Điện Thoại");
                 model.addColumn("Chức Vụ");
                 model.addColumn("Chức Năng");

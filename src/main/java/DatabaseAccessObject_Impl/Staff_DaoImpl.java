@@ -181,7 +181,7 @@ public class Staff_DaoImpl implements Staff_Dao{
     }
 
     @Override
-    public void Update_Staff(Employee staff) {
+    public boolean Update_Staff(Employee staff) {
         try{
             String query = "Update [Employee] SET UserName =?, Password =?, FirstName =?, MiddleName =?, LastName =?, Birthday =?, Gender =?, Address =?, NumberPhone =?, Email =?, RoleName =? WHERE ID = ?";
             prepStatement = conn.prepareStatement(query);
@@ -198,7 +198,7 @@ public class Staff_DaoImpl implements Staff_Dao{
             prepStatement.setString(i++, staff.getEmail().trim());
             prepStatement.setString(i++, staff.getRoleName().trim());
             prepStatement.setInt(i++, staff.getID());
-            prepStatement.executeUpdate();
+            return prepStatement.executeUpdate() > 0;
         }catch(SQLException e)
         {  
             System.out.println(e.getMessage());
@@ -211,7 +211,7 @@ public class Staff_DaoImpl implements Staff_Dao{
                 System.out.println(e.getMessage());
             }
         }
-    
+        return false;
     }
 
     @Override

@@ -333,7 +333,7 @@ public class PatientDetails extends javax.swing.JPanel {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
-        showForm(new NewMedical(main, TypeInterface.Create, this.employee));
+        showForm(new NewMedical(main, TypeInterface.Create, this.employee, this.patient_target));
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnEditProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProfileActionPerformed

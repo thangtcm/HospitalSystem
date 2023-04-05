@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,26 @@ public class BillService {
     //Get all list service
     private List<PatientService> Listservice;
 
+    public BillService()
+    {
+        
+    }
+    
+    public BillService(BillService billService)
+    {
+        this.ID = billService.ID;
+        this.medicalExamination = billService.getMedicalExamination();
+        this.employee = billService.employee;
+        this.BillDate = billService.BillDate;
+        this.Price = billService.Price;
+        this.Paid = billService.Paid;
+    }
+    
+    
+    public Object[] toRowTable(EventAction event) {
+        //DecimalFormat df = new DecimalFormat("$#,##0.00");
+        return new Object[]{this.ID, this.medicalExamination.getPatient().getFullName(), this.BillDate, this.Price, new ModelThreeAction(this, event)};
+    }
     
     /**
      * @return the ID
@@ -121,6 +143,5 @@ public class BillService {
     public void setListservice(List<PatientService> Listservice) {
         this.Listservice = Listservice;
     }
-    
     
 }

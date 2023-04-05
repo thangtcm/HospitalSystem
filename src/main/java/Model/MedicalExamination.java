@@ -44,6 +44,12 @@ public class MedicalExamination {
         return new Object[]{this.ID, this.Patient.getFullName(), this.Employee.getFullName() , this.MedicalDate, this.Symptom, this.Illnesses ,new ModelThreeAction(this, event)};
     }
     
+    @Override
+    public String toString()
+    {
+        return this.Patient.getFullName() + " (ID: " + this.ID + ")";
+    }
+    
     public MedicalExamination(Integer ID, Patient patient)
     {
         this.ID = ID;

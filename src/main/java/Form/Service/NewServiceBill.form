@@ -33,6 +33,11 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btnAdd1" min="-2" pref="112" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -51,8 +56,10 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="panel1" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="342" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="286" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnAdd1" min="-2" pref="47" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -120,7 +127,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel7" min="-2" pref="79" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="JPatient" min="-2" pref="220" max="-2" attributes="0"/>
+                                          <Component id="JMedical" min="-2" pref="220" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
@@ -151,7 +158,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="JPatient" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JMedical" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
                       <Component id="JStartTime" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
@@ -202,7 +209,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="7c" green="7c" red="7c" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Patient:"/>
+            <Property name="text" type="java.lang.String" value="Medical:"/>
           </Properties>
         </Component>
         <Component class="Swing.Button.Button2" name="btnAdd">
@@ -213,19 +220,21 @@
             </Property>
             <Property name="radius" type="int" value="25"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="Swing.Combobox.ComboBoxSuggestion" name="JPatient">
+        <Component class="Swing.Combobox.ComboBoxSuggestion" name="JMedical">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
-            <Property name="selectedIndex" type="int" value="-1"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Inter" size="12" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JPatientActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMedicalActionPerformed"/>
           </Events>
         </Component>
         <Component class="Swing.Combobox.ComboBoxSuggestion" name="JService">
@@ -443,5 +452,17 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="Swing.Button.Button2" name="btnAdd1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Inter" size="18" style="1"/>
+        </Property>
+        <Property name="radius" type="int" value="25"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdd1ActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

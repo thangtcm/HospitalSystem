@@ -20,7 +20,7 @@ public interface Staff_Dao {
     
     public void Delete_Staff(int ID);
     
-    public void Update_Staff(Employee staff);
+    public boolean Update_Staff(Employee staff);
     
     public Employee Login_Staff(Employee staff);
     

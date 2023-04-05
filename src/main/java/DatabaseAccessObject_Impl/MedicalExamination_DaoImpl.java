@@ -14,6 +14,7 @@ import Services.StringHandle;
 import ViewForm.Main;
 import dao.Convert;
 import dao.DBConnect;
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -237,6 +238,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
     public int Count(String where)
     {
         String queryString = "SELECT COUNT(*) FROM [MedicalExamination]";
+        int count = 0;
         if(where != null || !"".equals(where))
         {
             queryString += " WHERE " + where;
@@ -244,7 +246,8 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
         try {
             prepStatement = conn.prepareStatement(queryString);
             resultSet = prepStatement.executeQuery();
-            return resultSet.getInt(1);
+            if(resultSet.next())
+                count = resultSet.getInt(1);
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }finally {
@@ -256,7 +259,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
                 System.out.println(e.getMessage());
             }
         }
-        return 0;
+        return count;
     }
     
     private boolean showMessage(String message, TypeNotification type ) {

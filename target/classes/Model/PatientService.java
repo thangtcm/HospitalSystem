@@ -4,6 +4,10 @@
  */
 package Model;
 
+import DatabaseAccessObject_DAO.Service_Dao;
+import DatabaseAccessObject_Impl.Service_DaoImpl;
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
 import java.util.Date;
 
 /**
@@ -22,6 +26,17 @@ public class PatientService {
     private double Price;
     
 
+    public PatientService()
+    {
+        
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        Service_Dao service_Dao = new Service_DaoImpl();
+        
+        return new Object[]{this.ID, service_Dao.getService(this.service).getServiceName() , this.StartTime, this.EndTime, this.Result, new ModelThreeAction(this, event)};
+    }
+    
     /**
      * @return the ID
      */

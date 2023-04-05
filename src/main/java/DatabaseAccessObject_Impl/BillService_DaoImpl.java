@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -36,7 +35,7 @@ public class BillService_DaoImpl implements BillService_Dao{
     public ArrayList<BillService> getBillServiceList(int ID) {
         ArrayList<BillService> list = new ArrayList<>();
         //Lấy Toàn bộ Products và Categories và Supplyer có liên quan
-        String query = "Select * From [BillService] Where MedicalExaminationID = ?";
+        String query = "Select * From [BillServices] Where MedicalExaminationID = ?";
         
         try{
             //statement = conn.createStatement();  
@@ -77,7 +76,7 @@ public class BillService_DaoImpl implements BillService_Dao{
 
     @Override
     public boolean AddBillService(BillService billService) {
-        String sql = "INSERT INTO [BillService] (MedicalExaminationID, EmployeeID, BillDate, Price, Paid) VALUES (?, ?,?,?,?)";
+        String sql = "INSERT INTO [BillServices] (MedicalExaminationID, EmployeeID, BillDate, Price, Paid) VALUES (?, ?,?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);
@@ -106,7 +105,7 @@ public class BillService_DaoImpl implements BillService_Dao{
     @Override
     public void Delete_BillService(int ID) {
         try {
-            String query = "DELETE FROM [MedicalExaminationID] WHERE ID=?";
+            String query = "DELETE FROM [BillServices] WHERE ID=?";
             prepStatement = (PreparedStatement) conn.prepareStatement(query);
             prepStatement.setInt(1, ID);
             prepStatement.executeUpdate();
@@ -125,7 +124,7 @@ public class BillService_DaoImpl implements BillService_Dao{
 
     @Override
     public boolean Update_BillService(BillService billService) {
-        String query = "UPDATE BillService SET MedicalExaminationID =?, EmployeeID =?, BillDate =?, Price =?, Paid =? WHERE ID = ?";
+        String query = "UPDATE BillServices SET MedicalExaminationID =?, EmployeeID =?, BillDate =?, Price =?, Paid =? WHERE ID = ?";
         try{
             prepStatement = conn.prepareStatement(query);
             int index = 1;

@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
 import java.sql.Date;
 
 /**
@@ -20,6 +22,27 @@ public class Prescription { // Phiếu lĩnh thuốc (BILL)
     private boolean Paid;
     private String Note;
 
+    
+    public Prescription(){
+        
+    }
+    
+    public Prescription(Prescription prescription)
+    {
+        this.ID = prescription.ID;
+        this.employee = prescription.employee;
+        this.medicalExamination = prescription.medicalExamination;
+        this.CreateTime = prescription.CreateTime;
+        this.ReceivedTime = prescription.ReceivedTime;
+        this.Price = prescription.Price;
+        this.Paid = prescription.Paid;
+        this.Note = prescription.Note;
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        //DecimalFormat df = new DecimalFormat("$#,##0.00");
+        return new Object[]{this.ID, this.medicalExamination.getPatient().getFullName(), this.CreateTime, this.ReceivedTime, this.Price, new ModelThreeAction(this, event)};
+    }
     /**
      * @return the ID
      */

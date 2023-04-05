@@ -113,16 +113,23 @@ public class NewEmployee extends javax.swing.JPanel {
         Staff_Dao employee_Dao = new Staff_DaoImpl();
         if(this.type == TypeInterface.Create)
         {
-            employee_Dao.AddStaff(employee);
-            showMessage("Bạn vừa tạo mới nhân viên thành công", TypeNotification.Success);
-            return true;
+            if(employee_Dao.AddStaff(employee))
+            {
+                showMessage("Bạn vừa tạo mới nhân viên thành công", TypeNotification.Success);
+                return true;
+            }
+            
         }
         else if(this.type == TypeInterface.Edit)
         {
-            showMessage("Bạn vừa chỉnh sửa nhân viên thành công", TypeNotification.Success);
+            
             employee.setID(this.employee_target.getID());
-            employee_Dao.Update_Staff(employee);
-            return true;
+            if(employee_Dao.Update_Staff(employee))
+            {
+                showMessage("Bạn vừa chỉnh sửa nhân viên thành công", TypeNotification.Success);
+                return true;
+            }
+            
         }
         return false;  
     }
