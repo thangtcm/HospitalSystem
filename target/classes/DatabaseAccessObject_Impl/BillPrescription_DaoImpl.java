@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -155,5 +154,48 @@ public class BillPrescription_DaoImpl implements BillPrescription_Dao{
             }
         }
         return false;
+    }
+
+    @Override
+    public Prescription getBillPrescription(int ID)
+    {
+        try {
+            String query = "SELECT * FROM [BillPrescription] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Prescription object = new Prescription();
+                object.setID(resultSet.getInt("ID"));
+                MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
+                object.setMedicalExamination(medical.getMedicalExamination(ID));
+                
+                Staff_Dao employee = new Staff_DaoImpl();
+                object.setEmployee(employee.getEmployee(ID));
+                
+                object.setCreateTime(resultSet.getDate("CreateTime"));
+                object.setReceivedTime(resultSet.getDate("ReceivedTime"));
+                object.setPrice(resultSet.getDouble("Price"));
+                object.setNote(resultSet.getString("Note"));
+                object.setPaid(resultSet.getBoolean("Paid"));
+                
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
     }
 }

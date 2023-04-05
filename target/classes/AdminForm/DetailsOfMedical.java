@@ -125,9 +125,7 @@ public class DetailsOfMedical extends javax.swing.JPanel {
 
         jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        button23.setForeground(new java.awt.Color(255, 255, 255));
         button23.setText("Save");
-        button23.setColor(new java.awt.Color(79, 98, 203));
         button23.setRadius(15);
 
         jLabel2.setForeground(new java.awt.Color(118, 136, 233));

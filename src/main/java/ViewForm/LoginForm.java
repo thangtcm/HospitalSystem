@@ -4,8 +4,9 @@
  */
 package ViewForm;
 
-import DatabaseAccessObject_DAO.Staff_Dao;
 import DatabaseAccessObject_Impl.Staff_DaoImpl;
+import Dialog.Swal_Notification;
+import Enum.TypeNotification;
 import Model.Employee;
 import javax.swing.JOptionPane;
 
@@ -32,7 +33,7 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter your UserName");
             return false;
         }
-        else if(pass.equals(""))
+        if(pass.equals(""))
         {
             JOptionPane.showMessageDialog(this, "Please enter your UserName");
             return false;
@@ -44,22 +45,22 @@ public class LoginForm extends javax.swing.JFrame {
     public void Login()
     {
         String userName = txt_username.getText().trim();
-        String pass = String.valueOf(txt_password.getPassword()).trim();
+        String pass = String.valueOf(txt_password.getPassword()).trim();;
         Employee staff_temp = new Employee();
         staff_temp.setUserName(userName);
         staff_temp.setPassword(pass);
         
-        Staff_Dao staff_Dao = new Staff_DaoImpl();
+        Staff_DaoImpl staff_Dao = new Staff_DaoImpl();
         Employee staff = staff_Dao.Login_Staff(staff_temp);
         //System.out.println(staff.getFullName());
         if(staff == null)
         {
-            JOptionPane.showMessageDialog(this, "The user or pass is error.");
+            showMessage("The user or pass is error.", TypeNotification.Error);
         }
         else
         {
-            JOptionPane.showMessageDialog(this,  "Welcome : "  + "Admin" /*+ UserType_selectItem*/ + " : "
-						+ staff.getFullName());
+            showMessage("Welcome : "  + staff.getRoleName() + " " /*+ UserType_selectItem*/ + " : "
+						+ staff.getFullName(), TypeNotification.Success);
             new Main(staff).setVisible(true); //--> Đây là khỏi tạo giao diện chính thong qua người dùng
             // Close the interface of login
             this.dispose();
@@ -94,7 +95,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(79, 98, 203));
         jLabel3.setText("E Heatlth Care Management System");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(563, 191, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 230, -1, -1));
 
         txt_username.setBackground(new java.awt.Color(246, 250, 255));
         txt_username.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -110,40 +111,37 @@ public class LoginForm extends javax.swing.JFrame {
                 txt_usernameActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 317, 350, 50));
+        jPanel1.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 360, 350, 50));
 
         jLabelPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelPassword.setForeground(new java.awt.Color(79, 98, 203));
         jLabelPassword.setText("Password");
-        jPanel1.add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 385, -1, -1));
+        jPanel1.add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 420, -1, -1));
 
         jLabelAccount.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelAccount.setForeground(new java.awt.Color(79, 98, 203));
         jLabelAccount.setText("Account");
-        jPanel1.add(jLabelAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 274, -1, -1));
+        jPanel1.add(jLabelAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 310, -1, -1));
 
         txt_password.setBackground(new java.awt.Color(246, 250, 255));
         txt_password.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txt_password.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(79, 98, 203), 3));
-        jPanel1.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 428, 350, 50));
+        jPanel1.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 470, 350, 50));
 
         imgAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login/BackgroundLogin.png"))); // NOI18N
         jPanel1.add(imgAvatar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-100, 160, 830, 789));
 
-        button21.setForeground(new java.awt.Color(255, 255, 255));
         button21.setText("Login");
-        button21.setColor(new java.awt.Color(79, 98, 203));
-        button21.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         button21.setRadius(40);
         button21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button21ActionPerformed(evt);
             }
         });
-        jPanel1.add(button21, new org.netbeans.lib.awtextra.AbsoluteConstraints(714, 496, 145, 37));
+        jPanel1.add(button21, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 540, 145, 37));
 
         imgAvatar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Login/Logo.png"))); // NOI18N
-        jPanel1.add(imgAvatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 115, 70, 74));
+        jPanel1.add(imgAvatar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 150, 70, 74));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,7 +154,7 @@ public class LoginForm extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1022, 797));
+        setSize(new java.awt.Dimension(1516, 813));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -200,6 +198,7 @@ public class LoginForm extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -207,6 +206,12 @@ public class LoginForm extends javax.swing.JFrame {
                 new LoginForm().setVisible(true);
             }
         });
+    }
+    
+    private boolean showMessage(String message, TypeNotification type) {
+        Swal_Notification obj = new Swal_Notification(LoginForm.getFrames()[0], true);
+        obj.showMessage(message, type);
+        return obj.isOk();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

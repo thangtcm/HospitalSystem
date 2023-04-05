@@ -10,10 +10,12 @@ package Model;
  */
 public class PrescriptionDetail {
     private Integer ID;
-    private Prescription prescription;
-    private Drug drug;
+    private Integer prescription;
+    private Integer drug;
     private int quantity;
-
+    private double Price;
+    
+    
     /**
      * @return the ID
      */
@@ -29,34 +31,6 @@ public class PrescriptionDetail {
     }
 
     /**
-     * @return the prescription
-     */
-    public Prescription getPrescription() {
-        return prescription;
-    }
-
-    /**
-     * @param prescription the prescription to set
-     */
-    public void setPrescription(Prescription prescription) {
-        this.prescription = prescription;
-    }
-
-    /**
-     * @return the drug
-     */
-    public Drug getDrug() {
-        return drug;
-    }
-
-    /**
-     * @param drug the drug to set
-     */
-    public void setDrug(Drug drug) {
-        this.drug = drug;
-    }
-
-    /**
      * @return the quantity
      */
     public int getQuantity() {
@@ -68,6 +42,48 @@ public class PrescriptionDetail {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * @return the Price
+     */
+    public double getPrice() {
+        return Price;
+    }
+
+    /**
+     * @param Price the Price to set
+     */
+    public void setPrice(double Price) {
+        this.Price = Price;
+    }
+
+    /**
+     * @return the prescription
+     */
+    public Integer getPrescription() {
+        return prescription;
+    }
+
+    /**
+     * @param prescription the prescription to set
+     */
+    public void setPrescription(Integer prescription) {
+        this.prescription = prescription;
+    }
+
+    /**
+     * @return the drug
+     */
+    public Integer getDrug() {
+        return drug;
+    }
+
+    /**
+     * @param drug the drug to set
+     */
+    public void setDrug(Integer drug) {
+        this.drug = drug;
     }
     
     

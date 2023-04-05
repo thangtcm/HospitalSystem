@@ -6,6 +6,7 @@ package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.Staff_Dao;
 import Model.Employee;
+import Services.StringHandle;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -45,7 +46,7 @@ public class Staff_DaoImpl implements Staff_Dao{
             prepStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
             prepStatement.setString(i++, staff.getGender().trim());     
             prepStatement.setString(i++, staff.getAddress().trim());
-            prepStatement.setString(i++, staff.getNumberPhonne().trim());
+            prepStatement.setString(i++, staff.getNumberPhone().trim());
             prepStatement.setString(i++, staff.getEmail().trim());
             prepStatement.setString(i++, staff.getRoleName().trim());
             return prepStatement.executeUpdate() > 0;
@@ -70,7 +71,7 @@ public class Staff_DaoImpl implements Staff_Dao{
         /*
          * Default: displays all student information
          */
-        StringBuilder sql = new StringBuilder("SELECT * FROM [Employee] WHERE ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Employee]");
 
         /*------------------------------------------------------------------------
          * getStudent_name() : Get it from the information entered by the user.  |
@@ -81,20 +82,17 @@ public class Staff_DaoImpl implements Staff_Dao{
             Integer id = staff.getID();
             if(id != null)
             {
-                sql.append("ID = '").append(staff.getID()).append("%' ");  
-            }else
-                {
-                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + staff.getFullName().isEmpty());
-                    System.out.println("DatabaseAccessObject_Impl.Patient_DaoImpl.getPatientList()" + staff.getFullName());
-                    sql.append("FirstName LIKE N'%").append(staff.getFirstName()).append("%' ")
-                            .append(" AND MiddleName LIKE N'%").append(staff.getMiddleName()).append("%' ")
-                            .append(" AND LastName LIKE N'%").append(staff.getLastName()).append("%' ");
-                }
-            
+                sql.append(" AND ID LIKE '%").append(staff.getID()).append("%' ");  
+            }
+
+            if(staff.getFullName() != null)
+            {
+                sql.append(" AND CONCAT_WS(' ', FirstName, MiddleName, LastName) LIKE N'").append(StringHandle.addWildcards(staff.getFullName())).append("'");
+            } 
         }
 
         try{
-            prepStatement = conn.prepareStatement(sql.toString());
+            prepStatement = conn.prepareStatement(sql.toString().replaceFirst("AND", "WHERE"));
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
@@ -106,11 +104,11 @@ public class Staff_DaoImpl implements Staff_Dao{
                 table_staff.setBirthday(resultSet.getDate("BirthDay"));
                 table_staff.setGender(resultSet.getString("Gender").trim());
                 table_staff.setAddress(resultSet.getString("Address").trim());
-                table_staff.setNumberPhonne(resultSet.getString("NumberPhone"));
+                table_staff.setNumberPhone(resultSet.getString("NumberPhone"));
                 table_staff.setEmail(resultSet.getString("Email").trim());
                 table_staff.setRoleName(resultSet.getString("RoleName").trim());
 
-                    list.add(table_staff);
+                list.add(table_staff);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -148,6 +146,39 @@ public class Staff_DaoImpl implements Staff_Dao{
             }
         }
     }
+    
+    @Override
+    public Employee getNameEmployee(int ID){
+        try {
+            String query = "SELECT * FROM [Employee] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Employee object = new Employee();
+                object.setID(resultSet.getInt("ID"));
+                object.setFirstName(resultSet.getString("FirstName").trim());
+                object.setMiddleName(resultSet.getString("MiddleName").trim());
+                object.setLastName(resultSet.getString("LastName").trim());
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
+    }
 
     @Override
     public void Update_Staff(Employee staff) {
@@ -163,7 +194,7 @@ public class Staff_DaoImpl implements Staff_Dao{
             prepStatement.setDate(i++, Convert.convertDate(staff.getBirthday()));
             prepStatement.setString(i++, staff.getGender().trim());     
             prepStatement.setString(i++, staff.getAddress().trim());
-            prepStatement.setString(i++, staff.getNumberPhonne().trim());
+            prepStatement.setString(i++, staff.getNumberPhone().trim());
             prepStatement.setString(i++, staff.getEmail().trim());
             prepStatement.setString(i++, staff.getRoleName().trim());
             prepStatement.setInt(i++, staff.getID());
@@ -208,9 +239,9 @@ public class Staff_DaoImpl implements Staff_Dao{
                 table_Staff_temp.setBirthday(resultSet.getDate("BirthDay"));
                 table_Staff_temp.setGender(resultSet.getString("Gender").trim());
                 table_Staff_temp.setAddress(resultSet.getString("Address").trim());
-                table_Staff_temp.setNumberPhonne(resultSet.getString("NumberPhone"));
+                table_Staff_temp.setNumberPhone(resultSet.getString("NumberPhone"));
                 table_Staff_temp.setEmail(resultSet.getString("Email").trim());
-                table_Staff_temp.setNumberPhonne(resultSet.getString("RoleName"));
+                table_Staff_temp.setRoleName(resultSet.getString("RoleName"));
             }
         } catch (SQLException e)
         {
@@ -250,9 +281,9 @@ public class Staff_DaoImpl implements Staff_Dao{
                 object.setBirthday(resultSet.getDate("BirthDay"));
                 object.setGender(resultSet.getString("Gender").trim());
                 object.setAddress(resultSet.getString("Address").trim());
-                object.setNumberPhonne(resultSet.getString("NumberPhone"));
+                object.setNumberPhone(resultSet.getString("NumberPhone"));
                 object.setEmail(resultSet.getString("Email").trim());
-                object.setNumberPhonne(resultSet.getString("RoleName"));
+                object.setNumberPhone(resultSet.getString("RoleName"));
                 
                 return object;
             }
@@ -301,5 +332,31 @@ public class Staff_DaoImpl implements Staff_Dao{
                 System.out.println(e.getMessage());
             }
         }
+    }
+    
+    @Override
+    public int Count(String where)
+    {
+        String queryString = "SELECT COUNT(*) FROM [Employee]";
+        if(where != null || !"".equals(where))
+        {
+            queryString += " WHERE " + where;
+        }
+        try {
+            prepStatement = conn.prepareStatement(queryString);
+            resultSet = prepStatement.executeQuery();
+            return resultSet.getInt(1);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
     }
 }

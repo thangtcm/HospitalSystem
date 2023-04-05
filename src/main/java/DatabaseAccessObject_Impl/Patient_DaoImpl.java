@@ -4,7 +4,6 @@
  */
 package DatabaseAccessObject_Impl;
 
-import DatabaseAccessObject_DAO.MedicalExamination_Dao;
 import DatabaseAccessObject_DAO.Patient_Dao;
 import Model.Patient;
 import Services.StringHandle;
@@ -43,20 +42,16 @@ public class Patient_DaoImpl implements Patient_Dao{
             Integer id = patient.getID();
             if(id != null)
             {
-                sql.append("WHERE ID = '").append(patient.getID()).append("' ");  
+                sql.append(" AND ID LIKE '%").append(id).append("%' ");  
             }
-            else
+
+            if(patient.getFullName() != null)
             {
-                if(patient.getFullName() != null)
-                {
-                    sql.append("WHERE CONCAT_WS(' ', FirstName, MiddleName, LastName) LIKE N'").append(StringHandle.addWildcards(patient.getFullName())).append("'");
-                }
-                
-            }
-            
+                sql.append(" AND CONCAT_WS(' ', FirstName, MiddleName, LastName) LIKE N'").append(StringHandle.addWildcards(patient.getFullName())).append("'");
+            } 
         }
         try{
-            prepStatement = conn.prepareStatement(sql.toString());
+            prepStatement = conn.prepareStatement(sql.toString().replaceFirst("AND", "WHERE"));
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
@@ -71,8 +66,8 @@ public class Patient_DaoImpl implements Patient_Dao{
                 object.setEmail(resultSet.getString("Email").trim());
                 object.setNumberPhone(resultSet.getString("NumberPhone").trim());
                 
-                MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
-                object.setMedicalList(medical.getMedicalPatientList(resultSet.getInt("ID")));
+//                MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
+//                object.setMedicalList(medical.getMedicalPatientList(resultSet.getInt("ID")));
                 
                 list.add(object);
             }
@@ -166,10 +161,43 @@ public class Patient_DaoImpl implements Patient_Dao{
         return null;
     }
     
+    @Override
+    public Patient getNamePatient(int ID){
+        try {
+            String query = "SELECT * FROM [Patient] Where ID = ?";
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while(resultSet.next())
+            {
+                Patient object = new Patient();
+                object.setID(resultSet.getInt("ID"));
+                object.setFirstName(resultSet.getString("FirstName").trim());
+                object.setMiddleName(resultSet.getString("MiddleName").trim());
+                object.setLastName(resultSet.getString("LastName").trim());
+                return object;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage()); 
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
+    }
+    
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
     
      @Override
-    public boolean Update_Staff(Patient patient){
+    public boolean Update_Patient(Patient patient){
 
         String query = "UPDATE Patient SET FirstName = ?, MiddleName = ?, LastName = ?, Birthday = ?, Gender = ?, Address = ?, NumberPhone = ?, Email = ? WHERE ID = ?";
         try{
@@ -198,5 +226,31 @@ public class Patient_DaoImpl implements Patient_Dao{
             }
         }
         return false;
+    }
+    
+    @Override
+    public int Count(String where)
+    {
+        String queryString = "SELECT COUNT(*) FROM [Patient]";
+        if(where != null || !"".equals(where))
+        {
+            queryString += " WHERE " + where;
+        }
+        try {
+            prepStatement = conn.prepareStatement(queryString);
+            resultSet = prepStatement.executeQuery();
+            return resultSet.getInt(1);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
     }
 }

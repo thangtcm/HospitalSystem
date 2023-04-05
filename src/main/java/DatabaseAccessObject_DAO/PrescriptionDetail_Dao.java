@@ -7,8 +7,8 @@ public interface PrescriptionDetail_Dao {
     
     public boolean AddPrescriptionDetail(PrescriptionDetail prescription);
     
-    public boolean Delete_PrescriptionDetail(int ID);
-    public Patient getPrescriptionDetail(int ID);
+    public void Delete_PrescriptionDetail(int ID);
+   // public Patient getPrescriptionDetail(int ID);
     
     public boolean Update_PrescriptionDetail(PrescriptionDetail prescription);
 }

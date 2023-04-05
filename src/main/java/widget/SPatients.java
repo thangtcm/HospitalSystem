@@ -4,11 +4,14 @@
  */
 package widget;
 
+import Swing.Panel.PanelShadow;
+import javax.swing.Icon;
+
 /**
  *
  * @author YAN
  */
-public class SPatients extends javax.swing.JPanel {
+public class SPatients extends PanelShadow {
 
     /**
      * Creates new form SPatients
@@ -16,7 +19,13 @@ public class SPatients extends javax.swing.JPanel {
     public SPatients() {
         initComponents();
     }
-
+    
+    public void InitData(Icon icon, String Number, String Name)
+    {
+        lbIcon.setIcon(icon);
+        lbCount.setText(Number);
+        lbCount.setText(Name);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,12 +36,11 @@ public class SPatients extends javax.swing.JPanel {
     private void initComponents() {
 
         panel1 = new Swing.Panel.Panel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbIcon = new javax.swing.JLabel();
+        lbCount = new javax.swing.JLabel();
+        lbName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
-        setOpaque(false);
 
         panel1.setBackground(new java.awt.Color(255, 255, 255));
         panel1.setRoundBottomLeft(25);
@@ -40,14 +48,14 @@ public class SPatients extends javax.swing.JPanel {
         panel1.setRoundTopLeft(25);
         panel1.setRoundTopRight(25);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/Group 39.png"))); // NOI18N
+        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/Group 39.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel2.setText("50");
+        lbCount.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lbCount.setText("50");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(32, 54, 180));
-        jLabel3.setText("Patients");
+        lbName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbName.setForeground(new java.awt.Color(32, 54, 180));
+        lbName.setText("Patients");
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -55,14 +63,14 @@ public class SPatients extends javax.swing.JPanel {
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel1)
+                .addComponent(lbIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lbCount)
                         .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lbName)
                         .addGap(36, 36, 36))))
         );
         panel1Layout.setVerticalGroup(
@@ -71,12 +79,12 @@ public class SPatients extends javax.swing.JPanel {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbCount, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
+                        .addComponent(lbName))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12))
         );
 
@@ -96,9 +104,9 @@ public class SPatients extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lbCount;
+    private javax.swing.JLabel lbIcon;
+    private javax.swing.JLabel lbName;
     private Swing.Panel.Panel panel1;
     // End of variables declaration//GEN-END:variables
 }

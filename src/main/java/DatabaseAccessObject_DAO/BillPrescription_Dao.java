@@ -19,5 +19,5 @@ public interface BillPrescription_Dao {
     
     public boolean Update_BillPrescription(Prescription prescription);
 
-    public BillPrescription getBillPrescription(int ID);
+    public Prescription getBillPrescription(int ID);
 }

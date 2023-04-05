@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
 import java.util.Date;
 
 /**
@@ -13,6 +15,8 @@ import java.util.Date;
 public class MedicalExamination {
     private Integer ID;
     private Patient Patient;
+    private Integer PatientID;
+    private Integer EmployeeID;
     private Employee Employee;
     private Date MedicalDate;
     private String Symptom;
@@ -23,7 +27,24 @@ public class MedicalExamination {
         
     }
     
-    public MedicalExamination(int ID, Patient patient)
+    public MedicalExamination(MedicalExamination medical)
+    {
+        this.ID = medical.ID;
+        this.Patient = medical.Patient;
+        this.PatientID = medical.PatientID;
+        this.Employee = medical.Employee;
+        this.EmployeeID = medical.EmployeeID;
+        this.MedicalDate = medical.MedicalDate;
+        this.Symptom = medical.Symptom;
+        this.Illnesses = medical.Illnesses;
+        this.Note = medical.Note;
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        return new Object[]{this.ID, this.Patient.getFullName(), this.Employee.getFullName() , this.MedicalDate, this.Symptom, this.Illnesses ,new ModelThreeAction(this, event)};
+    }
+    
+    public MedicalExamination(Integer ID, Patient patient)
     {
         this.ID = ID;
         this.Patient = patient;
@@ -125,6 +146,34 @@ public class MedicalExamination {
      */
     public void setNote(String Note) {
         this.Note = Note;
+    }
+
+    /**
+     * @return the PatientID
+     */
+    public Integer getPatientID() {
+        return PatientID;
+    }
+
+    /**
+     * @param PatientID the PatientID to set
+     */
+    public void setPatientID(Integer PatientID) {
+        this.PatientID = PatientID;
+    }
+
+    /**
+     * @return the EmployeeID
+     */
+    public Integer getEmployeeID() {
+        return EmployeeID;
+    }
+
+    /**
+     * @param EmployeeID the EmployeeID to set
+     */
+    public void setEmployeeID(Integer EmployeeID) {
+        this.EmployeeID = EmployeeID;
     }
     
     

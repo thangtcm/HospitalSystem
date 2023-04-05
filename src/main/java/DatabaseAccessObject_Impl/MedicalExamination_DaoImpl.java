@@ -7,8 +7,11 @@ package DatabaseAccessObject_Impl;
 import DatabaseAccessObject_DAO.MedicalExamination_Dao;
 import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_DAO.Staff_Dao;
+import Dialog.Swal_Notification;
+import Enum.TypeNotification;
 import Model.MedicalExamination;
 import Services.StringHandle;
+import ViewForm.Main;
 import dao.Convert;
 import dao.DBConnect;
 import java.sql.Connection;
@@ -36,9 +39,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
     public ArrayList<MedicalExamination> getMedicalList(MedicalExamination medicalExamination) {
         ArrayList<MedicalExamination> list = new ArrayList<>();
         
-        StringBuilder sql = new StringBuilder("SELECT m.* FROM MedicalExamination m "
-                + "LEFT JOIN Patient p ON m.PatientID = p.ID "
-                + "LEFT JOIN Employee e ON m.EmployeeID = e.ID ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [MedicalExamination]");
         
 
         if(medicalExamination != null)
@@ -46,50 +47,44 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             Integer id = medicalExamination.getID();
             if(id != null)
             {
-                sql.append("WHERE m.ID = ?");  
-            }else
-            {
-                String patientFullName = medicalExamination.getPatient().getFullName();
-                if(patientFullName != null)
-                    sql.append("WHERE CONCAT_WS(' ', p.FirstName, p.MiddleName, p.LastName)  LIKE N'?").append(StringHandle.addWildcards(patientFullName)).append("'");
+                sql.append(" AND m.ID LIKE '%").append(id).append("%' ");  
             }
-            
-        }
-        try{
-            prepStatement = conn.prepareStatement(sql.toString());
-
-            if (medicalExamination != null) {
-                Integer id = medicalExamination.getID();
-                if (id != null) {
-                    prepStatement.setInt(1, id);
+            if(medicalExamination.getPatient() != null)
+            {
+                if(medicalExamination.getPatient().getFullName() != null)
+                {
+                    sql.append(" AND CONCAT_WS(' ', p.FirstName, p.MiddleName, p.LastName)  LIKE N'").append(StringHandle.addWildcards(medicalExamination.getPatient().getFullName())).append("'");
                 }
             }
-
+        }
+        try{
+            prepStatement = conn.prepareStatement(sql.toString().replaceFirst("AND", "WHERE"));
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
                 MedicalExamination object = new MedicalExamination();
-                object.setID(resultSet.getInt("m.ID"));
-                
-                // Patient_Dao patient = new Patient_DaoImpl();
-                // 
+                object.setID(resultSet.getInt("ID"));
                 
                 Patient_Dao patient = new Patient_DaoImpl();
-                object.setPatient(patient.getPatient(resultSet.getInt("p.ID")));
-
-                Staff_Dao employee = new Staff_DaoImpl();
-                object.setPatient(employee.getEmployee(resultSet.getInt("e.ID")));
+                object.setPatient(patient.getNamePatient(resultSet.getInt("PatientID")));
                 
-                object.setMedicalDate(resultSet.getDate("m.MedicalDate"));
-                object.setSymptom(resultSet.getString("m.Symptom"));
-                object.setIllnesses(resultSet.getString("m.Illnesses"));
-                object.setNote(resultSet.getString("m.Note"));
+                Staff_Dao employee = new Staff_DaoImpl();
+                object.setEmployee(employee.getNameEmployee(resultSet.getInt("EmployeeID")));
+
+                object.setMedicalDate(resultSet.getDate("MedicalDate"));
+                object.setSymptom(resultSet.getString("Symptom"));
+                if(!resultSet.getString("Illnesses").equals(""))
+                    object.setIllnesses(resultSet.getString("Illnesses"));
+                else
+                    object.setIllnesses("Chưa rõ");
+                
+                object.setNote(resultSet.getString("Note"));
                 list.add(object);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }finally {
-            closeResources(conn, prepStatement, resultSet);
+            new DBConnect().closeResources(conn, prepStatement, resultSet);
         }
         return list;
     }
@@ -98,7 +93,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
     public ArrayList<MedicalExamination> getMedicalPatientList(int ID)
     {
         ArrayList<MedicalExamination> list = new ArrayList<>();
-        String query = "Select * From [MedicalExamination] Where PatientID = ?";
+        String query = "Select m.* From MedicalExamination m WHERE m.PatientID = ?";
         try{
             prepStatement = conn.prepareStatement(query);
             prepStatement.setInt(1, ID);
@@ -109,10 +104,10 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
                 object.setID(resultSet.getInt("ID"));
                 
                 Patient_Dao patient = new Patient_DaoImpl();
-                object.setPatient(patient.getPatient(resultSet.getInt("PatientID")));
+                object.setPatient(patient.getNamePatient(resultSet.getInt("PatientID")));
                 
                 Staff_Dao employee = new Staff_DaoImpl();
-                object.setEmployee(employee.getEmployee(resultSet.getInt("EmployeeID")));
+                object.setEmployee(employee.getNameEmployee(resultSet.getInt("EmployeeID")));
                 
                 object.setMedicalDate(resultSet.getDate("MedicalDate"));
                 object.setSymptom(resultSet.getString("Symptom"));
@@ -179,6 +174,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             prepStatement.setString(index++, medicalExamination.getIllnesses().trim());
             prepStatement.setString(index++, medicalExamination.getNote().trim());
             prepStatement.setInt(index++, medicalExamination.getID());
+            showMessage("Bạn vừa tạo thành công phiếu khám bệnh của bệnh nhân + " + medicalExamination.getPatient().getFullName() + " !!", TypeNotification.Success);
             return prepStatement.executeUpdate() > 0;
         } catch (SQLException e)
         {
@@ -235,6 +231,38 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             }
         }
         return null;
+    }
+    
+    @Override
+    public int Count(String where)
+    {
+        String queryString = "SELECT COUNT(*) FROM [MedicalExamination]";
+        if(where != null || !"".equals(where))
+        {
+            queryString += " WHERE " + where;
+        }
+        try {
+            prepStatement = conn.prepareStatement(queryString);
+            resultSet = prepStatement.executeQuery();
+            return resultSet.getInt(1);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
+    }
+    
+    private boolean showMessage(String message, TypeNotification type ) {
+        Swal_Notification obj = new Swal_Notification(Main.getFrames()[0], true);
+        obj.showMessage(message, type);
+        return obj.isOk();
     }
     
 }

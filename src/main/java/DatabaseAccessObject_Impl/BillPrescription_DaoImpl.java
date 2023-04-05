@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -158,7 +157,7 @@ public class BillPrescription_DaoImpl implements BillPrescription_Dao{
     }
 
     @Override
-    public BillPrescription getBillPrescription(int ID)
+    public Prescription getBillPrescription(int ID)
     {
         try {
             String query = "SELECT * FROM [BillPrescription] Where ID = ?";
@@ -167,7 +166,7 @@ public class BillPrescription_DaoImpl implements BillPrescription_Dao{
             resultSet = prepStatement.executeQuery();
             while(resultSet.next())
             {
-                Patient object = new Patient();
+                Prescription object = new Prescription();
                 object.setID(resultSet.getInt("ID"));
                 MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
                 object.setMedicalExamination(medical.getMedicalExamination(ID));

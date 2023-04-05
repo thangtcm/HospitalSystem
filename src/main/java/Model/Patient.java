@@ -4,9 +4,10 @@
  */
 package Model;
 
-import java.sql.Date;
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -152,8 +153,8 @@ public class Patient {
     public String getFullName()
     {
         if (this.FirstName == null && this.MiddleName == null && this.LastName == null) {
-        return null;
-    }
+            return null;
+        }
         String fullName = (this.FirstName != null ? this.FirstName : "")
                 + (this.MiddleName  != null ?  " " + this.MiddleName  : "") + " "
                 + (this.LastName != null ? this.LastName : "");
@@ -190,4 +191,21 @@ public class Patient {
         this.medicalList = medicalList;
     }
     
+    public Patient(Patient patient)
+    {
+        this.ID = patient.ID;
+        this.FirstName = patient.FirstName;
+        this.MiddleName = patient.MiddleName;
+        this.LastName = patient.LastName;
+        this.Gender = patient.Gender;
+        this.BirthDay = patient.getBirthDay();
+        this.Address = patient.Address;
+        this.NumberPhone = patient.NumberPhone;
+        this.Email = patient.Email;
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        //DecimalFormat df = new DecimalFormat("$#,##0.00");
+        return new Object[]{this.ID, getFullName(), this.BirthDay, this.Gender, this.Address, this.NumberPhone ,new ModelThreeAction(this, event)};
+    }
 }

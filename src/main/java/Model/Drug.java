@@ -4,6 +4,11 @@
  */
 package Model;
 
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  *
  * @author couni
@@ -15,7 +20,47 @@ public class Drug { //Kho thuốc
     private int Quantity;
     private double Price;
     private String Description;
-
+    
+    
+    //Setup Price
+    private final Locale locale ;
+    private final NumberFormat currencyFormater;
+    public Drug()
+    {
+        this.locale = new Locale("en", "US");
+        this.currencyFormater = NumberFormat.getCurrencyInstance(locale);
+        this.currencyFormater.setMaximumFractionDigits(0);
+    }
+    
+    public Drug(Drug drug)
+    {
+        this.ID = drug.ID;
+        this.DrugName = drug.DrugName;
+        this.DrugType = drug.DrugType;
+        this.Quantity = drug.Quantity;
+        this.Price = drug.Price;
+        this.Description = drug.Description;
+        
+        
+        this.locale = new Locale("en", "US");
+        this.currencyFormater = NumberFormat.getCurrencyInstance(locale);
+        this.currencyFormater.setMaximumFractionDigits(0);
+        
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        return new Object[]{this.ID, this.DrugName, this.DrugType, this.Quantity, this.currencyFormater.format(this.Price), new ModelThreeAction(this, event)};
+    }
+    
+    public Drug(Integer ID, String DrugName)
+    {
+        this.ID = ID;
+        this.DrugName = DrugName;
+        
+        this.locale = new Locale("en", "US");
+        this.currencyFormater = NumberFormat.getCurrencyInstance(locale);
+        this.currencyFormater.setMaximumFractionDigits(0);
+    }
     /**
      * @return the ID
      */

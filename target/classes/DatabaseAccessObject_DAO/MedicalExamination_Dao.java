@@ -21,5 +21,7 @@ public interface MedicalExamination_Dao {
     //public boolean Delete_Staff(int ID); -- 100 year can delete 1 timer
     public MedicalExamination getMedicalExamination(int ID);
     
+    public int Count(String where);
+    
     public boolean Update_MedicalExamination(MedicalExamination medicalExamination);
 }

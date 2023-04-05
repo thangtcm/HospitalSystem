@@ -4,13 +4,17 @@
  */
 package Form;
 
-import DatabaseAccessObject_DAO.Patient_Dao;
-import DatabaseAccessObject_Impl.Patient_DaoImpl;
+import DatabaseAccessObject_DAO.MedicalExamination_Dao;
+import DatabaseAccessObject_Impl.MedicalExamination_DaoImpl;
+import Dialog.Swal_Confirm;
+import Enum.TypeNotification;
 import Model.Employee;
-import Model.Patient;
+import Model.MedicalExamination;
+import Swing.Table.EventAction;
+import Swing.Table.ThreeAction_Abs;
+import ViewForm.Main;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,22 +27,24 @@ public class Home extends javax.swing.JPanel {
      * Creates new form Home
      */
     private Employee employee;
+    private JPanel main;
     public Home() {
         initComponents();
         init();
     }
     
-    public Home(Employee employee)
+    public Home(Employee employee, JPanel main)
     {
         initComponents();
-        init();
         this.employee = employee;
+        this.main = main;
+        init();
         UpdateProfile();
     }
     
     private void UpdateProfile()
     {
-        welcome1.setlbName(employee.getFullName());
+        welcome1.setlbName(this.employee.getFullName());
     }
     
     private void init()
@@ -49,30 +55,30 @@ public class Home extends javax.swing.JPanel {
     }
     
     private void ImportData(){
+        EventAction eventAction = new ThreeAction_Abs(table, this.employee, main);
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("#");
         model.addColumn("Họ Và Tên");
-        model.addColumn("Ngày Sinh");
-        model.addColumn("Giới Tính");
-        model.addColumn("Địa Chỉ");
-        model.addColumn("Số Điện Thoại");
-        Patient_Dao patients = new Patient_DaoImpl();
-        List<Patient> patientList = patients.getPatientList(new Patient(null, null, null, null));
-        for (Patient object : patientList) {
-            ArrayList<Object> item = new ArrayList<>();
-            item.add(object.getID());
-            item.add(object.getFullName());
-            item.add(object.getBirthDay());
-            item.add(object.getGender());
-            item.add(object.getAddress());
-            item.add(object.getNumberPhone());
-            //tạo hàng
-            model.addRow(item.toArray());
+        model.addColumn("Nhân Viên Lập");
+        model.addColumn("Ngày Tạo");
+        model.addColumn("Triệu Chứng");
+        model.addColumn("Bệnh Tật");
+        model.addColumn("Chức Năng");
+        MedicalExamination_Dao medical = new MedicalExamination_DaoImpl();
+        ArrayList<MedicalExamination> medicalList = medical.getMedicalList(new MedicalExamination(null, null));
+        for (MedicalExamination object : medicalList) {
+            model.addRow(new MedicalExamination(object).toRowTable(eventAction));
         }
         //đưa dữ liệu từ model vào bảng
         table.fixTable(jScrollPane1);
         table.setModel(model);
         table.setDefaultEditor(Object.class, null);
+    }
+    
+    private boolean showMessage(String message, TypeNotification type ) {
+        Swal_Confirm obj = new Swal_Confirm(Main.getFrames()[0], true);
+        obj.showMessage(message, type);
+        return obj.isOk();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,7 +159,7 @@ public class Home extends javax.swing.JPanel {
                 .addComponent(imgAvatar3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel5)
@@ -203,9 +209,9 @@ public class Home extends javax.swing.JPanel {
             .addGroup(panelShadow5Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(imgAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel7)
@@ -255,9 +261,9 @@ public class Home extends javax.swing.JPanel {
             .addGroup(panelShadow4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(imgAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel9)

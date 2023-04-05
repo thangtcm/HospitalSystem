@@ -4,8 +4,7 @@
  */
 package ViewForm;
 
-import AdminForm.ListOfMedical;
-import Enum.RoleName;
+
 import Enum.TypeList;
 import Form.Home;
 import Form.List.ListOfObject;
@@ -70,12 +69,12 @@ public class Main extends javax.swing.JFrame {
         
         menu.setEvent((int index) -> {
             switch (index) {
-                case 0 -> showForm(new Home(this.employee));
-                case 1 -> showForm(new ListOfObject(main, TypeList.Patient));
-                case 2 -> showForm(new ListOfObject(main, TypeList.Medical));
-                case 3 -> showForm(new ListOfObject(main, TypeList.Drug));
-                case 4 -> showForm(new ListOfObject(main, TypeList.Employee));
-                case 5 -> showForm(new ListOfObject(main, TypeList.Services));
+                case 0 -> showForm(new Home(this.employee, main));
+                case 1 -> showForm(new ListOfObject(main, TypeList.Patient, this.employee));
+                //case 2 -> showForm(new ListOfObject(main, TypeList.Medical));
+                case 2 -> showForm(new ListOfObject(main, TypeList.Drug, this.employee));
+                case 3 -> showForm(new ListOfObject(main, TypeList.Employee, this.employee));
+                case 4 -> showForm(new ListOfObject(main, TypeList.Services, this.employee));
                 default -> {
                 }
             }
@@ -84,12 +83,12 @@ public class Main extends javax.swing.JFrame {
         menu.addMenu(new ModelMenu("Profile", new ImageIcon(getClass().getResource("/Images/Icons/home.png"))));
         //menu.addMenu(new ModelMenu("Message", new ImageIcon(getClass().getResource("/Images/Icons/procedures.png"))));
         menu.addMenu(new ModelMenu("Patient", IconFontSwing.buildIcon(GoogleMaterialDesignIcons.SUPERVISOR_ACCOUNT, 28, Color.WHITE)));
-        menu.addMenu(new ModelMenu("Medical", IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LOCAL_HOSPITAL, 28, Color.WHITE)));// Phieu Kham Benh
+        //menu.addMenu(new ModelMenu("Medical", IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LOCAL_HOSPITAL, 28, Color.WHITE)));// Phieu Kham Benh
         //menu.addMenu(new ModelMenu("Prescription", new ImageIcon(getClass().getResource("/Images/Icons/CardMedicine.png"))));// Phieu Linh Thuoc
         menu.addMenu(new ModelMenu("Drug", new ImageIcon(getClass().getResource("/Images/Icons/Drug.png"))));// Quan ly Thuoc
         menu.addMenu(new ModelMenu("Employee", new ImageIcon(getClass().getResource("/Images/Icons/users.png"))));// Nhan Vien
         //menu.addMenu(new ModelMenu("Report", new ImageIcon(getClass().getResource("/Images/Icons/layers.png")))); // Bao cao     
-        menu.addMenu(new ModelMenu("Services", new ImageIcon(getClass().getResource("/Images/Icons/settings.png"))));
+        menu.addMenu(new ModelMenu("Services", new ImageIcon(getClass().getResource("/Images/Icons/Service.png"))));
         body.add(menu, "w 200!");
         body.add(rightMain, BorderLayout.EAST);
         body.add(main, "w 100%");
@@ -122,7 +121,7 @@ public class Main extends javax.swing.JFrame {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
-        showForm(new Home(this.employee));
+        showForm(new Home(this.employee, main));
     }
     private void showForm(Component com){
         main.removeAll();
@@ -185,35 +184,35 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Main().setVisible(true);
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> {
+//            new Main().setVisible(true);
+//        });
+//    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

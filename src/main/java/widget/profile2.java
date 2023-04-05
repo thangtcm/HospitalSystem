@@ -89,9 +89,7 @@ public class profile2 extends javax.swing.JPanel {
         TitleTable.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         TitleTable.setText("Patient records");
 
-        button21.setForeground(new java.awt.Color(255, 255, 255));
         button21.setText("New Bill Drug");
-        button21.setColor(new java.awt.Color(79, 98, 203));
         button21.setRadius(15);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

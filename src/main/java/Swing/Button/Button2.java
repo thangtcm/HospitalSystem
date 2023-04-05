@@ -47,19 +47,19 @@ public final class Button2 extends JButton {
     public Button2() {
         //  Init Color
         this.sizeBorder = 2;
-        //setColor(Color.WHITE);
-//        colorOver = new Color(79,98,203);
-//        colorClick = new Color(152, 184, 144);
         borderColor = new Color(79,98,203);
-        backgroundColor = new Color(79,98,203);
-        setBackground(backgroundColor);
-        setForeground(color);
+        backgroundColor = Color.WHITE;
+        colorHover = new Color(79,98,203);
+        BackgroundHoverColor = new Color(79,98,203);
+        colorForeground = Color.WHITE;
+        setBackground(BackgroundHoverColor);
+        setForeground(colorForeground);
         setContentAreaFilled(false);
         //  Add event mouse
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
-                setBackground(BackgroundHoverColor);
+                setBackground(backgroundColor);
                 setForeground(colorHover);
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
                 over = true;
@@ -67,8 +67,8 @@ public final class Button2 extends JButton {
 
             @Override
             public void mouseExited(MouseEvent me) {
-                setBackground(getBackgroundColor());
-                setForeground(getColor());
+                setBackground(BackgroundHoverColor);
+                setForeground(colorForeground);
                 over = false;
 
             }
@@ -76,24 +76,27 @@ public final class Button2 extends JButton {
             @Override
             public void mousePressed(MouseEvent me) {
                 setBackground(BackgroundHoverColor);
+                setForeground(colorForeground);
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
                 if (over) {
                     setBackground(getBackgroundColor());
+                    setForeground(colorHover);
                 } else {
                     setBackground(getBackgroundColor());
+                    setForeground(colorForeground);
                 }
             }
         });
     }
 
     private boolean over;
-    private Color color;
     private Color backgroundColor;
     private Color colorHover;
     private Color BackgroundHoverColor;
+    private Color colorForeground;
     private Color borderColor;
     private int radius = 0;
     private int sizeBorder;
@@ -154,13 +157,6 @@ public final class Button2 extends JButton {
     }
 
     /**
-     * @return the color
-     */
-    public Color getColor() {
-        return color;
-    }
-
-    /**
      * @return the backgroundColor
      */
     public Color getBackgroundColor() {
@@ -168,16 +164,23 @@ public final class Button2 extends JButton {
     }
 
     /**
-     * @param color the color to set
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
      * @param backgroundColor the backgroundColor to set
      */
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    /**
+     * @return the colorForeground
+     */
+    public Color getColorForeground() {
+        return colorForeground;
+    }
+
+    /**
+     * @param colorForeground the colorForeground to set
+     */
+    public void setColorForeground(Color colorForeground) {
+        this.colorForeground = colorForeground;
     }
 }

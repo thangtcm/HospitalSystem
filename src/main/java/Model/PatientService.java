@@ -12,13 +12,15 @@ import java.util.Date;
  */
 public class PatientService {
     private Integer ID;
-    private Service service;
-    private BillService billService;
+    private Integer service;
+    private Integer billService;
     private Date StartTime;
     private Date EndTime;
     private String Description;
     private String Result;
     private String Note;
+    private double Price;
+    
 
     /**
      * @return the ID
@@ -32,34 +34,6 @@ public class PatientService {
      */
     public void setID(Integer ID) {
         this.ID = ID;
-    }
-
-    /**
-     * @return the service
-     */
-    public Service getService() {
-        return service;
-    }
-
-    /**
-     * @param service the service to set
-     */
-    public void setService(Service service) {
-        this.service = service;
-    }
-
-    /**
-     * @return the billService
-     */
-    public BillService getBillService() {
-        return billService;
-    }
-
-    /**
-     * @param billService the billService to set
-     */
-    public void setBillService(BillService billService) {
-        this.billService = billService;
     }
 
     /**
@@ -130,6 +104,48 @@ public class PatientService {
      */
     public void setNote(String Note) {
         this.Note = Note;
+    }
+
+    /**
+     * @return the service
+     */
+    public Integer getService() {
+        return service;
+    }
+
+    /**
+     * @param service the service to set
+     */
+    public void setService(Integer service) {
+        this.service = service;
+    }
+
+    /**
+     * @return the billService
+     */
+    public Integer getBillService() {
+        return billService;
+    }
+
+    /**
+     * @param billService the billService to set
+     */
+    public void setBillService(Integer billService) {
+        this.billService = billService;
+    }
+
+    /**
+     * @return the Price
+     */
+    public double getPrice() {
+        return Price;
+    }
+
+    /**
+     * @param Price the Price to set
+     */
+    public void setPrice(double Price) {
+        this.Price = Price;
     }
     
     

@@ -26,5 +26,9 @@ public interface Staff_Dao {
     
     public Employee getEmployee(int ID);
     
+    public Employee getNameEmployee(int ID);
+    
     public void ChangePassword(Employee staff, String Password);
+    
+    public int Count(String where);
 }

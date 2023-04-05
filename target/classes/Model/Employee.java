@@ -4,7 +4,9 @@
  */
 package Model;
 
-import java.util.Date;
+import Swing.Table.EventAction;
+import Swing.Table.ModelThreeAction;
+import java.sql.Date;
 
 /**
  *
@@ -22,7 +24,7 @@ public class Employee {
     private Date Birthday;
     private String Gender;
     private String Address;
-    private String NumberPhonne;
+    private String NumberPhone;
     private String email;
     private String RoleName;
     
@@ -44,8 +46,20 @@ public class Employee {
         this.RoleName = staff.RoleName;
         this.Gender = staff.Gender;
         this.Address = staff.Address;
-        this.NumberPhonne = staff.NumberPhonne;
+        this.NumberPhone = staff.NumberPhone;
         this.email = staff.email;
+    }
+    
+    public Object[] toRowTable(EventAction event) {
+        return new Object[]{this.ID, getFullName(), this.Birthday, this.Gender, this.Address, this.NumberPhone, this.RoleName ,new ModelThreeAction(this, event)};
+    }
+    
+    public Employee(Integer ID, String FirstName, String MiddleName, String LastName)
+    {
+        this.ID = ID;
+        this.FirstName = FirstName;
+        this.MiddleName = MiddleName;
+        this.LastName = LastName;
     }
     
     /**
@@ -103,15 +117,15 @@ public class Employee {
     /**
      * @return the NumberPhonne
      */
-    public String getNumberPhonne() {
-        return NumberPhonne;
+    public String getNumberPhone() {
+        return NumberPhone;
     }
 
     /**
      * @param NumberPhonne the NumberPhonne to set
      */
-    public void setNumberPhonne(String NumberPhonne) {
-        this.NumberPhonne = NumberPhonne;
+    public void setNumberPhone(String NumberPhonne) {
+        this.NumberPhone = NumberPhonne;
     }
 
     /**
@@ -218,8 +232,8 @@ public class Employee {
     public String getFullName()
     {
         if (this.FirstName == null && this.MiddleName == null && this.LastName == null) {
-        return null;
-    }
+            return null;
+        }
         String fullName = (this.FirstName != null ? this.FirstName : "")
                 + (this.MiddleName  != null ?  " " + this.MiddleName  : "") + " "
                 + (this.LastName != null ? this.LastName : "");

@@ -6,13 +6,13 @@ package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.Service_Dao;
 import Model.Service;
+import Services.StringHandle;
 import dao.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -32,22 +32,23 @@ public class Service_DaoImpl implements Service_Dao{
     public ArrayList<Service> getServiceList(Service service) {
         ArrayList<Service> list = new ArrayList<>();
         
-        StringBuilder sql = new StringBuilder("SELECT * FROM [Service] WHERE ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Service]");
 
         if(service != null)
         {
             Integer id = service.getID();
             if(id != null)
             {
-                sql.append("ID = '").append(service.getID()).append("%' ");  
-            }else
-                {
-                    sql.append("ServiceName LIKE N'%").append(service.getServiceName()).append("%' ");
-                }
+                sql.append(" AND ID = '").append(service.getID()).append("' ");  
+            }
+            if(service.getServiceName() != null)
+            {
+                sql.append(" AND ServiceName LIKE N'%").append(StringHandle.addWildcards(service.getServiceName())).append("%' ");
+            }
             
         }
         try{
-            prepStatement = conn.prepareStatement(sql.toString());
+            prepStatement = conn.prepareStatement(sql.toString().replaceFirst("AND", "WHERE"));
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
@@ -78,7 +79,7 @@ public class Service_DaoImpl implements Service_Dao{
 
     @Override
     public boolean AddService(Service service) {
-        String sql = "INSERT INTO [Service] (ServiceName, ServiceDescription, ServicePrice) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [Service] (ServiceName, ServiceDescription, ServicePrice) VALUES (?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);
@@ -146,5 +147,31 @@ public class Service_DaoImpl implements Service_Dao{
             }
         }
         return false;
+    }
+    
+    @Override
+    public int Count(String where)
+    {
+        String queryString = "SELECT COUNT(*) FROM [Service]";
+        if(where != null || !"".equals(where))
+        {
+            queryString += " WHERE " + where;
+        }
+        try {
+            prepStatement = conn.prepareStatement(queryString);
+            resultSet = prepStatement.executeQuery();
+            return resultSet.getInt(1);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
     }
 }

@@ -18,5 +18,7 @@ public interface Service_Dao {
     
     public void Delete_Service(int ID);
     
+    public int Count(String where);
+    
     public boolean Update_Service(Service service);
 }

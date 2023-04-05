@@ -4,7 +4,6 @@
  */
 package ViewForm;
 
-import Swing.Table.ShadowTable;
 import java.awt.Color;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -46,9 +45,6 @@ public class Test extends javax.swing.JFrame {
             
             model.addRow(vector);
         }
-        table.fixTable(jScrollPane1);
-        table.setModel(model);
-
     }
 
     /**
@@ -61,33 +57,16 @@ public class Test extends javax.swing.JFrame {
     private void initComponents() {
 
         calendarCustom1 = new calendar.CalendarCustom();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new Swing.Table.Table();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(calendarCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(69, 69, 69)
+                .addComponent(calendarCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(730, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -95,9 +74,7 @@ public class Test extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(calendarCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(666, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,7 +122,5 @@ public class Test extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private calendar.CalendarCustom calendarCustom1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private Swing.Table.Table table;
     // End of variables declaration//GEN-END:variables
 }

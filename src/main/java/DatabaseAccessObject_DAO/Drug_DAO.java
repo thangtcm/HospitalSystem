@@ -18,5 +18,7 @@ public interface Drug_Dao {
     
     public void Delete_Drug(int ID);
     
+    public int Count(String where);
+    
     public boolean Update_Drug(Drug drug);
 }

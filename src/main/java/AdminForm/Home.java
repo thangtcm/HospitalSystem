@@ -71,9 +71,7 @@ public class Home extends javax.swing.JPanel {
         TitleTable.setForeground(new java.awt.Color(129, 148, 255));
         TitleTable.setText("5P Technology Hospital");
 
-        button21.setForeground(new java.awt.Color(255, 255, 255));
         button21.setText("Search");
-        button21.setColor(new java.awt.Color(79, 98, 203));
         button21.setRadius(15);
 
         panel1.setBackground(new java.awt.Color(255, 255, 255));

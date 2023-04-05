@@ -36,6 +36,6 @@ public class Convert {
     
     public static void main(String[] args) {
         Convert con = new Convert();
-        System.out.println(con.convertName("  tUẤn   aNh"));
+        System.out.println(con.convertName(""));
     }
 }

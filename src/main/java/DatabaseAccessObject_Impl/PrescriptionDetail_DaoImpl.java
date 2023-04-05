@@ -1,5 +1,16 @@
 package DatabaseAccessObject_Impl;
 
+import DatabaseAccessObject_DAO.BillPrescription_Dao;
+import DatabaseAccessObject_DAO.PrescriptionDetail_Dao;
+import Model.PrescriptionDetail;
+import dao.Convert;
+import dao.DBConnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class PrescriptionDetail_DaoImpl implements PrescriptionDetail_Dao{
 
     Connection conn = null;
@@ -11,20 +22,58 @@ public class PrescriptionDetail_DaoImpl implements PrescriptionDetail_Dao{
         conn = new DBConnect().getConnection();
     }
 
-    public ArrayList<PrescriptionDetail> getPrescriptionList(int ID);
+    @Override
+    public ArrayList<PrescriptionDetail> getPrescriptionList(int ID){
+        ArrayList<PrescriptionDetail> list = new ArrayList<>();
+        
+        String query = "Select * From [PrescriptionDetail] Where PrescriptionID = ?";
+        
+        try{
+            //statement = conn.createStatement();  
+            prepStatement = conn.prepareStatement(query);
+            prepStatement.setInt(1, ID);
+            resultSet = prepStatement.executeQuery();
+            while (resultSet.next())
+            {
+                    PrescriptionDetail object = new PrescriptionDetail();
+                    object.setID(resultSet.getInt("ID"));
+
+                    object.setPrescription(resultSet.getInt("PrescriptionID"));
+                    
+                    object.setPrescription(resultSet.getInt("DrugID"));
+                    
+                    object.setQuantity(resultSet.getInt("Quantity"));
+                    object.setPrice(resultSet.getDouble("Price"));
+                    list.add(object);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return list;
+    }
     
+    @Override
     public boolean AddPrescriptionDetail(PrescriptionDetail prescription){
         String sql = "INSERT INTO [PrescriptionDetail] (PrescriptionID, DrugID, Quantity, TotalPrice) VALUES (?,?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);
             int index = 1;
-            prepStatement.setInt(index++, prescription.getEmployee().getID());
-            prepStatement.setInt(index++, prescription.MedicalExamination().getID());
-            prepStatement.setDate(index++, Convert.convertDate(prescription.getCreateTime()));
-            prepStatement.setDate(index++, Convert.convertDate(prescription.getReceivedTime()));
-            prepStatement.setDouble(index++, prescription.Price());
-            prepStatement.setString(index++, prescription.getNote().trim());
+            prepStatement.setInt(index++, prescription.getPrescription());
+            prepStatement.setInt(index++, prescription.getDrug());
+            prepStatement.setInt(index++, prescription.getQuantity());
+            prepStatement.setDouble(index++, prescription.getPrice());
             return prepStatement.executeUpdate() > 0;
         }
          catch (SQLException e) {
@@ -41,7 +90,8 @@ public class PrescriptionDetail_DaoImpl implements PrescriptionDetail_Dao{
         return false;
     }
     
-    public boolean Delete_PrescriptionDetail(int ID){
+    @Override
+    public void Delete_PrescriptionDetail(int ID){
         try {
             String query = "DELETE FROM [PrescriptionDetail] WHERE ID=?";
             prepStatement = (PreparedStatement) conn.prepareStatement(query);
@@ -60,20 +110,19 @@ public class PrescriptionDetail_DaoImpl implements PrescriptionDetail_Dao{
         }
     }
 
-    public Patient getPrescriptionDetail(int ID);
+    //public Patient getPrescriptionDetail(int ID);
     
+    @Override
     public boolean Update_PrescriptionDetail(PrescriptionDetail prescription){
         String query = "UPDATE [PrescriptionDetail] SET EmployeeID =?, MedicalExaminationID =?, CreateDate =?, ReceivedDate =?, TotalPrice =?, Note =? WHERE ID = ?";
         try{
             prepStatement = conn.prepareStatement(query);
             int index = 1;
-            prepStatement.setInt(index++, prescription.getEmployee().getID());
-            prepStatement.setInt(index++, prescription.MedicalExamination().getID());
-            prepStatement.setDate(index++, Convert.convertDate(prescription.getCreateTime()));
-            prepStatement.setDate(index++, Convert.convertDate(prescription.getReceivedTime()));
-            prepStatement.setDouble(index++, prescription.Price());
-            prepStatement.setString(index++, prescription.getNote().trim());
-            prepStatement.setInt(index++, patient.getID());
+            prepStatement.setInt(index++, prescription.getPrescription());
+            prepStatement.setInt(index++, prescription.getDrug());
+            prepStatement.setInt(index++, prescription.getQuantity());
+            prepStatement.setDouble(index++, prescription.getPrice());
+            prepStatement.setDouble(index++, prescription.getID());
             return prepStatement.executeUpdate() > 0;
         } catch (SQLException e)
         {

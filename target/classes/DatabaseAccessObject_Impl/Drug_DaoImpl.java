@@ -6,13 +6,13 @@ package DatabaseAccessObject_Impl;
 
 import DatabaseAccessObject_DAO.Drug_Dao;
 import Model.Drug;
+import Services.StringHandle;
 import dao.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -32,22 +32,23 @@ public class Drug_DaoImpl implements Drug_Dao{
     public ArrayList<Drug> getDrugList(Drug drug) {
         ArrayList<Drug> list = new ArrayList<>();
         
-        StringBuilder sql = new StringBuilder("SELECT * FROM [Drugs] WHERE ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Drugs]");
 
         if(drug != null)
         {
             Integer id = drug.getID();
             if(id != null)
             {
-                sql.append("ID = '").append(drug.getID()).append("%' ");  
-            }else
-                {
-                    sql.append("DrugName LIKE N'%").append(drug.getDrugName()).append("%' ");
-                }
+                sql.append(" AND ID LIKE '%").append(drug.getID()).append("%' ");  
+            }
+            if(drug.getDrugName() != null)
+            {
+                sql.append(" AND DrugName LIKE N'").append(StringHandle.addWildcards(drug.getDrugName())).append("' ");
+            }
             
         }
         try{
-            prepStatement = conn.prepareStatement(sql.toString());
+            prepStatement = conn.prepareStatement(sql.toString().replaceFirst("AND", "WHERE"));
             resultSet = prepStatement.executeQuery();
             while (resultSet.next())
             {
@@ -154,4 +155,29 @@ public class Drug_DaoImpl implements Drug_Dao{
         return false;
     }
     
+    @Override
+    public int Count(String where)
+    {
+        String queryString = "SELECT COUNT(*) FROM [Drugs]";
+        if(where != null || !"".equals(where))
+        {
+            queryString += " WHERE " + where;
+        }
+        try {
+            prepStatement = conn.prepareStatement(queryString);
+            resultSet = prepStatement.executeQuery();
+            return resultSet.getInt(1);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (prepStatement != null) {
+                    prepStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
+    }
 }
