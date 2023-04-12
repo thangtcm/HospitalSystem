@@ -1,4 +1,4 @@
-package com.raven.swing;
+package Swing.TextField;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -126,7 +126,7 @@ public class TextField extends JTextField {
         } else {
             g2.setColor(new Color(150, 150, 150));
         }
-        g2.fillRect(2, height - spaceHelperText - 1, width - 4, 1);
+        g2.fillRect(2, height - getSpaceHelperText() - 1, width - 4, 1);
         createHintText(g2);
         createLineStyle(g2);
         createHelperText(g2);
@@ -156,7 +156,7 @@ public class TextField extends JTextField {
     private void createLineStyle(Graphics2D g2) {
         if (isFocusOwner()) {
             double width = getWidth() - 4;
-            int height = getHeight() - spaceHelperText;
+            int height = getHeight() - getSpaceHelperText();
             g2.setColor(lineColor);
             double size;
             if (show) {
@@ -189,5 +189,19 @@ public class TextField extends JTextField {
             showing(string.equals(""));
         }
         super.setText(string);
+    }
+
+    /**
+     * @return the spaceHelperText
+     */
+    public int getSpaceHelperText() {
+        return spaceHelperText;
+    }
+
+    /**
+     * @param spaceHelperText the spaceHelperText to set
+     */
+    public void setSpaceHelperText(int spaceHelperText) {
+        this.spaceHelperText = spaceHelperText;
     }
 }

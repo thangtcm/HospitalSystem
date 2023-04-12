@@ -6,8 +6,6 @@ package Swing.Textfield;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTextField;
@@ -49,7 +47,6 @@ public class TextFieldSuggestion extends JTextField {
         {
             setText(labelText);
             setForeground(Color.GRAY);
-            System.out.println("Swing.Textfield.TextFieldSuggestion.PlaceHolder()");
         }
         textUI = new TextFieldSuggestionUI(this);
         setUI(textUI);
@@ -99,7 +96,6 @@ public class TextFieldSuggestion extends JTextField {
             {
                 setText(labelText);
                 setForeground(Color.GRAY);
-                System.out.println("Swing.Textfield.TextFieldSuggestion.PlaceHolder()");
             }
         }
         

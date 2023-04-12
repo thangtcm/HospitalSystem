@@ -9,13 +9,12 @@ import javax.swing.JComboBox;
 /**
  *
  * @author couni
+ * @param <E>
  */
 public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
     public ComboBoxSuggestion() {
         setUI(new ComboSuggestionUI());
     }
-    
-    
 }
 

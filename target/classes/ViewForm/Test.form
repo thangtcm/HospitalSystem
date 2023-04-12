@@ -23,25 +23,41 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="147" max="32767" attributes="0"/>
-              <Component id="newServiceBill1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+                      <Component id="textFieldSuggestion1" min="-2" pref="330" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+                      <Component id="comboBoxSuggestion1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="742" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-              <Component id="newServiceBill1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="59" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
+              <Component id="textFieldSuggestion1" min="-2" pref="46" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="comboBoxSuggestion1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="436" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="Form.Service.NewServiceBill" name="newServiceBill1">
+    <Component class="Swing.Textfield.TextFieldSuggestion" name="textFieldSuggestion1">
+      <Properties>
+        <Property name="opaque" type="boolean" value="true"/>
+        <Property name="round" type="int" value="25"/>
+      </Properties>
+    </Component>
+    <Component class="Swing.Combobox.ComboBoxSuggestion" name="comboBoxSuggestion1">
     </Component>
   </SubComponents>
 </Form>
