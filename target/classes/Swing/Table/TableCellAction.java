@@ -6,6 +6,7 @@ package Swing.Table;
 
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
@@ -25,7 +26,8 @@ public class TableCellAction extends DefaultCellEditor{
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int i, int i1) {
         this.data = (ModelAction) o;
         OneAction cell = new OneAction(data, i);
-        cell.setBackground(new Color(239, 244, 255));
+        cell.setBackground(new Color(66,98,203));
+        cell.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.decode("#4F62CB")), BorderFactory.createEmptyBorder(0, 0, 0, 0)));
         return cell;
     }
 

@@ -398,7 +398,7 @@ public class MedicalDetails extends javax.swing.JPanel {
 
     private void btnNewServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewServiceActionPerformed
         // TODO add your handling code here:
-        showForm(new NewServiceBill(main, TypeInterface.Create, this.employee));
+        showForm(new NewServiceBill(main, TypeInterface.Create, this.employee, this.medical_target, null));
     }//GEN-LAST:event_btnNewServiceActionPerformed
 
 

@@ -7,7 +7,7 @@ package Model;
 import DatabaseAccessObject_DAO.Service_Dao;
 import DatabaseAccessObject_Impl.Service_DaoImpl;
 import Swing.Table.EventAction;
-import Swing.Table.ModelThreeAction;
+import Swing.Table.ModelAction;
 import java.util.Date;
 
 /**
@@ -25,6 +25,8 @@ public class PatientService {
     private String Note;
     private double Price;
     
+    private Service serivces;
+    
 
     public PatientService()
     {
@@ -34,7 +36,7 @@ public class PatientService {
     public Object[] toRowTable(EventAction event) {
         Service_Dao service_Dao = new Service_DaoImpl();
         
-        return new Object[]{this.ID, service_Dao.getService(this.service).getServiceName() , this.StartTime, this.EndTime, this.Result, new ModelThreeAction(this, event)};
+        return new Object[]{this.ID, service_Dao.getService(this.service).getServiceName() , this.StartTime, this.EndTime, this.Result, new ModelAction(this, event)};
     }
     
     /**
@@ -161,6 +163,14 @@ public class PatientService {
      */
     public void setPrice(double Price) {
         this.Price = Price;
+    }
+
+    public Service getSerivces() {
+        return serivces;
+    }
+
+    public void setSerivces(Service serivces) {
+        this.serivces = serivces;
     }
     
     

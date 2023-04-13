@@ -77,6 +77,7 @@ public class PatientService_DaoImpl implements PatientService_Dao{
             prepStatement.setDate(index++, Convert.convertDate(service.getStartTime()));
             prepStatement.setDate(index++, Convert.convertDate(service.getEndTime()));
             prepStatement.setString(index++, service.getDescription());
+            prepStatement.setString(index++, service.getResult());
             prepStatement.setString(index++, service.getNote());
             prepStatement.setDouble(index++, service.getPrice());
             return prepStatement.executeUpdate() > 0;

@@ -25,7 +25,7 @@ public class OneAction extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("swing.Table.Action.<init>()");
-                data.getEvent().view(data.getObject(), row);
+                data.getEvent().delete(data.getObject(), row);
             }
         });
     }
@@ -41,7 +41,7 @@ public class OneAction extends javax.swing.JPanel {
 
         cmdView = new Swing.Button.Button();
 
-        cmdView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/view.png"))); // NOI18N
+        cmdView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/delete.png"))); // NOI18N
         cmdView.setPreferredSize(new java.awt.Dimension(25, 25));
         cmdView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

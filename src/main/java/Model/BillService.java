@@ -6,6 +6,7 @@ package Model;
 
 import Swing.Table.EventAction;
 import Swing.Table.ModelThreeAction;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class BillService {
     
     
     //Get all list service
-    private List<PatientService> Listservice;
+    private ArrayList<PatientService> Listservice = new ArrayList<>();
 
     public BillService()
     {
@@ -40,22 +41,14 @@ public class BillService {
         this.Paid = billService.Paid;
     }
     
-    
     public Object[] toRowTable(EventAction event) {
-        //DecimalFormat df = new DecimalFormat("$#,##0.00");
         return new Object[]{this.ID, this.medicalExamination.getPatient().getFullName(), this.BillDate, this.Price, new ModelThreeAction(this, event)};
     }
     
-    /**
-     * @return the ID
-     */
     public Integer getID() {
         return ID;
     }
 
-    /**
-     * @param ID the ID to set
-     */
     public void setID(Integer ID) {
         this.ID = ID;
     }
@@ -135,13 +128,6 @@ public class BillService {
      */
     public List<PatientService> getListservice() {
         return Listservice;
-    }
-
-    /**
-     * @param Listservice the Listservice to set
-     */
-    public void setListservice(List<PatientService> Listservice) {
-        this.Listservice = Listservice;
     }
     
 }

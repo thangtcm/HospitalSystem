@@ -20,12 +20,10 @@ public class LabelStatus extends JLabel {
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        if (getText().equals("Pending")) {
-            g2.setColor(new Color(253, 187, 65));
-        } else if (getText().equals("Approved")) {
-            g2.setColor(new Color(59, 211, 160));
-        } else {
-            g2.setColor(new Color(240, 81, 81));
+        switch (getText()) {
+            case "Pending" -> g2.setColor(new Color(253, 187, 65));
+            case "Approved" -> g2.setColor(new Color(59, 211, 160));
+            default -> g2.setColor(new Color(240, 81, 81));
         }
         int x[] = {5, getWidth(), getWidth() - 5, 0};
         int y[] = {0, 0, getHeight(), getHeight()};

@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -75,21 +76,24 @@ public class BillService_DaoImpl implements BillService_Dao{
     }
 
     @Override
-    public boolean AddBillService(BillService billService) {
-        String sql = "INSERT INTO [BillServices] (MedicalExaminationID, EmployeeID, BillDate, Price, Paid) VALUES (?, ?,?,?,?)";
+    public int AddBillService(BillService billService) {
+        String sql = "INSERT INTO [BillServices] (MedicalExaminationID, EmployeeID, BillDate) VALUES (?,?,?)";
         
         try{
-            prepStatement = conn.prepareStatement(sql);
+            prepStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int index = 1;
             prepStatement.setInt(index++, billService.getMedicalExamination().getID());
             prepStatement.setInt(index++, billService.getEmployee().getID());
             prepStatement.setDate(index++, Convert.convertDate(billService.getBillDate()));
-            prepStatement.setDouble(index++, billService.getPrice());
-            prepStatement.setBoolean(index++, billService.isPaid());
-            return prepStatement.executeUpdate() > 0;
+            if(prepStatement.executeUpdate() > 0)
+            {
+                resultSet = prepStatement.getGeneratedKeys();
+                if(resultSet.next())
+                    return resultSet.getInt(1);
+            }
         }
          catch (SQLException e) {
-            System.out.println("Failed to add patient: " + e.getMessage());
+            System.out.println("Failed to add patient Service: " + e.getMessage());
         }finally {
             try {
                 if (prepStatement != null) {
@@ -99,7 +103,7 @@ public class BillService_DaoImpl implements BillService_Dao{
                 System.out.println(e.getMessage());
             }
         }
-        return false;
+        return -1;
     }
 
     @Override

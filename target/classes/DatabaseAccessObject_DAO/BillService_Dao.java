@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public interface BillService_Dao {
     public ArrayList<BillService> getBillServiceList(int ID);
     
-    public boolean AddBillService(BillService billService);
+    public int AddBillService(BillService billService);
     
     public void Delete_BillService(int ID);
     

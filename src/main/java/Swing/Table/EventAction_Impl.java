@@ -4,15 +4,10 @@
  */
 package Swing.Table;
 
-import AdminForm.Drug.DetailsDrug;
 import DatabaseAccessObject_DAO.Drug_Dao;
-import DatabaseAccessObject_DAO.MedicalExamination_Dao;
-import DatabaseAccessObject_DAO.Patient_Dao;
 import DatabaseAccessObject_DAO.Service_Dao;
 import DatabaseAccessObject_DAO.Staff_Dao;
 import DatabaseAccessObject_Impl.Drug_DaoImpl;
-import DatabaseAccessObject_Impl.MedicalExamination_DaoImpl;
-import DatabaseAccessObject_Impl.Patient_DaoImpl;
 import DatabaseAccessObject_Impl.Service_DaoImpl;
 import DatabaseAccessObject_Impl.Staff_DaoImpl;
 import Dialog.Swal_Confirm;
@@ -28,10 +23,12 @@ import Form.Medical.NewMedical;
 import Form.Patient.NewPatient;
 import Form.Patient.PatientDetails;
 import Form.Service.NewService;
+import Model.BillService;
 import Model.Drug;
 import Model.Employee;
 import Model.MedicalExamination;
 import Model.Patient;
+import Model.PatientService;
 import Model.Service;
 import ViewForm.Main;
 import java.awt.Component;
@@ -111,6 +108,54 @@ public abstract class EventAction_Impl implements EventAction{
 
                         Drug_Dao object_Dao = new Drug_DaoImpl();
                         object_Dao.Delete_Drug(object.getID());
+                    } else {
+                        System.out.println("User click Cancel");
+                    }
+                }
+                else {
+                    showMessageError("You don't have permission to use this function.", TypeNotification.Warning);
+                }
+            } else {
+                System.out.println("No row selected");
+            } 
+        }
+        if (obj instanceof PatientService) {
+            PatientService object = (PatientService) obj;
+            System.out.println(".delete()" + object.getID());
+            if (row != -1) {
+                if(this.employeecurrent.getRoleName().equals(RoleName.Admin.toString()) || this.employeecurrent.getRoleName().equals(RoleName.Pharmacist.toString()))
+                {
+                    if (showMessage("Delete Services", TypeNotification.Default)) {
+                        if (this.table.isEditing()) {
+                            this.table.getCellEditor().stopCellEditing();
+                        }
+                        DefaultTableModel model = (DefaultTableModel) table.getModel();
+                        model.removeRow(row);
+
+                    } else {
+                        System.out.println("User click Cancel");
+                    }
+                }
+                else {
+                    showMessageError("You don't have permission to use this function.", TypeNotification.Warning);
+                }
+            } else {
+                System.out.println("No row selected");
+            } 
+        }
+        if (obj instanceof BillService) {
+            BillService object = (BillService) obj;
+            System.out.println(".delete()" + object.getID());
+            if (row != -1) {
+                if(this.employeecurrent.getRoleName().equals(RoleName.Admin.toString()) || this.employeecurrent.getRoleName().equals(RoleName.Pharmacist.toString()))
+                {
+                    if (showMessage("Delete Services", TypeNotification.Default)) {
+                        if (this.table.isEditing()) {
+                            this.table.getCellEditor().stopCellEditing();
+                        }
+                        DefaultTableModel model = (DefaultTableModel) table.getModel();
+                        model.removeRow(row);
+
                     } else {
                         System.out.println("User click Cancel");
                     }

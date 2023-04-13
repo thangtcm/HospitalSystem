@@ -4,13 +4,18 @@
  */
 package Form.Service;
 
+import DatabaseAccessObject_DAO.BillService_Dao;
 import DatabaseAccessObject_DAO.MedicalExamination_Dao;
+import DatabaseAccessObject_DAO.PatientService_Dao;
 import DatabaseAccessObject_DAO.Service_Dao;
-import DatabaseAccessObject_DAO.Staff_Dao;
+import DatabaseAccessObject_Impl.BillService_DaoImpl;
 import DatabaseAccessObject_Impl.MedicalExamination_DaoImpl;
+import DatabaseAccessObject_Impl.PatientService_DaoImpl;
 import DatabaseAccessObject_Impl.Service_DaoImpl;
-import DatabaseAccessObject_Impl.Staff_DaoImpl;
+import Dialog.Swal_Confirm;
+import Dialog.Swal_Notification;
 import Enum.TypeInterface;
+import Enum.TypeNotification;
 import Model.BillService;
 import Model.Employee;
 import Model.MedicalExamination;
@@ -18,19 +23,13 @@ import Model.PatientService;
 import Model.Service;
 import Swing.Table.EventAction;
 import Swing.Table.ThreeAction_Abs;
-import java.awt.Component;
+import ViewForm.Main;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 
 /**
  *
@@ -46,7 +45,7 @@ public class NewServiceBill extends javax.swing.JPanel {
     private Employee employee;
     private TypeInterface type;
     private BillService servicer_bill;
-    private ArrayList<PatientService> serviceList;
+    private MedicalExamination medical;
     
     public NewServiceBill()
     {
@@ -61,18 +60,21 @@ public class NewServiceBill extends javax.swing.JPanel {
         init(type);
     }
     
-    public NewServiceBill(JPanel main, TypeInterface type, Employee employee, BillService servicer_bill) {
+    public NewServiceBill(JPanel main, TypeInterface type, Employee employee, MedicalExamination medical, BillService servicer_bill) {
         initComponents();
         this.main = main;
         this.employee = employee;
         this.type = type;
-        this.servicer_bill = servicer_bill;
+        if(servicer_bill == null)
+            this.servicer_bill = new BillService();
+        else
+            this.servicer_bill = servicer_bill;
+        this.medical = medical;
         init(type);
     }
     
     private void init(TypeInterface type)
     {
-        Date date = new Date();
         txtDescription.setText("");
         txtNote.setText("");
         txtResult.setText("");
@@ -81,6 +83,12 @@ public class NewServiceBill extends javax.swing.JPanel {
         DefaultComboBoxModel<MedicalExamination> model = new DefaultComboBoxModel<>();
         model.addAll(medicalList);
         JMedical.setModel(model);
+        JMedical.setSelectedItem(this.medical);
+        JMedical.setEditable(false);
+        JMedical.setEnabled(false);
+        // Tắt sự kiện nhấn phím và chuột trên JComboBox
+        JMedical.setFocusable(false);
+        JMedical.setRequestFocusEnabled(false);
         
         Service_Dao service_Dao = new Service_DaoImpl();
         ArrayList<Service> serviceLists = service_Dao.getServiceList(new Service(null, null));
@@ -89,7 +97,6 @@ public class NewServiceBill extends javax.swing.JPanel {
         JService.setModel(modelService);
         
         table1.fixTable(jScrollPane1);
-        EventAction eventAction = new ThreeAction_Abs(table1, this.employee, main);
         DefaultTableModel modeltable = new DefaultTableModel();
         modeltable.addColumn("#");
         modeltable.addColumn("Tên Dịch Vụ");
@@ -97,17 +104,84 @@ public class NewServiceBill extends javax.swing.JPanel {
         modeltable.addColumn("Hạn Ngày");
         modeltable.addColumn("Kết Quả");
         modeltable.addColumn("Chức Năng");
-        table1.setModel(modeltable);
-        
-        if(type == TypeInterface.Create)
+
+        if(type == TypeInterface.Edit)
         {
+            PatientService_Dao patientService_Dao = new PatientService_DaoImpl();
+            EventAction eventAction = new EventAction() {
+                @Override
+                public <T> void delete(T object, int row) {
+                    if (object instanceof PatientService) {
+                        PatientService obj = (PatientService) object;
+                        if(row != -1)
+                        {
+                            if (showMessage("Delete Services", TypeNotification.Default)) {
+                                if (table1.isEditing()) {
+                                    table1.getCellEditor().stopCellEditing();
+                                }
+                                DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                                model.removeRow(row);
+                                patientService_Dao.Delete_ServiceDetail(obj.getID());
+                        } else {
+                            System.out.println("User click Cancel");
+                        }
+                        }
+                    }
+                }
+
+                @Override
+                public <T> void update(T object, int row) {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+
+                @Override
+                public <T> void view(T object, int row) {
+                    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                }
+            };
             
+            ArrayList<PatientService> patientServiceList = patientService_Dao.getServiceList(servicer_bill.getID());
+            for(PatientService obj : patientServiceList)
+            {
+                obj.setSerivces(service_Dao.getService(obj.getService()));
+                modeltable.addRow(obj.toRowTable(eventAction));
+            }
         }
-        else{
-            
+        table1.setModel(modeltable);
+        table1.setDefaultEditor(Object.class, null);
+    }
+    
+    private boolean ImportData()
+    {
+        Date date = new Date();
+        BillService_Dao billService_Dao = new BillService_DaoImpl();
+        servicer_bill.setBillDate(java.sql.Date.valueOf(dateFormat.format(date)));
+        servicer_bill.setEmployee(employee);
+        servicer_bill.setMedicalExamination(medical);
+        PatientService_Dao patientService_Dao = new PatientService_DaoImpl();
+        int patientServiceID = billService_Dao.AddBillService(servicer_bill);
+        if(patientServiceID != -1)
+        {
+            for(PatientService obj : servicer_bill.getListservice())
+            {
+                obj.setBillService(patientServiceID);
+                if(!patientService_Dao.AddServiceDetail(obj))
+                {
+                    showMessage("Đã có lỗi xảy ra", TypeNotification.Error);
+                    return false;
+                }
+            }
+            return true;
         }
+        
+        return false;
     }
 
+    private boolean showMessage(String message, TypeNotification type ) {
+        Swal_Notification obj = new Swal_Notification(Main.getFrames()[0], true);
+        obj.showMessage(message, type);
+        return obj.isOk();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -392,7 +466,37 @@ public class NewServiceBill extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        EventAction eventAction = new ThreeAction_Abs(table1, this.employee, main);
+        EventAction eventAction = new EventAction() {
+            @Override
+            public <T> void delete(T object, int row) {
+                if (object instanceof PatientService) {
+                    PatientService obj = (PatientService) object;
+                    if(row != -1)
+                    {
+                        if (showMessage("Delete Services", TypeNotification.Default)) {
+                            if (table1.isEditing()) {
+                                table1.getCellEditor().stopCellEditing();
+                            }
+                            DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                            model.removeRow(row);
+                            servicer_bill.getListservice().remove(obj);
+                    } else {
+                        System.out.println("User click Cancel");
+                    }
+                    }
+                }
+            }
+
+            @Override
+            public <T> void update(T object, int row) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public <T> void view(T object, int row) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        };
         PatientService patientService = new PatientService();
         patientService.setDescription(txtDescription.getText().trim());
         patientService.setNote(txtNote.getText().trim());
@@ -401,13 +505,18 @@ public class NewServiceBill extends javax.swing.JPanel {
         patientService.setEndTime(java.sql.Date.valueOf(dateFormat.format(JEndTime.getDate())));
         Service value = (Service)JService.getSelectedItem();
         patientService.setService(value.getID());
+        patientService.setPrice(value.getServicePrice());
         DefaultTableModel modelTable = (DefaultTableModel) table1.getModel();
         modelTable.addRow(patientService.toRowTable(eventAction));
         table1.setModel(modelTable);
+        servicer_bill.getListservice().add(patientService);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        // TODO add your handling code here:
+        if(ImportData())
+        {
+            showMessage("Thêm hóa đơn thành công", TypeNotification.Success);
+        }
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
 
