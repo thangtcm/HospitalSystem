@@ -124,6 +124,8 @@ public class NewEmployee extends javax.swing.JPanel {
         {
             
             employee.setID(this.employee_target.getID());
+            employee.setUserName(this.employee_target.getUserName());
+            employee.setPassword(this.employee_target.getPassword());
             if(employee_Dao.Update_Staff(employee))
             {
                 showMessage("Bạn vừa chỉnh sửa nhân viên thành công", TypeNotification.Success);

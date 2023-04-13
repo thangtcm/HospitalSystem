@@ -98,6 +98,8 @@ public class Staff_DaoImpl implements Staff_Dao{
             {
                 Employee table_staff = new Employee();
                 table_staff.setID(resultSet.getInt("ID"));
+                table_staff.setUserName(resultSet.getString("UserName").trim());
+                table_staff.setPassword(resultSet.getString("Password").trim());
                 table_staff.setFirstName(resultSet.getString("FirstName").trim());
                 table_staff.setMiddleName(resultSet.getString("MiddleName").trim());
                 table_staff.setLastName(resultSet.getString("LastName").trim());
