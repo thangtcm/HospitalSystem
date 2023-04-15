@@ -12,6 +12,7 @@ OPD (Out-Patient Department) is responsible for managing out-patients who just c
 <ul><li>Employee</li><li>Patient</li><li>MedicalExamination</li><li>Drug</li><li>Service</li><li>Bill Service</li></ul>
 
 <p align="middle">
+  
 ![image](https://user-images.githubusercontent.com/23113822/232237883-f366b735-6d84-4fd5-9081-d0675de7cb14.png)
 </p>
 
