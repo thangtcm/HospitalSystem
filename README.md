@@ -69,8 +69,13 @@ In addition, the system also provides functions for drug management, prescriptio
 ![itextpdf](https://img.shields.io/badge/Library-JCALENDAR-blue) 
 
 ## 👨🏼‍💻 Members
-<div>
-  
+
+<p>
+  <img src="[https://example.com/avatar.png](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png)" alt="Avatar" title="Trần Cao Minh Thắng"
+  style="margin-right:10px;">
+  - Trần Cao Minh Thắng [Coder]
+</p>
+
 ![image](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png "- Trần Cao Minh Thắng [Coder]")   <p style ="margin: 0 auto">- Trần Cao Minh Thắng [Coder]</p>
 </div>
 ![image](https://user-images.githubusercontent.com/23113822/232239661-77942db6-5d2e-4a3f-b738-61d3a1df2ba7.png)   - Lê Thảo Duyên [Tester]<br>
