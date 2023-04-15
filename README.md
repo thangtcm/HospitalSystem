@@ -17,34 +17,36 @@ In addition, the system also provides functions for drug management, prescriptio
 ![image](https://user-images.githubusercontent.com/23113822/232237883-f366b735-6d84-4fd5-9081-d0675de7cb14.png)
 </p>
 
-<p>The hospital management system we have developed is a <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about desktop application.">desktop application</a> built using <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Java Swing.">Java Swing</a> and the <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Maven.">Maven</a> project management tool. Based on the <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about project requirements.">project requirements</a>, we have categorized our system into the following main functions:</p>
+<h1 style="color: #4F62CB;">Hospital Management System</h1>
+
+<p>The hospital management system we have developed is a desktop application built using Java Swing and the Maven project management tool. Based on the project requirements, we have categorized our system into the following main functions:
 
 <ol>
 <li>
-<p><a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Patient management.">Patient management</a>: allows for adding, editing, and deleting patient information, including name, age, gender, <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about phone number.">phone number</a>, address, medical history, etc.</p>
+<p><strong>Patient management:</strong> allows for adding, editing, and deleting <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about patient information.">patient information</a>, including name, age, gender, <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about phone number.">phone number</a>, address, medical history, etc.</p>
 </li>
 <li>
-<p>Follow-up appointment management: enables scheduling follow-up appointments for patients, updating follow-up information, and notifying patients of their follow-up schedule.</p>
+<p><strong>Follow-up appointment management:</strong> enables scheduling follow-up appointments for patients, updating follow-up information, and notifying patients of their follow-up schedule.</p>
 </li>
 <li>
-<p>Employee management: allows for adding, editing, and deleting <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about employee information.">employee information</a>, including name, position, phone number, address, etc.</p>
+<p><strong>Employee management:</strong> allows for adding, editing, and deleting employee information, including name, position, phone number, address, etc.</p>
 </li>
 <li>
-<p><a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Medication management.">Medication management</a>: allows for adding, editing, and deleting <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about medication information.">medication information</a>, including <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about medication name.">medication name</a>, ingredients, <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about usage instructions.">usage instructions</a>, inventory quantity, etc.</p>
+<p><strong>Medication management:</strong> allows for adding, editing, and deleting medication information, including medication name, ingredients, usage instructions, inventory quantity, etc.</p>
 </li>
 <li>
-<p><a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Service management.">Service management</a>: allows for adding, editing, and deleting service information, including <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about service name.">service name</a>, price, usage time, etc.</p>
+<p><strong>Service management:</strong> allows for adding, editing, and deleting service information, including service name, price, usage time, etc.</p>
 </li>
 <li>
-<p><a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Medical record management.">Medical record management</a>: allows for storing <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about medical record information.">medical record information</a>, including symptoms, test results, prescriptions, doctor's advice, etc.</p>
+<p><strong>Medical record management:</strong> allows for storing medical record information, including symptoms, test results, prescriptions, doctor's advice, etc.</p>
 </li>
 <li>
-<p><a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Invoice management.">Invoice management</a>: allows for storing <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about invoice information.">invoice information</a>, including information on services and medications used by the patient, cost, usage time, etc.</p>
+<p><strong>Invoice management:</strong> allows for storing invoice information, including information on services and medications used by the patient, cost, usage time, etc.</p>
 </li>
 <li>
-<p>Prescription invoice management: allows for storing information on prescription invoices, including information on prescribed medications, quantity, dosage, etc.</p>
+<p><strong>Prescription invoice management:</strong> allows for storing information on prescription invoices, including information on prescribed medications, quantity, dosage, etc.</p>
 </li>
 </ol>
 
-<p>With the efforts of our team members, we have successfully developed a <a class="Markdown_link__9ACHA MarkdownLink_linkifiedLink__KxC9G" node="[object Object]" prompt="Tell me more about Hospital Management System.">Hospital Management System</a> that meets the project requirements and exceeds the satisfaction of the stakeholders involved in the project.</p>
+<p>With the efforts of our team members, we have successfully developed a Hospital Management System that meets the project requirements and exceeds the satisfaction of the stakeholders involved in the project.</p>
 
