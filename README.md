@@ -73,7 +73,7 @@ In addition, the system also provides functions for drug management, prescriptio
 <div display="flex"; align-items ="center"; justify-content="center">
   <img src="https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png" alt="Avatar" title="Trần Cao Minh Thắng"
   width="50" height="50">
-  Trần Cao Minh Thắng
+  &nbsp;&nbsp;Trần Cao Minh Thắng
 </div>
 
 ![image](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png "- Trần Cao Minh Thắng [Coder]")   <p style ="margin: 0 auto">- Trần Cao Minh Thắng [Coder]</p>
