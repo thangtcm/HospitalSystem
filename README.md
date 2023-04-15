@@ -70,11 +70,11 @@ In addition, the system also provides functions for drug management, prescriptio
 
 ## 👨🏼‍💻 Members
 
-<p>
+<div style="display:flex;align-items:center;">
   <img src="https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png" alt="Avatar" title="Trần Cao Minh Thắng"
   style="margin-right:10px;">
   - Trần Cao Minh Thắng [Coder]
-</p>
+</div>
 
 ![image](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png "- Trần Cao Minh Thắng [Coder]")   <p style ="margin: 0 auto">- Trần Cao Minh Thắng [Coder]</p>
 </div>
