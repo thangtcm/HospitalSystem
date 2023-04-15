@@ -71,7 +71,7 @@ In addition, the system also provides functions for drug management, prescriptio
 ## 👨🏼‍💻 Members
 <div>
   
-![Trần Cao Minh Thắng [Coder]](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png)   <p style ="margin: 0 auto">- Trần Cao Minh Thắng [Coder]</p>
+![image](https://user-images.githubusercontent.com/23113822/232242056-87a937ef-0aa0-4877-aa01-671cebf14cda.png)   <p style ="margin: 0 auto">- Trần Cao Minh Thắng [Coder]</p>
 </div>
 ![image](https://user-images.githubusercontent.com/23113822/232239661-77942db6-5d2e-4a3f-b738-61d3a1df2ba7.png)   - Lê Thảo Duyên [Tester]<br>
 ![image](https://user-images.githubusercontent.com/23113822/232239760-a85d70ed-0d89-4cdc-806c-562680862e32.png)   - Lê Ngọc Đình Đình [Designer]<br>
