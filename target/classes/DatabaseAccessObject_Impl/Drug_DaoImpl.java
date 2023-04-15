@@ -81,7 +81,7 @@ public class Drug_DaoImpl implements Drug_Dao{
 
     @Override
     public boolean AddDrug(Drug drug) {
-        String sql = "INSERT INTO [Drugs] (DrugName, DrugType, Quantity, DrugPrice, Description) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [Drugs] (DrugName, DrugType, Quantity, DrugPrice, Description) VALUES (?,?,?,?,?)";
         
         try{
             prepStatement = conn.prepareStatement(sql);

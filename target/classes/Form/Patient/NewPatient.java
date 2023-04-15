@@ -58,7 +58,7 @@ public class NewPatient extends javax.swing.JPanel {
             txtAddress.setText("");
             txtPhone.setText("");
             txtCID.setText("");
-            btnSave.setText("Resigner");
+            btnSave.setText("Submit");
         }
         if(type == TypeInterface.Edit)
         {
@@ -115,6 +115,7 @@ public class NewPatient extends javax.swing.JPanel {
         }
         else if(this.type == TypeInterface.Edit)
         {
+            patient.setID(this.patients.getID());
             if(patient_Dao.Update_Patient(patient))
             {
                 showMessage("Bạn vừa cập nhật bệnh nhân thành công", TypeNotification.Success);

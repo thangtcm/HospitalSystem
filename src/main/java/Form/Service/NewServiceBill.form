@@ -79,6 +79,9 @@
           <Image iconType="3" name="/Images/Icons/Group 31.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
+      </Events>
     </Component>
     <Container class="Swing.Panel.Panel" name="panel1">
       <Properties>

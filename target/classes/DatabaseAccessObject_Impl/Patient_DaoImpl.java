@@ -203,6 +203,7 @@ public class Patient_DaoImpl implements Patient_Dao{
         try{
             prepStatement = conn.prepareStatement(query);
             int index = 1;
+            
             prepStatement.setString(index++, patient.getFirstName().trim());
             prepStatement.setString(index++, patient.getMiddleName().trim());
             prepStatement.setString(index++, patient.getLastName().trim());

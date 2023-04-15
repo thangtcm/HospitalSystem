@@ -59,8 +59,8 @@ public class LoginForm extends javax.swing.JFrame {
         }
         else
         {
-            showMessage("Welcome : "  + staff.getRoleName() + " " /*+ UserType_selectItem*/ + " : "
-						+ staff.getFullName(), TypeNotification.Success);
+            showMessage("Welcome: "  + staff.getRoleName() + " " /*+ UserType_selectItem*/ + " - "
+						+ staff.getFullName() +"!", TypeNotification.Success);
             new Main(staff).setVisible(true); //--> Đây là khỏi tạo giao diện chính thong qua người dùng
             // Close the interface of login
             this.dispose();

@@ -15,7 +15,9 @@ import DatabaseAccessObject_Impl.Service_DaoImpl;
 import Dialog.Swal_Confirm;
 import Dialog.Swal_Notification;
 import Enum.TypeInterface;
+import Enum.TypeList;
 import Enum.TypeNotification;
+import Form.List.ListOfObject;
 import Model.BillService;
 import Model.Employee;
 import Model.MedicalExamination;
@@ -24,6 +26,7 @@ import Model.Service;
 import Swing.Table.EventAction;
 import Swing.Table.ThreeAction_Abs;
 import ViewForm.Main;
+import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -222,6 +225,11 @@ public class NewServiceBill extends javax.swing.JPanel {
         TitleTable.setText("Services Bill");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/Group 31.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         panel1.setBackground(new java.awt.Color(255, 255, 255));
         panel1.setRoundBottomLeft(55);
@@ -519,6 +527,16 @@ public class NewServiceBill extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    showForm(new ListOfObject(main, TypeList.Services, this.employee));        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void showForm(Component com){
+        main.removeAll();
+        main.add(com);
+        main.repaint();
+        main.revalidate();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JEndTime;
@@ -546,4 +564,6 @@ public class NewServiceBill extends javax.swing.JPanel {
     private Swing.TextField.TextArea txtNote;
     private Swing.TextField.TextArea txtResult;
     // End of variables declaration//GEN-END:variables
+
+  
 }

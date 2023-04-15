@@ -130,6 +130,11 @@ public class NewService extends javax.swing.JPanel {
         setOpaque(false);
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/Group 31.png"))); // NOI18N
+        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBackMouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(79, 98, 203));
@@ -237,6 +242,10 @@ public class NewService extends javax.swing.JPanel {
         if(initData())
             showForm(new ListOfObject(main, TypeList.Drug, this.employee));
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
+showForm(new ListOfObject(main, TypeList.Services, this.employee));        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackMouseClicked
 
     private void showForm(Component com){
         main.removeAll();

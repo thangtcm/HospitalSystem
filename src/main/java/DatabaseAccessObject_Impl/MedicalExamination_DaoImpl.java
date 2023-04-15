@@ -14,7 +14,6 @@ import Services.StringHandle;
 import ViewForm.Main;
 import dao.Convert;
 import dao.DBConnect;
-import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -164,7 +163,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
 
     @Override
     public boolean Update_MedicalExamination(MedicalExamination medicalExamination) {
-        String query = "UPDATE Patient SET PatientID = ?, EmployeeID = ?, MedicalDate = ?, Symptom = ?, Illnesses = ?, Note = ? WHERE ID = ?";
+        String query = "UPDATE MedicalExamination SET PatientID = ?, EmployeeID = ?, MedicalDate = ?, Symptom = ?, Illnesses = ?, Note = ? WHERE ID = ?";
         try{
             prepStatement = conn.prepareStatement(query);
             int index = 1;
@@ -175,7 +174,7 @@ public class MedicalExamination_DaoImpl implements MedicalExamination_Dao{
             prepStatement.setString(index++, medicalExamination.getIllnesses().trim());
             prepStatement.setString(index++, medicalExamination.getNote().trim());
             prepStatement.setInt(index++, medicalExamination.getID());
-            showMessage("Bạn vừa tạo thành công phiếu khám bệnh của bệnh nhân + " + medicalExamination.getPatient().getFullName() + " !!", TypeNotification.Success);
+            //showMessage("Bạn vừa tạo thành công phiếu khám bệnh của bệnh nhân + " + medicalExamination.getPatient().getFullName() + " !!", TypeNotification.Success);
             return prepStatement.executeUpdate() > 0;
         } catch (SQLException e)
         {

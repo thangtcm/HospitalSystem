@@ -83,6 +83,8 @@ public class EmployeeProfile extends javax.swing.JPanel {
         TitleTable1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JLabel();
 
+        setOpaque(false);
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         txtEmail1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

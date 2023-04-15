@@ -38,8 +38,8 @@ public class Staff_DaoImpl implements Staff_Dao{
         try{
             prepStatement = conn.prepareStatement(SQL_AddStaff);
             int i = 1;
-            prepStatement.setString(i++, staff.getUserName().trim());
-            prepStatement.setString(i++, staff.getPassword().trim());
+            prepStatement.setString(i++, staff.getUserName());
+            prepStatement.setString(i++, staff.getPassword());
             prepStatement.setString(i++, staff.getFirstName().trim());
             prepStatement.setString(i++, staff.getMiddleName().trim());
             prepStatement.setString(i++, staff.getLastName().trim());
@@ -68,15 +68,9 @@ public class Staff_DaoImpl implements Staff_Dao{
     @Override
     public ArrayList<Employee> getStaffList(Employee staff) {
         ArrayList<Employee> list = new ArrayList<>();
-        /*
-         * Default: displays all student information
-         */
+     
         StringBuilder sql = new StringBuilder("SELECT * FROM [Employee]");
 
-        /*------------------------------------------------------------------------
-         * getStudent_name() : Get it from the information entered by the user.  |
-         * -----------------------------------------------------------------------
-         */
         if(staff != null)
         {
             Integer id = staff.getID();
@@ -219,9 +213,6 @@ public class Staff_DaoImpl implements Staff_Dao{
     @Override
     public Employee Login_Staff(Employee staff) {
         String SQL_ADMINISTRATOR_LOGIN = "SELECT * FROM [Employee] WHERE UserName = ? AND Password = ?";
-        /*
-         * In order to initialize the main interface though the user's personal information.
-         */
         Employee table_Staff_temp = null;
         try{
             prepStatement = conn.prepareStatement(SQL_ADMINISTRATOR_LOGIN);

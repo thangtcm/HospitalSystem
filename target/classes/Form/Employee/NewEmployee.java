@@ -57,7 +57,7 @@ public class NewEmployee extends javax.swing.JPanel {
             txtEmail.setText("");
             txtAddress.setText("");
             txtPhone.setText("");
-            btnSave.setText("Resigner");
+            btnSave.setText("Submit");
             for(RoleName obj : RoleName.values())
             {
                 JRole.addItem(obj.toString());
@@ -170,6 +170,7 @@ public class NewEmployee extends javax.swing.JPanel {
         JBirthday = new com.toedter.calendar.JDateChooser();
 
         setForeground(new java.awt.Color(79, 98, 203));
+        setOpaque(false);
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/Group 31.png"))); // NOI18N
         btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -233,10 +234,9 @@ public class NewEmployee extends javax.swing.JPanel {
         jLabel12.setText("Email:");
 
         TitleTable1.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
-        TitleTable1.setText("Edit Doctor");
+        TitleTable1.setText("Create Doctor");
 
-        btnSave.setForeground(new java.awt.Color(255, 255, 255));
-        btnSave.setText("Resigner");
+        btnSave.setText("Submit");
         btnSave.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         btnSave.setRadius(15);
         btnSave.addActionListener(new java.awt.event.ActionListener() {

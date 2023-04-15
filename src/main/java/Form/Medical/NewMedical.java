@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JPanel;
 
-
 /**
  *
  * @author YAN
@@ -33,21 +32,22 @@ public class NewMedical extends javax.swing.JPanel {
      * Creates new form ServiceBill
      */
     private final JPanel main;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Employee employee;
     private final TypeInterface type;
     private MedicalExamination medical_target;
     private Patient patient_target;
+
     public NewMedical(JPanel main, TypeInterface type, Employee employee, Patient patient_target) {
         initComponents();
         this.main = main;
         this.employee = employee;
         this.type = type;
         this.patient_target = patient_target;
-        
+
         init(type);
     }
-    
+
     public NewMedical(JPanel main, TypeInterface type, Employee employee, MedicalExamination medical_target) {
         initComponents();
         this.main = main;
@@ -57,68 +57,62 @@ public class NewMedical extends javax.swing.JPanel {
         this.medical_target = medical_target;
         init(type);
     }
-    
-    private void init(TypeInterface type)
-    {
+
+    private void init(TypeInterface type) {
         Date date = new Date();
         MedicalExamination_Dao medical_Dao = new MedicalExamination_DaoImpl();
-        if(type == TypeInterface.Create)
-        {
+        if (type == TypeInterface.Create) {
+            TitleTable.setText("Create Medical Examination");
+
             txtCID.setText(this.patient_target.getID().toString());
             txtName.setText(this.patient_target.getFullName());
             txtMedicalDate.setText(dateFormat.format(date));
-            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.patient_target.getID()) ));
+            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.patient_target.getID())));
             txtIllnesses.setText("");
             txtNote.setText("");
             txtSympton.setText("");
-        }
-        else{
+        } else {
+            TitleTable.setText("Edit Medical Examination");
+
             txtCID.setText(this.medical_target.getPatient().getID().toString());
             txtName.setText(this.medical_target.getPatient().getFullName());
             txtMedicalDate.setText(dateFormat.format(this.medical_target.getMedicalDate()));
-            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.medical_target.getPatient().getID()) ));
+            txtNumber.setText(String.valueOf(medical_Dao.Count("PatientID = " + this.medical_target.getPatient().getID())));
             txtIllnesses.setText(this.medical_target.getIllnesses());
             txtNote.setText(this.medical_target.getNote());
             txtSympton.setText(this.medical_target.getSymptom());
         }
     }
 
-    private void initCreate()
-    {
+    private void initCreate() {
         MedicalExamination medical = new MedicalExamination();
         medical.setEmployee(this.employee);
-        medical.setPatient(this.medical_target.getPatient());
+        
         medical.setMedicalDate(java.sql.Date.valueOf(txtMedicalDate.getText()));
         medical.setIllnesses(txtIllnesses.getText());
         medical.setSymptom(txtSympton.getText());
         medical.setNote(txtNote.getText());
+
         
         MedicalExamination_Dao medical_Dao = new MedicalExamination_DaoImpl();
-        if(type == TypeInterface.Create)
-        {
-            if(medical_Dao.AddMedicalExamination(medical))
-            {
+        if (type == TypeInterface.Create) {
+            medical.setPatient(this.patient_target);
+            if (medical_Dao.AddMedicalExamination(medical)) {
                 showMessage("<html><div style ='text-align:center'>Bạn vừa tạo thành công phiếu khám bệnh của bệnh nhân <br>" + medical.getPatient().getFullName() + " !!</div></html>", TypeNotification.Success);
-            }
-            else
-            {
+            } else {
                 showMessage("<html><div style ='text-align:center'>Đã có lỗi xảy ra<br>Có vẻ bạn nhập thông tin phiếu của bệnh nhân " + medical.getPatient().getFullName() + " bị sai dữ liệu!!</div></html>", TypeNotification.Error);
             }
-        }
-        else
-        {
+        } else {
+            medical.setPatient(this.medical_target.getPatient());
             medical.setID(this.medical_target.getID());
-            if(medical_Dao.Update_MedicalExamination(medical))
-            {
+            if (medical_Dao.Update_MedicalExamination(medical)) {
                 showMessage("<html><div style ='text-align:center'>Bạn vừa cập nhật thành công phiếu khám bệnh của bệnh nhân <br>" + medical.getPatient().getFullName() + " !!</div></html>", TypeNotification.Success);
-            }
-            else
-            {
+            } else {
                 showMessage("<html><div style ='text-align:center'>Đã có lỗi xảy ra<br>Có vẻ bạn nhập thông tin phiếu của bệnh nhân " + medical.getPatient().getFullName() + " bị sai dữ liệu!!</div></html>", TypeNotification.Error);
             }
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -395,12 +389,13 @@ public class NewMedical extends javax.swing.JPanel {
         showForm(new ListOfObject(main, TypeList.Patient, this.employee));
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private boolean showMessage(String message, TypeNotification type ) {
+    private boolean showMessage(String message, TypeNotification type) {
         Swal_Notification obj = new Swal_Notification(Main.getFrames()[0], true);
         obj.showMessage(message, type);
         return obj.isOk();
     }
-    private void showForm(Component com){
+
+    private void showForm(Component com) {
         main.removeAll();
         main.add(com);
         main.repaint();
