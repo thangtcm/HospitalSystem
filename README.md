@@ -50,3 +50,14 @@ In addition, the system also provides functions for drug management, prescriptio
 
 <p>With the efforts of our team members, we have successfully developed a Hospital Management System that meets the project requirements and exceeds the satisfaction of the stakeholders involved in the project.</p>
 
+
+## Technology stack 💎💎
+
+### Languages 
+![Java](https://img.shields.io/badge/Language-Java-red) 
+
+### Frameworks and Libs
+![MSSQL JDBC](https://img.shields.io/badge/Library-MSSQL_JDBC-blue) 
+![itextpdf](https://img.shields.io/badge/Library-itextpdf-blue) 
+![itextpdf](https://img.shields.io/badge/Library-jfoenix-blue) 
+
