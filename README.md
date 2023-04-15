@@ -69,11 +69,11 @@ In addition, the system also provides functions for drug management, prescriptio
 ![itextpdf](https://img.shields.io/badge/Library-JCALENDAR-blue) 
 
 ## 👨🏼‍💻 Members
-![image|250x250](https://user-images.githubusercontent.com/23113822/232240043-6c0b14c6-ea51-49cb-b1a6-52c6ae08c214.png)   - Trần Cao Minh Thắng [Coder]
-![image|250x250](https://user-images.githubusercontent.com/23113822/232239661-77942db6-5d2e-4a3f-b738-61d3a1df2ba7.png)   - Lê Thảo Duyên [Tester]
-![image|250x250](https://user-images.githubusercontent.com/23113822/232239760-a85d70ed-0d89-4cdc-806c-562680862e32.png)   - Lê Ngọc Đình Đình [Designer]
-![image|250x250](https://user-images.githubusercontent.com/23113822/232239798-30d4ea17-094c-48f0-a636-4e2a32a18992.png)   - Nguyễn Tuấn Khoa  [Coder]
-![image|250x250](https://user-images.githubusercontent.com/23113822/232239953-bb400fd3-43ad-4783-9f4d-de8c7ea680db.png)   - Hồ Lâm Gia Khánh  [Designer]
+![image|82x82](https://user-images.githubusercontent.com/23113822/232240043-6c0b14c6-ea51-49cb-b1a6-52c6ae08c214.png)   - Trần Cao Minh Thắng [Coder]
+![image|82x82](https://user-images.githubusercontent.com/23113822/232239661-77942db6-5d2e-4a3f-b738-61d3a1df2ba7.png)   - Lê Thảo Duyên [Tester]
+![image|82x82](https://user-images.githubusercontent.com/23113822/232239760-a85d70ed-0d89-4cdc-806c-562680862e32.png)   - Lê Ngọc Đình Đình [Designer]
+![image|82x82](https://user-images.githubusercontent.com/23113822/232239798-30d4ea17-094c-48f0-a636-4e2a32a18992.png)   - Nguyễn Tuấn Khoa  [Coder]
+![image|82x82](https://user-images.githubusercontent.com/23113822/232239953-bb400fd3-43ad-4783-9f4d-de8c7ea680db.png)   - Hồ Lâm Gia Khánh  [Designer]
 
 You can also follow my GitHub Profile to stay updated about my latest projects: [![GitHub Follow](https://img.shields.io/badge/Connect-IronCoder-blue.svg?logo=Github&longCache=true&style=social&label=Follow)](https://github.com/thangtcm)
 
