@@ -73,7 +73,7 @@ In addition, the system also provides functions for drug management, prescriptio
 **Getting and Building Sources**
 
 ~~~~
-$ git clone https://github.com/thangtcm/HospitalSystem
+$ git clone https://github.com/thangtcm/HospitalSystem.git
 ~~~~
 
 **Connect SQL Server**
