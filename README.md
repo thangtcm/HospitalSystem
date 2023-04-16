@@ -68,7 +68,26 @@ In addition, the system also provides functions for drug management, prescriptio
 ![itextpdf](https://img.shields.io/badge/Library-JICONFONT_GOOGLE_MATERIAL_DESIGN_ICONS-blue) 
 ![itextpdf](https://img.shields.io/badge/Library-JCALENDAR-blue) 
 
-## 👨🏼‍💻 Members
+### Quick Start with Maven
+
+**Getting and Building Sources**
+
+~~~~
+$ git clone https://github.com/thangtcm/HospitalSystem
+~~~~
+
+**Connect SQL Server**
+
+~~~~
+<-- Open File DBConnect -->
+<-- Edit Your Connect SQL Server Here -->
+static String url = "jdbc:sqlserver://localhost:51361;instance=SQLEXPRESS;databaseName=Hospital;encrypt=true;trustServerCertificate=true";
+static String username = "sa";
+static String password = "123123";
+~~~~
+
+
+## Contributors ✨
 
 | Avatar                | Name                 | Role      |
 |-----------------------|----------------------|-----------|
