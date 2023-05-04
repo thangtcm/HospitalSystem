@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author couni
  */
-public interface Drug_DAO {
+public interface Drug_Dao {
     public ArrayList<Drug> getDrugList(Drug drug);
     
     public boolean AddDrug(Drug drug);
