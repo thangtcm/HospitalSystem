@@ -16,7 +16,12 @@ In addition, the system also provides functions for drug management, prescriptio
   
 ![image](https://user-images.githubusercontent.com/23113822/232237883-f366b735-6d84-4fd5-9081-d0675de7cb14.png)
 </p>
+<p>
+  DEMO VIDEO : 
+</p>
 
+[![IMAGE ALT TEXT](https://i.ytimg.com/vi/BrjEFJzf7Bc/hqdefault.jpg)](http://www.youtube.com/watch?v=BrjEFJzf7Bc "Video Title")
+  
 <h1><span style ="color:#4F62CB">Hospital Management System </span></h1>
 
 <p>The hospital management system we have developed is a desktop application built using Java Swing and the Maven project management tool. Based on the project requirements, we have categorized our system into the following main functions:
